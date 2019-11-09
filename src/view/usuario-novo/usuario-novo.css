@@ -1,0 +1,6 @@
+.container-maior {
+	width: 100%;
+	height: 100vh;
+	padding-top: 2%; /* Depois retirar com cabeçalho */
+	margin: auto;
+}
