@@ -1,10 +1,12 @@
 import React, {useState, Component,  useEffect} from 'react';
 import './home.css';
-import { BounceLoader as Spinner } from 'react-spinners';
+import { PulseLoader as Spinner } from 'react-spinners';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 import Navbar from '../../components/navbar';
+import Carrousel from '../../components/carrousel';
+
 import ImovelCard from '../../components/imovel-card';
 
 import firebase from '../../config/firebase';
@@ -53,8 +55,8 @@ export default class Home extends Component {
 			<Navbar />
 				
 
-			<div className="container p-5">
-				<input type="text" onChange={ (e) => this.setState({pesquisa: e.target.value})} className="form-control text-center" placeholder="pesquisar pela cidade" />
+			<div className="container p-3">
+				{/* <input type="text" onChange={ (e) => this.setState({pesquisa: e.target.value})} className="form-control text-center" placeholder="pesquisar pela cidade" /> */}
 			</div>
 			
 			<div className="container">
@@ -66,16 +68,20 @@ export default class Home extends Component {
 					<div className="mx-auto">
 						<Spinner
 							sizeUnit={"px"}
-							size={150}
-							color={'#123abc'}
+							size={15}
+							color={'#4d6d6d'}
 						/>
 					</div>
 					:  
-						this.state.listaImoveis.map( (item, index) => (
+          <>
+            <Carrousel imovel={this.state.listaImoveis} />
+            
+						{this.state.listaImoveis.map( (item, index) => (
 							<>
-							<ImovelCard id={item.id} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
+							<ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
 							</>
-						)) 
+						))} 
+          </>
 					}
 				
 				</div>

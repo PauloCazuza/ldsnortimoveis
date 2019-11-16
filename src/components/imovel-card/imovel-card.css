@@ -1,19 +1,26 @@
+:root {
+  --roxo-padrao: #614ea6;
+}
 .rodape-card {
-    color: #614ea6;
+    color: var(--roxo-padrao);
     height: 35px;
 }
-
-.btn-detalhes {
-    background-color: #614ea6;
-    color: #fff;
+.card {
+  cursor: pointer;
+  padding: 5px;
+  margin-bottom: 30px;
+  height: 400px;
+  border-radius: 0;
 }
-
-
-.btn-detalhes:hover {
-    background-color: #614ea6;
-    color: #f21667;
+.card:hover {
+  box-shadow: 22px 22px 49px rgba(0, 0, 0, 0.11)
 }
-
+.card img {
+  border-radius: 0;
+}
+.card i {
+  color: tomato;
+}
 .card-text {
     max-height: 100px;
     overflow: hidden;

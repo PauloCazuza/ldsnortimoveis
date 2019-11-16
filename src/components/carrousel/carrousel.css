@@ -1,0 +1,15 @@
+.carrousel-container {
+  display: flex;
+  border: 1px solid lightgray;
+  cursor: pointer;
+  height: 300px !important;
+}
+.carrousel-container img {
+  height: 100%;
+  width: 65%;
+  background-size: cover;
+}
+.descricao {
+  width: 35%;
+  padding: 10px;
+}

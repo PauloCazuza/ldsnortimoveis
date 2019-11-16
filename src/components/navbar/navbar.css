@@ -1,5 +1,6 @@
-.nav-bar {
-	
+.navbar {
+  background-color: coral;
+  /* opacity: 0.9; */
 }
 
 .nav-item a{
@@ -9,4 +10,14 @@
 
 .nav-item a:hover{
 	color: #f5426c;
+}
+.logo {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  height: 80px;
+  width: 200px;
+}
+.logo img {
+  height: 100%;
 }

@@ -10,12 +10,13 @@ function NavBar() {
 	
 	const dispatch = useDispatch();
 	const logado = useSelector(state => state.usuarioLogado)
+  const urlLogo = 'https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo.svg?alt=media&token=ddf9c7d9-53ec-4593-9140-be6e8fa61950'
 
 	return (
-		<nav className="navbar navbar-expand-lg bg-light">
-		  <Link className="navbar-brand" to="">NortImoveis</Link>
+		<nav className="navbar navbar-expand-lg">
+		  <Link className="navbar-brand logo" to=""> <img src={urlLogo}></img> </Link>
 			  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-a="Alterna navegação">
-			    <i class="fas fa-bars"></i>
+			    <i className="fas fa-bars"></i>
 			  </button>
 		  <div className="collapse navbar-collapse" id="navbarNav">
 		    <ul className="navbar-nav">
