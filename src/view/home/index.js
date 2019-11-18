@@ -5,6 +5,7 @@ import { PulseLoader as Spinner } from 'react-spinners';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Navbar from '../../components/navbar';
+import Search from '../../components/search';
 import Carrousel from '../../components/carrousel';
 
 import ImovelCard from '../../components/imovel-card';
@@ -53,11 +54,11 @@ export default class Home extends Component {
 		return (
 			<>
 			<Navbar />
-				
+      <Search/>	
 
-			<div className="container p-3">
+			{/* <div className="container p-3"> */}
 				{/* <input type="text" onChange={ (e) => this.setState({pesquisa: e.target.value})} className="form-control text-center" placeholder="pesquisar pela cidade" /> */}
-			</div>
+			{/* </div> */}
 			
 			<div className="container">
 

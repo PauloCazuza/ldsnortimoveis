@@ -7,13 +7,13 @@
 }
 .btn {
   background-color: transparent !important;
-  border: 1px solid tomato !important;
-  color: tomato;
-  border-radius: 0;
+  border: 1px solid #ff9900 !important;
+  color: #ff9900;
+  border-radius: 0;   /*#ff9900 #f95c00*/
   box-sizing: border-box;
 }
 .btn:hover{
-  background-color: tomato !important;
+  background-color: #f95c00 !important;
   color: white;
 }
 a.btn.btn-sm:hover i{

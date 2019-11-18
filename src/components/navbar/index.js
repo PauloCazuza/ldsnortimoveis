@@ -5,12 +5,15 @@ import {Link} from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
+// import Search from '../search'
+
 function NavBar() {
 
 	
 	const dispatch = useDispatch();
 	const logado = useSelector(state => state.usuarioLogado)
-  const urlLogo = 'https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo.svg?alt=media&token=ddf9c7d9-53ec-4593-9140-be6e8fa61950'
+  // const urlLogo = 'https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo.svg?alt=media&token=ddf9c7d9-53ec-4593-9140-be6e8fa61950'
+  const urlLogo = 'https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo-moderna.svg?alt=media&token=4e067975-927c-4824-9f76-62d12d9ed81b'
 
 	return (
 		<nav className="navbar navbar-expand-lg">

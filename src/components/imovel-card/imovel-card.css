@@ -19,13 +19,12 @@
   border-radius: 0;
 }
 .card i {
-  color: tomato;
+  color: #f95c00;
 }
 .card-text {
     max-height: 100px;
     overflow: hidden;
 }
-
 .img-cartao {
     max-height: 200px;
     min-height: 200px;

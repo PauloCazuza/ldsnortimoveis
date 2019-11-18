@@ -63,16 +63,17 @@ export default class Carrousel extends React.Component {
               <div className="descricao">
                 <span>A partir de</span>
                 <h4 className="font-weight-light">R$ 80.000,00</h4>
-                <h4> {imovel.imovel} </h4>
-                <h6> {`${imovel.cidade} - ${imovel.bairro}`} </h6><br></br>
+                <h4>{imovel.imovel}</h4>
+                <h6>{`${imovel.cidade} - ${imovel.bairro}`}</h6><br/>
                 <p>{`${imovel.imovel} com ${imovel.areaUtil}m² de área construída, ${imovel.areaTotal}m²
-                de terreno, com ${imovel.quartos} quartos, possui ${imovel.banheiro} banheiro(s), situado em ${imovel.rua} no bairro ${imovel.bairro}.`}</p>
+                de terreno, com ${imovel.quartos} quartos, possui ${imovel.banheiro} banheiro(s), 
+                situado em ${imovel.rua} no bairro ${imovel.bairro}.`}</p>
                 <hr class="my"></hr>
                 <a href="#" class="btn active float-right" role="button" aria-pressed="true">Mais Detalhes <i class="fas fa-angle-right"></i></a>
               </div>
             </div>
         
-        );}) }   
+        )}) }   
         </AliceCarousel>
       </div>
     );

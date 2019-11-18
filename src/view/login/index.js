@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Navbar from '../../components/navbar';
 
-
 function Login() {
 
 	const [email, setEmail] = useState("");

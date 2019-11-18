@@ -19,16 +19,6 @@
 a.link {
   text-decoration: none;
 }
-button.btn {
-  background-color: transparent !important;
-  border: 1px solid tomato !important;
-  color: tomato ;
-  box-sizing: border-box;
-}
-.btn:hover{
-  background-color: tomato !important;
-  color: white;
-}
 .input, .btn-login {
   border-radius: 0px;
   box-shadow: none;
