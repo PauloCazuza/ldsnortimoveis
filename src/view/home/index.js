@@ -23,10 +23,14 @@ export default class Home extends Component {
 			listaImoveis: [],
 			carregando: true,
 			pesquisa: '',
+			search: '',
+			filtro1: '',
+			filtro2: '',
 		}
 
 		this.receberDoBD();
-		console.log(props.match);
+		this.handleChange = this.handleChange.bind(this);
+		console.log(props.match.params);
 	}
 
 	receberDoBD() {
@@ -49,16 +53,20 @@ export default class Home extends Component {
 		})
 	}
 
+	handleChange(event) {
+		const {name, value} = event.target;
+
+		this.setState({
+			[name]: value
+		})
+	}
+
 	render() {
 		
 		return (
 			<>
 			<Navbar />
-      <Search/>	
-
-			{/* <div className="container p-3"> */}
-				{/* <input type="text" onChange={ (e) => this.setState({pesquisa: e.target.value})} className="form-control text-center" placeholder="pesquisar pela cidade" /> */}
-			{/* </div> */}
+      		<Search handleChange={this.handleChange} filters={`${this.state.filtro1},${this.state.filtro2},${this.state.search},`}/>	
 			
 			<div className="container">
 

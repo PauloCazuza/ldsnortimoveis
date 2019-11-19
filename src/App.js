@@ -11,6 +11,7 @@ import Home from './view/home';
 import RecuperarSenha from './view/usuario-recuperar-senha';
 import CadastrarImovel from './view/cadastrar-imovel';
 import DetalhesImovel from './view/detalhes-imovel';
+import PaginaPesquisa from './view/pagina-pesquisa';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
     		<Route exact path="/novousuario" component={NovoUsuario} />
 			<Route exact path="/recuperarsenha" component={RecuperarSenha} />
 			<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
+			<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
 			<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
     	</Router>
     </Provider>

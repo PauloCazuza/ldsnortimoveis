@@ -17,7 +17,7 @@ function NavBar() {
 
 	return (
 		<nav className="navbar navbar-expand-lg">
-		  <Link className="navbar-brand logo" to=""> <img src={urlLogo}></img> </Link>
+		  <Link className="navbar-brand logo" to="/"> <img src={urlLogo}></img> </Link>
 			  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-a="Alterna navegação">
 			    <i className="fas fa-bars"></i>
 			  </button>
@@ -36,16 +36,16 @@ function NavBar() {
 		      		? 
 				      <>
 					      <li className="nav-item">
-					        <Link className="nav-link" to="login">Login</Link>
+					        <Link className="nav-link" to="/login">Login</Link>
 					      </li>
 					      <li className="nav-item">
-					        <Link className="nav-link" to="novousuario">Cadastre-se</Link>
+					        <Link className="nav-link" to="/novousuario">Cadastre-se</Link>
 					      </li>
 				      </>
 		      		:
 		      		  <>
 					      <li className="nav-item">
-					        <Link className="nav-link" to="login">Editar Perfil</Link>
+					        <Link className="nav-link" to="/login">Editar Perfil</Link>
 					      </li>
 					      <li className="nav-item">
 					        <Link className="nav-link" onClick={() => dispatch({type: "LOG_OUT"})}>Sair</Link>

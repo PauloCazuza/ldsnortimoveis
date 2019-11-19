@@ -298,7 +298,7 @@ legend {
 }
 
 .s003 form .inner-form .input-field {
-  height: 68px;
+  height: 50px;
 }
 
 .s003 form .inner-form .input-field input {
@@ -335,6 +335,7 @@ legend {
 
 .s003 form .inner-form .input-field.first-wrap {
   width: 200px;
+  min-height: 50px;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -441,7 +442,7 @@ select {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
-  height: 68px !important;
+  height: 50px !important;
   width: 100% !important;
   opacity: 1;
   text-justify: center;

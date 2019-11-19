@@ -51,14 +51,14 @@ export default class Carrousel extends React.Component {
         <AliceCarousel mouseTrackingEnabled
         buttonsDisabled={true}
         autoPlay={true}
-        autoPlayInterval={3000}
+        autoPlayInterval={8000}
         duration={1500}
         >
         
         { this.state.url.map((url, index) => { 
           let imovel = this.state.imovel[index];
           return( 
-            <div className="carrousel-container">
+            <div className="carrousel-container" key={index}>
               <img  style={{ backgroundImage: `url(${url})` }} />
               <div className="descricao">
                 <span>A partir de</span>

@@ -14,7 +14,10 @@ export default class ImovelCard extends Component {
 
         this.state = {
             url: "",
+            md: this.props.md === undefined ? "col-md-3" : this.props.md,
         }
+
+
 
         this.receberUrl(this.props.img);
     }
@@ -29,7 +32,7 @@ export default class ImovelCard extends Component {
         const {id, img, titulo, detalhes, visualizacoes} = this.props;
 
         return(
-            <div className="col-md-3 col-sm-12">
+            <div className={`${this.state.md} col-sm-12`}>
               <div className="card">
                 <Link to={"/detalhesimovel/" + id }>
                   <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
