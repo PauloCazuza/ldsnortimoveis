@@ -5,6 +5,8 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 
 import './carrousel.css';
 
+import { PulseLoader as Spinner } from 'react-spinners';
+
 import {Link} from 'react-router-dom';
 
 import firebase from '../../config/firebase';
@@ -47,7 +49,15 @@ export default class Carrousel extends React.Component {
     const handleOnDragStart = (e) => e.preventDefault();
 
     if (this.state.url === null)
-      return <h1>b</h1> ;
+      return (
+        <div className="row mx-auto">
+              <Spinner
+                sizeUnit={"px"}
+                size={15}
+                color={'#4d6d6d'}
+              />
+        </div>
+        );
 
     return (
 
