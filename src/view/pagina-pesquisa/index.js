@@ -105,7 +105,7 @@ class paginaPesquisa extends React.Component {
                                         </div>
                                     : this.state.listaImoveis.map( (item, index) => (
                                         <>
-                                        <ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
+                                        <ImovelCard md="col-md-3" id={item.id} key={index} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
                                         </>
                                     ))}
                         </div>

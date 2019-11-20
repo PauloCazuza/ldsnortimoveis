@@ -7,8 +7,8 @@ import {Link} from 'react-router-dom';
 
 import { BounceLoader as Spinner } from 'react-spinners';
 
-
 import { useSelector} from 'react-redux';
+
 
 import Navbar from '../../components/navbar';
 
@@ -42,10 +42,20 @@ export default class DetalhesImovel extends React.Component {
 
         return (
             <>
-                <div>
-                    ok
-                    <img src={this.state.urlImg} />
-                </div>
+                {this.state.imovel === null ? 
+                    <center>
+                        <Spinner
+                            sizeUnit={"px"}
+                            size={150}
+                            color={'#4d6d6d'}
+                        />
+                    </center>
+                    : 
+                    <div>
+                        {this.state.imovel.imovel}
+                        <img src={this.state.urlImg} />
+                    </div>
+                }
             </>
         );
     }
