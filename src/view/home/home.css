@@ -1,0 +1,14 @@
+.banner {
+  background: #f95c00;
+  opacity: 0.9;
+  color: aliceblue;
+  padding: 10px;
+}
+.logo-info {
+  width: 60px;
+  height: 60px;
+}
+.logo-info img{
+  width: 100%;
+  height: 100%;
+}

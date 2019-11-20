@@ -8,6 +8,10 @@ import Navbar from '../../components/navbar';
 import Search from '../../components/search';
 import Carrousel from '../../components/carrousel';
 
+import icone_search from './images/search.svg'
+import icone_home from './images/home.svg'
+import icone_hammer from './images/hammer.svg'
+
 import ImovelCard from '../../components/imovel-card';
 
 import firebase from '../../config/firebase';
@@ -84,7 +88,7 @@ export default class Home extends Component {
 					:  
           <>
             <Carrousel imovel={this.state.listaImoveis} />
-            
+            <legend style={{ color: 'black', marginTop: '25px' }} >Imóveis em Destaque</legend>
 						{this.state.listaImoveis.map( (item, index) => (
 							<>
 							<ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
@@ -95,6 +99,44 @@ export default class Home extends Component {
 				
 				</div>
 			</div>
+
+      <div class="container-fluid p-4 banner">
+        <div class="row flex-sm-row">
+          <div class="col-sm d-flex">
+            
+            <div className="d-flex flex-column justify-content-center align-items-center text-center">
+              <div className="logo-info">
+                <img src={icone_search} alt="home"/>
+              </div><br/>
+              <h4>As melhores oportunidades:</h4>
+              <p>Iremos selecionar alguns imóveis que você pode gostar e considerar a visita com um dos corretores</p>
+            </div>
+
+          </div>
+          <div class="col-sm d-flex">
+            
+            <div className="d-flex flex-column justify-content-center align-items-center text-center">
+              <div className="logo-info">
+                <img src={icone_home} alt="home"/>
+              </div><br/>
+              <h4>Vamos acompanhar você:</h4>
+              <p>Nossos corretores são especialmente treinados para oferecer a você a melhor consultoria na escolha do seu imóvel</p>
+            </div>
+
+          </div>
+          <div class="col-sm d-flex">
+            
+            <div className="d-flex flex-column justify-content-center align-items-center text-center">
+              <div className="logo-info">
+                <img src={icone_hammer} alt="home"/>
+              </div><br/>
+              <h4>Buscaremos a melhor condição:</h4>
+              <p>Nossa equipe irá buscar a melhor condição de fechamento, oferecendo inclusive suporte a financiamento com os principais bancos</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
 		</>
 		);
 	}
