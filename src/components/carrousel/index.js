@@ -5,6 +5,8 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 
 import './carrousel.css';
 
+import {Link} from 'react-router-dom';
+
 import firebase from '../../config/firebase';
 
 export default class Carrousel extends React.Component {
@@ -71,7 +73,7 @@ export default class Carrousel extends React.Component {
                 de terreno, com ${imovel.quartos} quartos, possui ${imovel.banheiro} banheiro(s), 
                 situado em ${imovel.rua} no bairro ${imovel.bairro}.`}</p>
                 <hr class="my"></hr>
-                <a href="#" class="btn active float-right" role="button" aria-pressed="true">Mais Detalhes <i class="fas fa-angle-right"></i></a>
+                <Link to={"/detalhesimovel/" + imovel.id }  class="btn active float-right" role="button" aria-pressed="true">Mais Detalhes <i class="fas fa-angle-right"></i></Link>
               </div>
             </div>
         

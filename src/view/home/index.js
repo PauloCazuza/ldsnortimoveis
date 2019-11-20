@@ -28,8 +28,8 @@ export default class Home extends Component {
 			carregando: true,
 			pesquisa: '',
 			search: '',
-			filtro1: '',
-			filtro2: '',
+			filtro1: 'Comprar',
+			filtro2: 'Casa',
 		}
 
 		this.receberDoBD();
