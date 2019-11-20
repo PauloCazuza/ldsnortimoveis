@@ -66,6 +66,8 @@ export default class Home extends Component {
 	}
 
 	render() {
+
+
 		
 		return (
 			<>
@@ -87,9 +89,9 @@ export default class Home extends Component {
 					</div>
 					:  
           <>
-            <Carrousel imovel={this.state.listaImoveis} />
+            <Carrousel imovel={this.state.listaImoveis.slice(0,5)} />
             <legend style={{ color: 'black', marginTop: '25px' }} >Imóveis em Destaque</legend>
-						{this.state.listaImoveis.map( (item, index) => (
+						{this.state.listaImoveis.slice(0,8).map( (item, index) => (
 							<>
 							<ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
 							</>
