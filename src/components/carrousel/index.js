@@ -31,10 +31,10 @@ export default class Carrousel extends React.Component {
 
     var foto = [];
     var i = 0;
-
+    
     this.state.imovel.map( async (item, index) => {
       
-      await firebase.storage().ref(`imagensImoveis/${item.foto}`).getDownloadURL().then(function (url) { 
+      await firebase.storage().ref(`imagensImoveis/${item.foto[0]}`).getDownloadURL().then(function (url) { 
         foto[index] = url;
         i++;
       }.bind(this));

@@ -20,21 +20,30 @@ export default class DetalhesImovel extends React.Component {
 
         this.state= {
             imovel: null,
-            urlImg: null,
+            urlImg: [],
         }
 
         console.log(this.props.match.params.id)
         this.receberDoBd();
     }
 
-    receberDoBd() {
-        firebase.firestore().collection('imoveis').doc(this.props.match.params.id).get().then(resultado => {
+    async receberDoBd() {
+        await firebase.firestore().collection('imoveis').doc(this.props.match.params.id).get().then(async resultado => {
             this.setState({imovel: resultado.data()})
             console.log(this.state.imovel);
 
-            firebase.storage().ref(`imagensImoveis/${this.state.imovel.foto}`).getDownloadURL().then(url => { 
-                this.setState({urlImg: url})
-            });
+            var fotos = [];
+            await this.state.imovel.foto.map(item => {
+                firebase.storage().ref(`imagensImoveis/${item}`).getDownloadURL().then(url => { 
+                    console.log(url);
+                    fotos.push(url);
+                    if(fotos.length === this.state.imovel.foto.length) {
+                        this.setState({urlImg: fotos});
+                    }
+                });
+            })
+
+
         })
     }
 
@@ -53,7 +62,18 @@ export default class DetalhesImovel extends React.Component {
                     : 
                     <div>
                         {this.state.imovel.imovel}
-                        <img src={this.state.urlImg} />
+                        {
+                            this.state.urlImg.length === this.state.imovel.foto.length 
+                            ? 
+                            <>
+                            {this.state.urlImg.map( (item, index) => {
+                                console.log(item);
+                                return (<img src={item} key={index}/>); 
+                            })}
+                            </>
+                            :
+                            null
+                        }
                     </div>
                 }
             </>

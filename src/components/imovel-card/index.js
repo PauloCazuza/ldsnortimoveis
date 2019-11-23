@@ -19,7 +19,7 @@ export default class ImovelCard extends Component {
 
 
 
-        this.receberUrl(this.props.img);
+        this.receberUrl(this.props.img[0]);
     }
 
     receberUrl(img) {

@@ -25,7 +25,7 @@ function CadastrarImovel() {
     const [horarioDeContato, setHorarioDeContato] = useState("");
     const [imovel, setImovel] = useState();
     const [transacao, setTransacao] = useState();
-    const [foto, setFoto] = useState({});
+    const [foto, setFoto] = useState([]);
     const [areaTotal, setAreaTotal] = useState();
     const [areaUtil, setAreaUtil] = useState();
     const [quartos, setQuartos] = useState();
@@ -62,15 +62,32 @@ function CadastrarImovel() {
     const storage = firebase.storage();
     const db = firebase.firestore();
 
+    async function enviarFotos(foto) {
+        await storage.ref(`imagensImoveis/${foto.name}/`).put(foto).then(
+
+        ).catch( erro => {
+            console.log('Erro ao enviar a foto ', foto.name);
+        });
+    }
+
     function enviarImovel() {
-        if(!foto.name)
+        if(foto.length === 0)
             return alert("Não Há Imagem");
 
         setMsg(null);
-        setCarregando(true)
+        setCarregando(true);
 
-        storage.ref(`imagensImoveis/${foto.name}/`).put(foto).then( () => {
-            db.collection('imoveis').add({
+        Array.from(foto).forEach( item => {
+            enviarFotos(item);
+        })
+
+        var fotos = [];
+
+        Array.from(foto).forEach( item => {
+            fotos.push(item.name);
+        })
+
+        db.collection('imoveis').add({
                 usuario: usuario,
                 cep: cep,
                 estado: estado,
@@ -83,7 +100,7 @@ function CadastrarImovel() {
                 horarioDeContato: horarioDeContato,
                 imovel: imovel,
                 transacao: transacao,
-                foto: foto.name,
+                foto: fotos,
                 areaTotal: areaTotal,
                 areaUtil: areaUtil,
                 quartos: quartos,
@@ -93,11 +110,10 @@ function CadastrarImovel() {
             }).then(() => {
                 setCarregando(false)
                 setMsg('sucesso')
+            }).catch(erro => {
+                setCarregando(false)
+                setMsg('erro')
             })
-        }).catch(erro => {
-            setCarregando(false)
-            setMsg('erro')
-        })
     }    
 
     //{	useSelector(state => state.usuarioLogado) === 0 ? <Redirect to="/login" /> : null
@@ -134,7 +150,7 @@ function CadastrarImovel() {
 
                         <div className="col-4">
                             <label>Foto Principal</label>
-                            <input onChange={ e => setFoto(e.target.files[0]) } type="file" className="form-control" />
+                            <input multiple onChange={ e =>{ console.log(e.target.files); setFoto(e.target.files) }} type="file" className="form-control" />
                         </div>
                     </div>
                 </form>
