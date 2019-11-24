@@ -29,21 +29,21 @@ class Search extends React.Component {
     var string = filters.split(",");
 
     return (
-            <div class="s003">
+            <div className="s003">
               { this.state.redirecionar ? <Redirect to={`/paginaPesquisa/${filters}`} /> : null}
             <legend>ENCONTRE SEU NOVO LAR AQUI!</legend>
             <form onSubmit={this.submitForm}>
-              <div class="inner-form">
-                <div class="input-field first-wrap" style={{width: '160px'}}>
-                  <div class="input-select">
+              <div className="inner-form">
+                <div className="input-field first-wrap" style={{width: '160px'}}>
+                  <div className="input-select">
                     <select data-trigger="" name="filtro1" onChange={handleChange} value={string[0]}>
                       <option>Comprar</option>
                       <option>Alugar</option>
                     </select>
                   </div>
                 </div>
-                <div class="input-field first-wrap" style={{width: '160px'}}>
-                  <div class="input-select">
+                <div className="input-field first-wrap" style={{width: '160px'}}>
+                  <div className="input-select">
                     <select data-trigger="" name="filtro2" onChange={handleChange} value={string[1]}>
                       <option>Casa</option>
                       <option>Apartamento</option>
@@ -51,11 +51,11 @@ class Search extends React.Component {
                     </select>
                   </div>
                 </div>
-                <div class="input-field second-wrap">
+                <div className="input-field second-wrap">
                   <input name="search" id="search" value={string[2]} type="text" placeholder="Busque um imóvel pela sua cidade" onChange={handleChange} />
                 </div>
-                <div class="input-field third-wrap" style={{height: '50px'}}>
-                    <button type="submit" class="btn-search">
+                <div className="input-field third-wrap" style={{height: '50px'}}>
+                    <button type="submit" className="btn-search">
                       <img src={url} alt=""/>
                     </button>
                 </div>

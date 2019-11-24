@@ -18,7 +18,7 @@ function NavBar() {
 	return (
 		<nav className="navbar navbar-expand-lg">
 		  <Link className="navbar-brand logo" to="/"> <img src={urlLogo}></img> </Link>
-			  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-a="Alterna navegação">
+			  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
 			    <i className="fas fa-bars"></i>
 			  </button>
 		  <div className="collapse navbar-collapse" id="navbarNav">
@@ -27,7 +27,7 @@ function NavBar() {
 		        <Link className="nav-link" to={logado === 0 ? "login" : "cadastrarimovel"}>Venda seu Imóvel</Link>
 		      </li>
 		      <li className="nav-item">
-		        <Link className="nav-link" to={logado === 0 ? "login" : "cadastrarimovel"}> <i class="fas fa-heart" /> Seus Favoritos </Link>
+		        <Link className="nav-link" to={logado === 0 ? "login" : "cadastrarimovel"}> <i className="fas fa-heart" /> Seus Favoritos </Link>
 		      </li>
 		      
 		      {

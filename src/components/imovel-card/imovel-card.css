@@ -1,8 +1,4 @@
-:root {
-  --roxo-padrao: #614ea6;
-}
 .rodape-card {
-    color: var(--roxo-padrao);
     height: 35px;
 }
 .card {

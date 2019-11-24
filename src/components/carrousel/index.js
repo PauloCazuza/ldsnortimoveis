@@ -82,8 +82,8 @@ export default class Carrousel extends React.Component {
                 <p>{`${imovel.imovel} com ${imovel.areaUtil}m² de área construída, ${imovel.areaTotal}m²
                 de terreno, com ${imovel.quartos} quartos, possui ${imovel.banheiro} banheiro(s), 
                 situado em ${imovel.rua} no bairro ${imovel.bairro}.`}</p>
-                <hr class="my"></hr>
-                <Link to={"/detalhesimovel/" + imovel.id }  class="btn active float-right" role="button" aria-pressed="true">Mais Detalhes <i class="fas fa-angle-right"></i></Link>
+                <hr className="my"></hr>
+                <Link to={"/detalhesimovel/" + imovel.id }  className="btn active float-right" role="button" aria-pressed="true">Mais Detalhes <i className="fas fa-angle-right"></i></Link>
               </div>
             </div>
         

@@ -25,12 +25,14 @@ export default class ImovelCard extends Component {
     receberUrl(img) {
         firebase.storage().ref(`imagensImoveis/${img}`).getDownloadURL().then(url => { 
             this.setState({url: url})
+            // console.log("----------------")
+            // console.log(url)
         });
     }
  
     render() {
         const {id, img, titulo, detalhes, visualizacoes} = this.props;
-
+      
         return(
             <div className={`${this.state.md} col-sm-12`}>
               <div className="card">
@@ -44,7 +46,7 @@ export default class ImovelCard extends Component {
                     
                     <div className="row rodape-card d-flex align-items-center">
                         <div className="col-6">
-                          <Link to={"/detalhesimovel/" + id }  className="btn btn-sm">Detalhes <i class="fas fa-angle-right"></i></Link>
+                          <Link to={"/detalhesimovel/" + id }  className="btn btn-sm">Detalhes <i className="fas fa-angle-right"></i></Link>
                         </div>
                         <div className="col-6 text-right">
                           <i className="fas fa-eye"> </i> <span>{visualizacoes}</span>

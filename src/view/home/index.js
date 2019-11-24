@@ -34,7 +34,7 @@ export default class Home extends Component {
 
 		this.receberDoBD();
 		this.handleChange = this.handleChange.bind(this);
-		console.log(props.match.params);
+		// console.log(props.match.params);
 	}
 
 	receberDoBD() {
@@ -48,9 +48,9 @@ export default class Home extends Component {
 					})
 			})
 			
-			console.log("ok deu certo");
+			// console.log("ok deu certo");
 			this.setState({listaImoveis: listaImoveis, carregando: false});
-			console.log(resultado.docs)
+			// console.log(resultado.docs)
 		}).catch(erro => {
 			alert('Problema de Conexão');
 			console.log(erro)
@@ -104,9 +104,9 @@ export default class Home extends Component {
 			</div>
 
 			{this.state.carregando ? null:
-			<div class="container-fluid p-4 banner">
-				<div class="row flex-sm-row">
-				<div class="col-sm d-flex">
+			<div className="container-fluid p-4 banner">
+				<div className="row flex-sm-row">
+				<div className="col-sm d-flex">
 					
 					<div className="d-flex flex-column justify-content-center align-items-center text-center">
 					<div className="logo-info">
@@ -117,7 +117,7 @@ export default class Home extends Component {
 					</div>
 
 				</div>
-				<div class="col-sm d-flex">
+				<div className="col-sm d-flex">
 					
 					<div className="d-flex flex-column justify-content-center align-items-center text-center">
 					<div className="logo-info">
@@ -128,7 +128,7 @@ export default class Home extends Component {
 					</div>
 
 				</div>
-				<div class="col-sm d-flex">
+				<div className="col-sm d-flex">
 					
 					<div className="d-flex flex-column justify-content-center align-items-center text-center">
 					<div className="logo-info">
