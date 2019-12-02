@@ -11,6 +11,7 @@ import 'firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Navbar from '../../components/navbar';
+import Footer from '../../components/footer';
 
 function Login() {
 
@@ -42,12 +43,12 @@ function Login() {
 	}
 
 	return (
-		<div>
+		<>
 			<Navbar/>
 
 			{	useSelector(state => state.usuarioLogado) > 0 ? <Redirect to="/" /> : null }
 
-			<div className="container">
+			<div className="container mb-5">
 				<div className="row">
 					<div className="login-content d-flex col-md h-auto">
 						<form className="form-signin mx-auto" style={{width:'100%'}}>
@@ -96,7 +97,8 @@ function Login() {
 					</div>
 				</div>
 			</div>
-		</div>
+      <Footer/>
+		</>
 	)
 }
 

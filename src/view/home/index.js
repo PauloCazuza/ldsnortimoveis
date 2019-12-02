@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Navbar from '../../components/navbar';
 import Search from '../../components/search';
+import Footer from '../../components/footer';
 import Carrousel from '../../components/carrousel';
 
 import icone_search from './images/search.svg'
@@ -141,6 +142,7 @@ export default class Home extends Component {
 			</div>
       </div>
 			}
+      <Footer/>
 	</>
 		);
 	}

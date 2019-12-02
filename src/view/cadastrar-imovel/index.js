@@ -8,7 +8,13 @@ import 'firebase/auth';
 
 import { useSelector, useDispatch } from 'react-redux';
 
+import home from './images/home.svg'
+import location from './images/location.svg'
+import description from './images/flags.svg'
+
 import NavBar from '../../components/navbar';
+import Footer from '../../components/footer';
+
 import Axios from 'axios';
 
 
@@ -40,20 +46,20 @@ function CadastrarImovel() {
     // CONTROLE DO SPINNER
 	const [carregando, setCarregando] = useState(false);
 
-    // Recebendo JSON pelo Cep
-    Axios.get(`https://viacep.com.br/ws/${cep}/json/`).then(json => {
-        const {data} = json;
+  // Recebendo JSON pelo Cep
+  Axios.get(`https://viacep.com.br/ws/${cep}/json/`).then(json => {
+      const {data} = json;
 
-        if (data.cep !== "")
-            setCep(data.cep);
-        if (data.uf !== "")
-            setEstado(data.uf);
-        if (data.localidade !== "")
-            setCidade(data.localidade);
-        if (data.bairro !== "") 
-            setBairro(data.bairro);
-        if (data.logradouro !== "")
-            setRua(data.logradouro);
+      if (data.cep !== "")
+          setCep(data.cep);
+      if (data.uf !== "")
+          setEstado(data.uf);
+      if (data.localidade !== "")
+          setCidade(data.localidade);
+      if (data.bairro !== "") 
+          setBairro(data.bairro);
+      if (data.logradouro !== "")
+          setRua(data.logradouro);
 
     }).catch(erro => {
         console.log('erro')
@@ -123,26 +129,26 @@ function CadastrarImovel() {
             <NavBar />
             <div className="col-12">
                 <div className="row">
-                    <h3 className="mx-auto"> Publicar seu Imóvel</h3>
+                  <div className="d-flex align-items-end pl-2 pt-4"> <img src={home} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">PUBLICAR SEU IMÓVEL</h4> </div>
                 </div>
-
+                <hr className="my"></hr>
                 <form>
                     <div className="form-group row">
                         <div className="col-4">
                             <label>Imovel</label>
                             <select onChange={ e => setImovel(e.target.value) }className="form-control">
-                                <option disabled selected value>-- Selecione um Imóvel --</option>
+                                <option disabled selected value>Selecione um Imóvel</option>
                                 <option>Casa</option>
                                 <option>Apartamento</option>
                                 <option>Terreno</option>
                                 <option>Galpão</option>
                             </select>
                         </div>
-
+          
                         <div className="col-4">
                             <label>Transação</label>
                             <select onChange={ e => setTransacao(e.target.value) } className="form-control">
-                                <option disabled selected value>-- Selecione uma Transação --</option>
+                                <option disabled selected value>Selecione uma Transação</option>
                                 <option>Vender</option>
                                 <option>Alugar</option>
                             </select>
@@ -156,8 +162,9 @@ function CadastrarImovel() {
                 </form>
 
                 <div className="row">
-                    <h3 className="mx-auto"> Localização do Imóvel </h3>
+                  <div className="d-flex align-items-end pl-2"> <img src={location} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">LOCALIZAÇÃO DO IMÓVEL</h4> </div>
                 </div>
+                <hr className="my"></hr>
 
                 <form>
                     <div className="row">
@@ -213,8 +220,9 @@ function CadastrarImovel() {
                 </form>
 
                 <div className="row">
-                    <h3 className="mx-auto"> Descrição do Imóvel </h3>
+                  <div className="d-flex align-items-end pl-2"> <img src={description} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">DESCRIÇÃO DO IMÓVEL</h4> </div>
                 </div>
+                <hr className="my"></hr>
 
                 <form>
                     <div className="row">
@@ -259,13 +267,14 @@ function CadastrarImovel() {
 							/>
 						</center>
 					:
-                        <button type="button" onClick={enviarImovel} className="btn btn-lg btn-block btn-login my-5">Enviar</button>
+                  <button type="button" onClick={enviarImovel} className="btn btn-lg btn-login my-4">Enviar</button>
                 	}
 
 
                 {msg === 'sucesso' ? <span>Imovel enviado para a equipe Nortimoveis avaliar, aguarde o contato</span> : null}
                 {msg === 'erro' ? <span>Ocorreu um erro ao enviar seu Imóvel</span> : null}
             </div>
+            <Footer/>
         </>
     );
 }

@@ -1,14 +1,10 @@
 .navbar {
-  /* background-color: coral; */
   background-color: gold;
-  /* opacity: 0.9; */
 }
-
 .nav-item a{
 	color: #000;
 	transition: .3s ease-in;
 }
-
 .nav-item a:hover{
 	color: #f5426c;
 }

@@ -44,7 +44,7 @@ class Search extends React.Component {
                 </div>
                 <div className="input-field first-wrap" style={{width: '160px'}}>
                   <div className="input-select">
-                    <select data-trigger="" name="filtro2" onChange={handleChange} value={string[1]}>
+                    <select data-trigger="" className="radius-0" name="filtro2" onChange={handleChange} value={string[1]}>
                       <option>Casa</option>
                       <option>Apartamento</option>
                       <option>Terreno</option>
