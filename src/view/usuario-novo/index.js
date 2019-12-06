@@ -8,6 +8,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
 import Navbar from '../../components/navbar';
+import Footer from '../../components/footer';
 
 function UsuarioNovo() {
 
@@ -38,7 +39,7 @@ function UsuarioNovo() {
 		<div>
 			<Navbar />
 			
-			<div className="container-maior">
+			<div className="container py-5">
 				<div className="container">
 					<Tabs defaultActiveKey="fisica" id="tab-cad" onSelect={key => setPessoa(key)}>
 						{/* FORMULARIO DA PESSOA FISICA  */ }
@@ -232,6 +233,7 @@ function UsuarioNovo() {
 					</div>
 				</div>
 		</div>
+    <Footer/>
 	</div>
 	);
 }

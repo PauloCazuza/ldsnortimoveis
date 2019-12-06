@@ -5,7 +5,7 @@ import './footer.css';
 function Footer() {
   const urlLogo = 'https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo-moderna.svg?alt=media&token=4e067975-927c-4824-9f76-62d12d9ed81b'
 	return (
-    <div className="container-fluid p-5 footer">
+    <div className="container-fluid p-5 footer m-0">
 				<div className="row flex-sm-row">
 				<div className="col-sm d-flex">
 
