@@ -40,7 +40,12 @@ function Login() {
 			alert('DEU ERRO')
 			setCarregando(false)
 		})
-	}
+  }
+  
+  function submitForm (e) {
+    e.preventDefault()
+    logar()
+  }
 
 	return (
 		<>
@@ -51,12 +56,14 @@ function Login() {
 			<div className="container mb-5">
 				<div className="row">
 					<div className="login-content d-flex col-md h-auto">
-						<form className="form-signin mx-auto" style={{width:'100%'}}>
+						<form className="form-signin mx-auto" style={{width:'100%'}} onSubmit={submitForm}>
 						  <div className="text-center mb-4">
 						    <h1 className="h3 mb-3 font-weight-normal">Faça login</h1>
 
 							<input onChange={ (e) => setEmail(e.target.value)} type="email" id="inputEmail" className="form-control my-2 input" placeholder="Seu email"/>
-							<input onChange={ (e) => setSenha(e.target.value)} onKeyPress={ e => e.key === 'Enter' ? logar() : null} type="password" id="inputPassword" className="form-control my-2 input" placeholder="Senha" required/>
+              <input onChange={ (e) => setSenha(e.target.value)} 
+              //onKeyPress={ e => e.key === 'Enter' ? logar() : null} 
+              type="password" id="inputPassword" className="form-control my-2 input" placeholder="Senha" required/>
               <span className="link">
                 <Link className="mb-3 text-muted" to="recuperarsenha">Recuperar Senha</Link>
               </span>
@@ -73,7 +80,7 @@ function Login() {
 										/>
 									</center>
 								:
-									<button type="button" onClick={logar} className="btn btn-block btn-login">Login</button>
+									<button type="submit" className="btn btn-block btn-login">Login</button>
 							}
 							
 							  </div>

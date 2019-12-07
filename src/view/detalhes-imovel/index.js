@@ -8,9 +8,26 @@ import {Link} from 'react-router-dom';
 import { BounceLoader as Spinner } from 'react-spinners';
 
 import { useSelector} from 'react-redux';
-
+import ImageGallery from 'react-image-gallery';
+import "react-image-gallery/styles/scss/image-gallery.scss";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 import Navbar from '../../components/navbar';
+
+var images = [
+  /*{
+    original: 'https://picsum.photos/id/1018/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1018/250/150/',
+  },
+  {
+    original: 'https://picsum.photos/id/1015/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1015/250/150/',
+  },
+  {
+    original: 'https://picsum.photos/id/1019/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1019/250/150/',
+  }, */
+];
 
 
 export default class DetalhesImovel extends React.Component {
@@ -21,6 +38,7 @@ export default class DetalhesImovel extends React.Component {
         this.state= {
             imovel: null,
             urlImg: [],
+            imagens: []
         }
 
         console.log(this.props.match.params.id)
@@ -28,17 +46,23 @@ export default class DetalhesImovel extends React.Component {
     }
 
     async receberDoBd() {
+
         await firebase.firestore().collection('imoveis').doc(this.props.match.params.id).get().then(async resultado => {
             this.setState({imovel: resultado.data()})
             console.log(this.state.imovel);
 
             var fotos = [];
+            var images = [];
             await this.state.imovel.foto.map(item => {
                 firebase.storage().ref(`imagensImoveis/${item}`).getDownloadURL().then(url => { 
                     console.log(url);
                     fotos.push(url);
+                    images.push({
+                      original: url,
+                      thumbnail: url,
+                    })
                     if(fotos.length === this.state.imovel.foto.length) {
-                        this.setState({urlImg: fotos});
+                        this.setState({urlImg: fotos, imagens: images});
                     }
                 });
             })
@@ -51,6 +75,7 @@ export default class DetalhesImovel extends React.Component {
 
         return (
             <>
+              <Navbar />
                 {this.state.imovel === null ? 
                     <center>
                         <Spinner
@@ -60,21 +85,13 @@ export default class DetalhesImovel extends React.Component {
                         />
                     </center>
                     : 
-                    <div>
+                    <>
+                        <div className="container-fluid p-2" style={{width: '50%'} }>
+                          <ImageGallery items={this.state.imagens} showBullets autoPlay showPlayButton={ false  }/>
+                        </div>
                         {this.state.imovel.imovel}
-                        {
-                            this.state.urlImg.length === this.state.imovel.foto.length 
-                            ? 
-                            <>
-                            {this.state.urlImg.map( (item, index) => {
-                                console.log(item);
-                                return (<img src={item} key={index}/>); 
-                            })}
-                            </>
-                            :
-                            null
-                        }
-                    </div>
+                        
+                    </>
                 }
             </>
         );
