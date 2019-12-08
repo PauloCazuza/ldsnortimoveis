@@ -1,8 +1,6 @@
-import React, {useState, Component,  useEffect} from 'react';
+import React, {Component} from 'react';
 import './home.css';
 import { PulseLoader as Spinner } from 'react-spinners';
-
-import { useSelector, useDispatch } from 'react-redux';
 
 import Navbar from '../../components/navbar';
 import Search from '../../components/search';

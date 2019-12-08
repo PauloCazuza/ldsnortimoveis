@@ -14,14 +14,17 @@ function UsuarioNovo() {
 
 	//IDENTIFICAR A PESSOA
 	const [pessoa, setPessoa] = useState('fisica');
-	const [foto, setFoto] = useState(null);
 	const [msg, setMsg] = useState();
 	const [carregando, setCarregando] = useState();
-
+	
 	//AMBOS USUARIOS
 	const [email, setEmail] = useState();
 	const [senha, setSenha] = useState();
 	const [verSenha, setVerSenha] = useState();
+	const [telefone, setTelefone] = useState();
+	const [estado, setEstado] = useState();
+	const [cidade, setCidade] = useState();
+	const [foto, setFoto] = useState(null);
 
 
 	// PESSOA FÍSICA
@@ -29,14 +32,15 @@ function UsuarioNovo() {
 	const [sobrenome, setSobrenome] = useState();
 	const [cpf, setcpf] = useState();
 	const [dataDeNasc, setDataDeNasc] = useState();
-	const [telefone, setTelefone] = useState();
-	const [estado, setEstado] = useState();
-	const [cidade, setCidade] = useState();
 
     const storage = firebase.storage();
     const db = firebase.firestore();
 
 	// PESSOA JURIDICA
+	const [razaoSocial, setRazaoSocial] = useState();
+	const [nomeFantasia, setNomeFantasia] = useState();
+	const [cnpj, setCnpj] = useState();
+	
 
 	async function enviarFoto(foto) {
         await storage.ref(`imagensUsuarios/${foto.name}/`).put(foto).then(
@@ -61,6 +65,7 @@ function UsuarioNovo() {
 				db.collection('usuarios').add({
 						nome: nome,
 						sobrenome: sobrenome,
+						tipoDePessoa: pessoa,
 						cpf: cpf,
 						dataDeNasc: dataDeNasc,
 						telefone: telefone,
@@ -77,16 +82,22 @@ function UsuarioNovo() {
 					})
 				} else {
 					db.collection('usuarios').add({
-			
-							foto: foto.name,
-							
-						}).then(() => {
-							setCarregando(false)
-							setMsg('sucesso')
-						}).catch(erro => {
-							setCarregando(false)
-							setMsg('erro')
-						})
+						tipoDePessoa: pessoa,
+						razaoSocial: razaoSocial,
+						nome: nomeFantasia,
+						cnpj: cnpj,
+						telefone: telefone,
+						estado: estado,
+						cidade: cidade,
+						foto: foto.name,
+						email: email,
+					}).then(() => {
+						setCarregando(false)
+						setMsg('sucesso')
+					}).catch(erro => {
+						setCarregando(false)
+						setMsg('erro')
+					})
 			}
 		}).catch(function(error) {
 			// Handle Errors here.
@@ -200,9 +211,8 @@ function UsuarioNovo() {
 							        </div>
 
 									<div className="col">
-										<input onChange={ e =>{ console.log(e.target.files); setFoto(e.target.files[0]) }} type="file" className="form-control" />
+										<input onChange={ e =>{ setFoto(e.target.files[0]) }} type="file" className="form-control" />
 									</div>
-
 							    </div>
 					      
 						      </div>
@@ -221,33 +231,73 @@ function UsuarioNovo() {
 							     		<div className="input-group mb-3">
 										  
 										  <div className="input-group-prepend">
-										    <span className="input-group-text" id="inputGroup-sizing-sm">Nome</span>
+										    <span className="input-group-text" id="inputGroup-sizing-sm">Razão Social</span>
 										  </div>
 										  
-										  <input onChange={ (e) => setNome(e.target.value)} type="text" id="inputNome" className="form-control" placeholder="Nome"/>
+										  <input onChange={ (e) => setRazaoSocial(e.target.value)} type="text" className="form-control" placeholder="Nome"/>
 										</div>
 									</div>
 							      	<div className="col">
 							      		<div className="input-group mb-3">
 										  
 										  <div className="input-group-prepend">
-										    <span className="input-group-text" id="inputGroup-sizing-sm">Sobrenome</span>
+										    <span className="input-group-text" id="inputGroup-sizing-sm">Nome Fantasia</span>
 										  </div>
 										  
-										  <input onChange={ (e) => setSobrenome(e.target.value)} type="text" id="inputSobrenome" className="form-control" placeholder="Sobrenome" required/>
+										  <input onChange={ (e) => setNomeFantasia(e.target.value)} type="text" className="form-control" placeholder="Sobrenome" required/>
 										</div>
 							      	</div>
 							      	<div className="col">
 							      		<div className="input-group mb-3">
 										  
 										  <div className="input-group-prepend">
-										    <span className="input-group-text" id="inputGroup-sizing-sm">CPF</span>
+										    <span className="input-group-text" id="inputGroup-sizing-sm">CNPJ</span>
 										  </div>
 										  
-										  <input onChange={ (e) => setcpf(e.target.value)} type="text" id="inputCpf" className="form-control" placeholder="CPF" required/>
+										  <input onChange={ (e) => setCnpj(e.target.value)} type="text" className="form-control" placeholder="CNPJ" required/>
 										</div>
 							      	</div>
 							     </div>
+
+								 <div className="row">
+
+							        <div className="col">
+							        	<div className="input-group mb-3">
+										  
+										  <div className="input-group-prepend">
+										    <span className="input-group-text" id="inputGroup-sizing-sm">Estado</span>
+										  </div>
+										  
+										  <input onChange={ (e) => {setEstado(e.target.value)}} type="text" className="form-control" placeholder="Ceará" />  
+										</div>
+							        </div>
+
+							        <div className="col">
+							        	<div className="input-group mb-3">
+										  
+										  <div className="input-group-prepend">
+										    <span className="input-group-text" id="inputGroup-sizing-sm">Cidade</span>
+										  </div>
+										  
+										  <input onChange={ (e) => {setCidade(e.target.value)}} type="text" className="form-control" placeholder="Sobral" />  
+										</div>
+							        </div>
+
+									<div className="col">
+							        	<div className="input-group mb-3">
+										  
+										  <div className="input-group-prepend">
+										    <span className="input-group-text" id="inputGroup-sizing-sm">Telefone</span>
+										  </div>
+										  
+										  <input onChange={ (e) => {setTelefone(e.target.value)}} type="text" className="form-control" placeholder="8888 - 8888"/>  
+										</div>
+							        </div>
+
+									<div className="col">
+										<input onChange={ e =>{ setFoto(e.target.files[0]) }} type="file" className="form-control" />
+									</div>
+							    	</div>
 							  </div>
 						</form>
 					  </Tab>
