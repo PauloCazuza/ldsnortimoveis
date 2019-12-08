@@ -32,23 +32,24 @@ class NavBar extends React.Component {
 
 	async receberUsario() {
 		const email = this.props.usuarioEmail;
+		const foto = this.props.usuarioFoto;
 
 		if (email === "") {
 			console.log('okok entrou')
 			return 'errado';
 		} else {
+			console.log(this.state.avatar)
 			console.log("saiu")
 		}
 		
-		if (this.state.avatar !== null)
+		if (foto !== null)
 			return console.log("Já tem Foto")
 		
 		db.where('email', '==', email).get().then(async resultado => {
-				console.log(resultado.docs[0].data())
-				await this.setState({usuario: resultado.docs[0].data()})
+				// console.log(resultado.docs[0].data())
+				// await this.setState({usuario: resultado.docs[0].data()})
 				firebase.storage().ref(`imagensUsuarios/${resultado.docs[0].data().foto}`).getDownloadURL().then( url => {
-
-					this.setState({avatar: url})
+					this.props.SetFotoENome({email: email, foto: url, nome: resultado.docs[0].data().nome});
 				})	
 		})	
 
@@ -103,14 +104,12 @@ class NavBar extends React.Component {
 					logado === 0 ? null :
 						<ul className="navbar-nav ml-auto">
 							<li className="nav-item mx-2">
-								{(avatar === null && usuario === null && logado === 0) ? null : 
+								{(this.props.usuarioFoto === null) ? null : 
 								<>
 									<label className="mx-3">
-										{usuario === null ? null :
-											usuario.nome
-										}
+										{this.props.usuarioNome}
 									</label>
-									<img className="avatar" src={avatar} alt="Imagem de Perfil"/>
+									<img className="avatar" src={this.props.usuarioFoto} alt="Imagem de Perfil"/>
 								</>
 								}
 							</li>
@@ -125,16 +124,21 @@ class NavBar extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const {usuarioLogado, usuarioEmail} = state;
+    const {usuarioLogado, usuarioEmail, usuarioFoto, usuarioNome} = state;
 
-    return { usuarioLogado: usuarioLogado, usuarioEmail: usuarioEmail}
+	return { usuarioLogado: usuarioLogado, usuarioEmail: usuarioEmail, 
+			 usuarioFoto: usuarioFoto, usuarioNome: usuarioNome }
 }
 
 const mapDispatchToEvents = (dispatch) => {
 	return {
 	  Lougout: () => {
 		dispatch({type: 'LOG_OUT'});
-	  }
+	  },
+	  SetFotoENome: ({email, foto, nome}) => {
+		dispatch({type: 'SET_NOME', usuarioEmail: email, usuarioFoto: foto, usuarioNome: nome});
+	  },
+	  
 	};
   };
 
