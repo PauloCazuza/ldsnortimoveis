@@ -1,7 +1,8 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import store from './store';
+import {store, persistor} from './store';
 import { Provider } from 'react-redux';
+import { PersistGate} from 'redux-persist/integration/react';
 
 /* PAGINAS */
 
@@ -16,15 +17,17 @@ import PaginaPesquisa from './view/pagina-pesquisa';
 function App() {
   return (
     <Provider store={store}>
-    	<Router>
-    		<Route exact path="/" component={Home} />
-    		<Route exact path="/login" component={Login} />
-    		<Route exact path="/novousuario" component={NovoUsuario} />
-			<Route exact path="/recuperarsenha" component={RecuperarSenha} />
-			<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
-			<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
-			<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
-    	</Router>
+		<PersistGate loading={null} persistor={persistor}>
+			<Router>
+				<Route exact path="/" component={Home} />
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/novousuario" component={NovoUsuario} />
+				<Route exact path="/recuperarsenha" component={RecuperarSenha} />
+				<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
+				<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
+				<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
+			</Router>
+		</PersistGate>
     </Provider>
   );
 }

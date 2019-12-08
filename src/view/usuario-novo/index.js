@@ -14,11 +14,14 @@ function UsuarioNovo() {
 
 	//IDENTIFICAR A PESSOA
 	const [pessoa, setPessoa] = useState('fisica');
+	const [foto, setFoto] = useState(null);
+	const [msg, setMsg] = useState();
+	const [carregando, setCarregando] = useState();
 
 	//AMBOS USUARIOS
 	const [email, setEmail] = useState();
 	const [senha, setSenha] = useState();
-	const [verSenha, setVerSennha] = useState();
+	const [verSenha, setVerSenha] = useState();
 
 
 	// PESSOA FÍSICA
@@ -26,13 +29,77 @@ function UsuarioNovo() {
 	const [sobrenome, setSobrenome] = useState();
 	const [cpf, setcpf] = useState();
 	const [dataDeNasc, setDataDeNasc] = useState();
-	const [celular, setCelular] = useState();
 	const [telefone, setTelefone] = useState();
 	const [estado, setEstado] = useState();
 	const [cidade, setCidade] = useState();
 
+    const storage = firebase.storage();
+    const db = firebase.firestore();
+
 	// PESSOA JURIDICA
-	
+
+	async function enviarFoto(foto) {
+        await storage.ref(`imagensUsuarios/${foto.name}/`).put(foto).then(
+
+        ).catch( erro => {
+            console.log('Erro ao enviar a foto ', foto.name);
+        });
+    }
+
+	function cadastrarPessoa() {
+		if (senha !== verSenha)
+			return alert("A repetição de senha não confere");
+
+        if(foto !== null) {
+			enviarFoto(foto)
+		} else {
+			setFoto({name: ""})
+		}
+
+		firebase.auth().createUserWithEmailAndPassword(email, senha).then(function () {
+			if (pessoa === "fisica") {
+				db.collection('usuarios').add({
+						nome: nome,
+						sobrenome: sobrenome,
+						cpf: cpf,
+						dataDeNasc: dataDeNasc,
+						telefone: telefone,
+						estado: estado,
+						cidade: cidade,
+						foto: foto.name,
+						email: email,
+					}).then(() => {
+						setCarregando(false)
+						setMsg('sucesso')
+					}).catch(erro => {
+						setCarregando(false)
+						setMsg('erro')
+					})
+				} else {
+					db.collection('usuarios').add({
+			
+							foto: foto.name,
+							
+						}).then(() => {
+							setCarregando(false)
+							setMsg('sucesso')
+						}).catch(erro => {
+							setCarregando(false)
+							setMsg('erro')
+						})
+			}
+		}).catch(function(error) {
+			// Handle Errors here.
+			var errorCode = error.code;
+			setCarregando(false)
+			setMsg('erro')
+			var errorMessage = error.message;
+			alert(errorMessage)
+			// ...
+		  });
+		
+
+    }
 	
 
 	return (
@@ -95,22 +162,7 @@ function UsuarioNovo() {
 										</div>
 							        </div>
 
-							        <div className="col">
-							        	<div className="input-group mb-3">
-										  
-										  <div className="input-group-prepend">
-										    <span className="input-group-text" id="inputGroup-sizing-sm">Celular</span>
-										  </div>
-										  
-										  <input onChange={ (e) => {setCelular(e.target.value)}} type="text" className="form-control" placeholder="(88) 9 9999 - 9999" />  
-										</div>
-							        </div>
-
-							    </div>
-
-							    <div className="row">
-								
-							        <div className="col">
+									<div className="col">
 							        	<div className="input-group mb-3">
 										  
 										  <div className="input-group-prepend">
@@ -120,6 +172,10 @@ function UsuarioNovo() {
 										  <input onChange={ (e) => {setTelefone(e.target.value)}} type="text" className="form-control" placeholder="8888 - 8888"/>  
 										</div>
 							        </div>
+
+							    </div>
+
+							    <div className="row">
 
 							        <div className="col">
 							        	<div className="input-group mb-3">
@@ -142,6 +198,10 @@ function UsuarioNovo() {
 										  <input onChange={ (e) => {setCidade(e.target.value)}} type="text" className="form-control" placeholder="Sobral" />  
 										</div>
 							        </div>
+
+									<div className="col">
+										<input onChange={ e =>{ console.log(e.target.files); setFoto(e.target.files[0]) }} type="file" className="form-control" />
+									</div>
 
 							    </div>
 					      
@@ -225,11 +285,11 @@ function UsuarioNovo() {
 							   		<span className="input-group-text" id="inputGroup-sizing-sm">Repita a Senha</span>
 								</div>
 										  
-								<input onChange={ (e) => {setVerSennha(e.target.value)}} type="password" className="form-control" placeholder="********" />  
+								<input onChange={ (e) => {setVerSenha(e.target.value)}} type="password" className="form-control" placeholder="********" />  
 							</div>
 						</div>
 
-						<button type="button" onClick={console.log('ok')} className="btn btn-lg btn-block btn-login my-3">Cadastrar</button>
+						<button type="button" onClick={cadastrarPessoa} className="btn btn-lg btn-block btn-login my-3">Cadastrar</button>
 					</div>
 				</div>
 		</div>

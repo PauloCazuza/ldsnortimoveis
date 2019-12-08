@@ -16,9 +16,7 @@ export default class ImovelCard extends Component {
             url: "",
             md: this.props.md === undefined ? "col-md-3" : this.props.md,
         }
-
-
-
+        
         this.receberUrl(this.props.img[0]);
     }
 
