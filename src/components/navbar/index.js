@@ -29,15 +29,7 @@ class NavBar extends React.Component {
 
 		this.receberUsario();
 	}
-	
-// 	const dispatch = useDispatch();
-// 	const logado = useSelector(state => state.usuarioLogado)
-// 	const email = useSelector(state => state.usuarioEmail)
-// 	const [estadoAvatar, setEstadoAvatar] = useState("0");
-// 	const [avatar, setAvatar] = useState("0");
-//   // const urlLogo = 'https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo.svg?alt=media&token=ddf9c7d9-53ec-4593-9140-be6e8fa61950'
-// 	const urlLogo = 'https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo-moderna.svg?alt=media&token=4e067975-927c-4824-9f76-62d12d9ed81b'
-	
+
 	async receberUsario() {
 		const email = this.props.usuarioEmail;
 
@@ -101,26 +93,29 @@ class NavBar extends React.Component {
 								<Link className="nav-link" to="/login">Editar Perfil</Link>
 							  </li>
 							  <li className="nav-item">
-								<Link className="nav-link" onClick={() => this.props.Lougout()}>Sair</Link>
+								<Link className="nav-link" to="/" onClick={() => this.props.Lougout()}>Sair</Link>
 							  </li>
 						  </>
 						  
 				  }
 				</ul>
-				<ul className="navbar-nav ml-auto">
-					<li className="nav-item mx-2">
-						{(avatar === null && usuario === null && logado === 0) ? null : 
-						<>
-							<label className="mx-3">
-								{usuario === null ? null :
-									usuario.nome
+				{
+					logado === 0 ? null :
+						<ul className="navbar-nav ml-auto">
+							<li className="nav-item mx-2">
+								{(avatar === null && usuario === null && logado === 0) ? null : 
+								<>
+									<label className="mx-3">
+										{usuario === null ? null :
+											usuario.nome
+										}
+									</label>
+									<img className="avatar" src={avatar} alt="Imagem de Perfil"/>
+								</>
 								}
-							</label>
-							<img className="avatar" src={avatar} alt="Imagem de Perfil"/>
-						</>
-						}
-					</li>
-				</ul>
+							</li>
+						</ul>
+				}
 			  </div>
 			</nav>
 		
