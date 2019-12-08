@@ -80,7 +80,7 @@ function Login() {
 										/>
 									</center>
 								:
-									<button type="submit" className="btn btn-block btn-login">Login</button>
+									<button type="submit" className="btn btn-block btn-login">ACESSAR CONTA</button>
 							}
 							
 							  </div>
@@ -97,7 +97,7 @@ function Login() {
 
 							  <input type="email" id="inputCriarEmail" className="form-control my-2 input" placeholder="Seu email"/>
 							      
-							  <Link to="novousuario" mail={email} className="link"> <button type="button" className="btn btn-block btn-login">Criar Conta</button> </Link>
+							  <Link to="novousuario" mail={email} className="link"> <button type="button" className="btn btn-block btn-login">PROSSEGUIR</button> </Link>
 					      </div>
 					      
 					    </form>

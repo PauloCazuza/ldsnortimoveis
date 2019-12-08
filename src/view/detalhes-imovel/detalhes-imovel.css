@@ -1,0 +1,23 @@
+.image-gallery-image {
+  height: 360px;
+}
+.image-gallery-image img {
+  height: 100%;
+  object-fit: cover
+}
+.image-gallery-content.fullscreen .image-gallery-image {
+  height: 100%;
+}
+.container-fluid {
+  min-height: 300px;
+}
+.banner-desc-imovel {
+  padding: 20px 200px;
+}
+.desc {
+  width: 450px;
+}
+.desc p {
+  margin: 0;
+  font-size: 18px;
+}
