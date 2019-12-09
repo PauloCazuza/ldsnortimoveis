@@ -76,7 +76,7 @@ export default class Carrousel extends React.Component {
               <img  style={{ backgroundImage: `url(${url})` }} />
               <div className="descricao">
                 <span>A partir de</span>
-                <h4 className="font-weight-light">R$ 80.000,00</h4>
+                <h4 className="font-weight-light">{`R$ ${imovel.preco}`}</h4>
                 <h4>{imovel.imovel}</h4>
                 <h6>{`${imovel.cidade} - ${imovel.bairro}`}</h6><br/>
                 <p>{`${imovel.imovel} com ${imovel.areaUtil}m² de área construída, ${imovel.areaTotal}m²

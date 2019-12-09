@@ -95,7 +95,10 @@ export default class Home extends Component {
 						{this.state.listaImoveis.slice(0,8).map( (item, index) => {
 							return(
 							<>
-							<ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
+                <ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} 
+                detalhes={item.rua} areaUtil={item.areaUtil} 
+                areaTotal={item.areaTotal} quartos={item.quartos}
+                banheiros={item.banheiro} visualizacoes={'1'}/>
 							</>
 						)})} 
           </>

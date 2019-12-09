@@ -12,12 +12,22 @@
   min-height: 300px;
 }
 .banner-desc-imovel {
-  padding: 20px 200px;
+  padding: 20px 230px;
 }
 .desc {
-  width: 450px;
+  width: 600px;
 }
 .desc p {
   margin: 0;
   font-size: 18px;
+}
+.svg path, .svg{
+  width: 40px;
+  height: 40px;
+}
+.grupo {
+  padding: 5px;
+}
+.filtro {
+  max-height: 745px;
 }

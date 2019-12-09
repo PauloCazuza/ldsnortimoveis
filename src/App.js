@@ -13,6 +13,7 @@ import RecuperarSenha from './view/usuario-recuperar-senha';
 import CadastrarImovel from './view/cadastrar-imovel';
 import DetalhesImovel from './view/detalhes-imovel';
 import PaginaPesquisa from './view/pagina-pesquisa';
+import './App.css'
 
 function App() {
   return (

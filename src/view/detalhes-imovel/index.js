@@ -8,6 +8,7 @@ import area from './images/full-screen.svg'
 import bathroom from './images/bathtub.svg'
 import car from './images/car.svg'
 import bed from './images/bed.svg'
+import like from './images/like.svg'
 
 import {Link} from 'react-router-dom';
 
@@ -17,6 +18,7 @@ import { useSelector} from 'react-redux';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import "react-image-gallery/styles/css/image-gallery.css";
+
 
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
@@ -104,13 +106,14 @@ export default class DetalhesImovel extends React.Component {
                           />
                         </div>
                         <div className="container-fluid banner-desc-imovel d-flex">
+
                           <div className="desc">
                             <p>{`${imovel.imovel} para comprar em`} </p>
                             <div className="d-flex">
                               <p className="text-primary">{`${imovel.rua} - ${imovel.cidade}, ${imovel.estado} `}</p> 
                               <img src={location} style={{ width: "20px", margin: "5px" }}/></div>
                             <p className="mt-3">A PARTIR DE</p>
-                            <h1>R$ 80.000,00</h1>
+                            <h1>{`R$ ${imovel.preco}`}</h1>
                             <div className="d-flex justify-content-between">
                               <div className="d-flex flex-column align-items-center">
                                 <img src={area} style={{ width: "25px", margin: "5px" }}/>
@@ -130,6 +133,12 @@ export default class DetalhesImovel extends React.Component {
                               </div>
                             </div>
                           </div>
+                          <div className="w-100 d-flex align-items-start justify-content-center">
+                            <button type="button" className="btn btn-lg btn-login d-flex align-items-baseline">
+                              TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
+                            </button>
+                          </div>
+
                         </div>
                         
                     </>

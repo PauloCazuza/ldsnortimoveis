@@ -4,6 +4,7 @@ import Search from '../../components/search';
 import NavBar from '../../components/navbar';
 import ImovelCard from '../../components/imovel-card';
 import { PulseLoader as Spinner } from 'react-spinners';
+import Footer from '../../components/footer';
 
 const db = firebase.firestore().collection('imoveis');
 
@@ -87,16 +88,91 @@ class paginaPesquisa extends React.Component {
             <NavBar />
             <Search handleChange={this.handleChange} filters={`${this.state.filtro1},${this.state.filtro2},${this.state.search},`}/>	
 			
-            <div className="container">
+            <div className="container mb-5">
                 <div className="row float-right">
                     {this.state.mensagem}
                 </div>
                 <div className="row">
-                    <div className="col-md-2 border">
-                        filtros
+                    <div className="col-md-3 border p-3 filtro">
+                        <h4 class="text-muted">Filtros selecionados</h4>
+
+                        <h5 className="mt-3">Organizar</h5>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                          <option>Relevância</option>
+                          <option>Menor Preço</option>
+                          <option>Maior Preço</option>
+                        </select>
+                        
+                        <h5 className="mt-3">Bairros</h5>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                          <option>Pedrinhas</option>
+                          <option>Alto do Cristo</option>
+                          <option>Coab II</option>
+                        </select>
+
+                        <h5 className="mt-3">Quartos</h5>
+                        <div className="grupo bg-light px-2">
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 1 quarto</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 2 quartos</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 3 quartos</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 4 quartos ou mais</label>
+                          </div>
+                        </div>
+
+                        <h5 className="mt-3">Banheiros</h5>
+                        <div className="grupo bg-light px-2">
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 1 banheiro</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 2 banheiros</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 3 banheiros</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 4 banheiros ou mais</label>
+                          </div>
+                        </div>
+
+                        <h5 className="mt-3">Garagens</h5>
+                        <div className="grupo bg-light px-2">
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> Sem garagem</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 1 garagem</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 2 garagens</label>
+                          </div>
+                          <div className="d-flex align-items-center"> 
+                            <input type="checkbox" name="" id=""/>
+                            <label htmlFor="" className="m-0 ml-1"> 3 garagens ou mais</label>
+                          </div>
+                        </div>
+
                     </div>
-                    <div className="col-md-10">
-                        <div className="row">
+                    <div className="col-md-9">
+                        <div className="row mx-2">
                             {this.state.carregando ?
                                         <div className="mx-auto">
                                             <Spinner
@@ -107,7 +183,10 @@ class paginaPesquisa extends React.Component {
                                         </div>
                                     : this.state.listaImoveis.map( (item, index) => (
                                         <>
-                                        <ImovelCard md="col-md-3 px-1" id={item.id} key={index} img={item.foto} titulo={item.imovel} detalhes={item.rua} visualizacoes={'1'}/>
+                                        <ImovelCard md="col-md-4 px-2" id={item.id} key={index} img={item.foto} titulo={item.imovel} 
+                                        detalhes={item.rua} areaUtil={item.areaUtil} 
+                                        areaTotal={item.areaTotal} quartos={item.quartos}
+                                        banheiros={item.banheiro} visualizacoes={'1'}/>
                                         </>
                                     ))}
                         </div>
@@ -115,6 +194,7 @@ class paginaPesquisa extends React.Component {
                     
                 </div>
             </div>
+            <Footer/>
             </>
         );
     }
