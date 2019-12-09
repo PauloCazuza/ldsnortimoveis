@@ -68,8 +68,8 @@ function CadastrarImovel() {
     const storage = firebase.storage();
     const db = firebase.firestore();
 
-    async function enviarFotos(foto) {
-        await storage.ref(`imagensImoveis/${foto.name}/`).put(foto).then(
+    async function enviarFotos(foto, nomeDaFoto) {
+        await storage.ref(`imagensImoveis/${nomeDaFoto}/`).put(foto).then(
 
         ).catch( erro => {
             console.log('Erro ao enviar a foto ', foto.name);
@@ -82,15 +82,11 @@ function CadastrarImovel() {
 
         setMsg(null);
         setCarregando(true);
-
-        Array.from(foto).forEach( item => {
-            enviarFotos(item);
-        })
-
-        var fotos = [];
-
-        Array.from(foto).forEach( item => {
-            fotos.push(item.name);
+        var nomesDasFotos = []
+        
+        Array.from(foto).forEach( (item, index) => {
+            nomesDasFotos[index] = (`${item.name} + ${new Date() - 0}`)
+            enviarFotos(item, nomesDasFotos[index]);
         })
 
         db.collection('imoveis').add({
@@ -106,11 +102,12 @@ function CadastrarImovel() {
                 horarioDeContato: horarioDeContato,
                 imovel: imovel,
                 transacao: transacao,
-                foto: fotos,
+                foto: nomesDasFotos,
                 areaTotal: areaTotal,
                 areaUtil: areaUtil,
                 quartos: quartos,
                 banheiro: banheiro,
+                preco: preco,
                 garagem: garagem,
                 criacao: new Date(),
             }).then(() => {
@@ -252,7 +249,13 @@ function CadastrarImovel() {
                             <label>Garagens</label>
                             <input type="number" onChange={ e => setGaragem(e.target.value)} className="form-control"/>
                         </div>
+                        
+                        <div className="col-4">
+                            <label>Valor do Imóvel</label>
+                            <input type="number" onChange={ e => setPreco(e.target.value)} className="form-control"/>
+                        </div>
                     </div>
+
                 </form>
 
                 {
