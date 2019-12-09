@@ -34,6 +34,10 @@ export default class ImovelCard extends Component {
         return(
             <div className={`${this.state.md} col-sm-12`}>
               <div className="card">
+                <div className="d-flex justify-content-end b-teste">
+                  <i className="far fa-heart fa-2x heart"/>
+                  <i hidden class="fas fa-heart fa-2x heart"></i>
+                </div>
                 <Link to={"/detalhesimovel/" + id }>
                   <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
                 </Link>

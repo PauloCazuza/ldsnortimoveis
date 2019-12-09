@@ -26,3 +26,17 @@
     min-height: 200px;
     min-width: 100%;
 }
+.heart {
+  width: 35px;
+  margin: 5px;
+  color: white !important;
+}
+.heart:hover {
+  color: #ff9900 !important;
+}
+.b-teste {
+  /* background: red; */
+  height: 50px;
+  position: absolute;
+  width: 95%;
+}
