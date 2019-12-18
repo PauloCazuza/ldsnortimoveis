@@ -14,7 +14,7 @@ function Footer() {
               <img src={urlLogo} />
             </div>
             <p className="p-footer my-0">Rua José de Alencar, 063, próximo ao restaurante Lanche Bem - Pedrinhas - Sobral</p>
-            <p className="p-footer my-0">(88) 4002-8922 / (88) 99610-9535 / (88) 99727-3740 | <b><a href="#">norteimoveis@contato.com.br</a></b></p>
+            <p className="p-footer my-0">(88) 4002-8922 / (88) 99610-9535 / (88) 99727-3740 | <b><a href="mailto:norteimoveis@contato.com.br?Subject=Olá%20Norte Imóveis - Fale Conosco">norteimoveis@contato.com.br</a></b></p>
 					</div>
 				</div>
 				

@@ -124,9 +124,9 @@ function CadastrarImovel() {
     return(
         <>
             <NavBar />
-            <div className="col-12">
+            <div className="container">
                 <div className="row">
-                  <div className="d-flex align-items-end pl-2 pt-4"> <img src={home} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">PUBLICAR SEU IMÓVEL</h4> </div>
+                  <div className="d-flex align-items-end pl-2 pt-4"> <img src={home} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Publicar seu Imóvel</h4> </div>
                 </div>
                 <hr className="my"></hr>
                 <form>
@@ -159,7 +159,7 @@ function CadastrarImovel() {
                 </form>
 
                 <div className="row">
-                  <div className="d-flex align-items-end pl-2"> <img src={location} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">LOCALIZAÇÃO DO IMÓVEL</h4> </div>
+                  <div className="d-flex align-items-end pl-2"> <img src={location} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Localização do Imóvel</h4> </div>
                 </div>
                 <hr className="my"></hr>
 
@@ -217,7 +217,7 @@ function CadastrarImovel() {
                 </form>
 
                 <div className="row">
-                  <div className="d-flex align-items-end pl-2"> <img src={description} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">DESCRIÇÃO DO IMÓVEL</h4> </div>
+                  <div className="d-flex align-items-end pl-2"> <img src={description} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Descriçaõ do Imóvel</h4> </div>
                 </div>
                 <hr className="my"></hr>
 

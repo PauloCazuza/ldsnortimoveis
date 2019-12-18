@@ -133,10 +133,11 @@ export default class DetalhesImovel extends React.Component {
                               </div>
                             </div>
                           </div>
-                          <div className="w-100 d-flex align-items-start justify-content-center">
+                          <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
                             <button type="button" className="btn btn-lg btn-login d-flex align-items-baseline">
                               TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
                             </button>
+                            <img src={`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.href}&size=150x150&format=svg`} alt="QRCode"/>
                           </div>
 
                         </div>
