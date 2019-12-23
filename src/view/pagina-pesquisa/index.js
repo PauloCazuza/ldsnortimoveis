@@ -13,13 +13,28 @@ class paginaPesquisa extends React.Component {
     constructor(props) {
         super(props);
 
-        var string = this.props.match.params.filters.split(",");
+        var string = this.props.match.params.filters.split("&");
 
         this.state = {
             filtro1: string[0],
             filtro2: string[1],
             search: string[2],
+            relevancia: '',
+            quarto1: false,
+            quarto2: false,
+            quarto3: false,
+            quarto4: false,
+            banheiro1: false,
+            banheiro2: false,
+            banheiro3: false,
+            banheiro4: false,
+            garagem0: false,
+            garagem1: false,
+            garagem2: false,
+            garagem3: false,
             listaImoveis: [],
+            backup: [],
+            listaFiltrados: [],
             carregando: true,
             mensagem: ''
         }
@@ -29,10 +44,16 @@ class paginaPesquisa extends React.Component {
         this.receberDoBD();
     }
 
-    receberDoBD() {
+    receberDoBD(string = this.props.match.params.filters ) {
       this.setState({carregando: true, mensagem: ''});
-      var {filtro1, filtro2, search} = this.state;
+      string = string.split("&");
+      var filtro1 = string[0];
+      var filtro2 = string[1];
+      var search = string[2];
+      var relevancia = string[3];
       var cont = 0;
+      
+      this.setState({listaImoveis: []})
 
       if (filtro1 === "Comprar")
           filtro1 = "Vender";
@@ -49,7 +70,17 @@ class paginaPesquisa extends React.Component {
 
       if (filtro2 !== "" && filtro2 !== "Filtros")
           consulta = consulta.where('imovel', '==', filtro2);
-    
+      
+      if (relevancia === "Menor Preço") {
+        console.log("Menor Preço")
+        consulta = consulta.orderBy('preco', 'asc');
+      }
+
+      if (relevancia === "Maior Preço") {
+        console.log("Maior Preço")
+        consulta = consulta.orderBy('preco', 'desc');
+      }
+
       consulta.get().then( async (resultado) => {
         let listaImoveis = [];
         
@@ -57,7 +88,7 @@ class paginaPesquisa extends React.Component {
             return this.setState({carregando: false, mensagem: 'Sem resultados para a busca'});
 
         await resultado.docs.forEach(doc => {
-                      cont++;
+            cont++;
             listaImoveis.push({
               id: doc.id,
               ...doc.data()
@@ -65,28 +96,129 @@ class paginaPesquisa extends React.Component {
         })
         
         console.log("ok deu certo");
-        this.setState({listaImoveis: listaImoveis, carregando: false, mensagem: `Total: ${cont}`});
+
+        await this.setState({listaImoveis: listaImoveis, backup: listaImoveis, carregando: false, mensagem: `Total: ${cont}`});
         console.log(resultado.docs)
       }).catch(erro => {
         alert('Problema de Conexão');
         console.log(erro)
+        this.setState({carregando: false, mensagem: 'Sem resultados para a busca'})
       })
 	}
 
-    handleChange(event) {
-		const {name, value} = event.target;
+    async handleChange(event) {
+    const {name, value, type, checked} = event.target;
 
-		this.setState({
-			[name]: value
-		})
-	}
+    console.log(event.target.value)
+
+    await this.setState({
+      [name]: type === "checkbox" ? value == "false" ? true : false : value
+    })
+    if (type === "checkbox")
+      this.consultaOffline();
+    }
+    
+    async consultaOffline() {
+      const {quarto1, quarto2, quarto3, quarto4, banheiro1, banheiro2, banheiro3, banheiro4,
+      garagem0, garagem1, garagem2, garagem3} = this.state;
+      const imoveisFiltrados = [];
+      var i, cont = 0, quarto = false, banheiro: false, garagem: false;
+      
+      if (quarto1 === true || quarto2 === true || quarto3 === true || quarto4 === true)
+        quarto = true;
+      if (banheiro1 === true || banheiro2 === true || banheiro3 === true || banheiro4 === true)
+        banheiro = true;
+      if (garagem0 === true || garagem1 === true || garagem2 === true || garagem3 === true)
+        garagem = true;
+      
+      if (!quarto && !banheiro && !garagem)
+        return this.setState({listaImoveis: this.state.backup, carregando: false,  mensagem: "Total: " + this.state.backup.length});
+      
+      await this.setState({carregando: true, listaImoveis: []})
+
+      for (i = 0; i < this.state.backup.length; i++) {
+          console.log(this.state.backup[i].quartos)
+          if (quarto1 && this.state.backup[i].quartos == 1) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            console.log(this.state.backup[i])
+            continue;
+          }
+          if ((quarto2) && this.state.backup[i].quartos == 2) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (quarto3 && this.state.backup[i].quartos == 3) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (quarto4 && this.state.backup[i].quartos >= 4) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (banheiro1 && this.state.backup[i].banheiro == 1) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (banheiro2 && this.state.backup[i].banheiro == 2) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (banheiro3 && this.state.backup[i].banheiro == 3) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (banheiro4 && this.state.backup[i].banheiro >= 4) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (garagem0 && this.state.backup[i].garagem == 0) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (garagem1 && this.state.backup[i].garagem == 1) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (garagem2 && this.state.backup[i].garagem == 2) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+          if (garagem3 && this.state.backup[i].garagem >= 3) {
+            imoveisFiltrados[cont] = (this.state.backup[i]);
+            cont++;
+            continue;
+          }
+      }
+
+
+      setTimeout(() => {
+        this.setState({listaImoveis: imoveisFiltrados, carregando: false, mensagem: "Total: " + cont})
+      }, 1000); 
+
+    }
+
 
     render() {
 
         return (
             <>
             <NavBar />
-            <Search handleChange={this.handleChange} filters={`${this.state.filtro1},${this.state.filtro2},${this.state.search},`}/>	
+            <Search handleChange={this.handleChange} 
+              filters=
+              {`${this.state.filtro1}&${this.state.filtro2}&${this.state.search}&${this.state.relevancia}`}
+              funcaoBD={this.receberDoBD}
+            />	
 			
             <div className="container mb-5">
                 <div className="row float-right">
@@ -97,7 +229,7 @@ class paginaPesquisa extends React.Component {
                         <h4 class="text-muted">Filtros selecionados</h4>
 
                         <h5 className="mt-3">Organizar</h5>
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <select class="form-control" id="exampleFormControlSelect1" name="relevancia" onChange={this.handleChange}>
                           <option>Relevância</option>
                           <option>Menor Preço</option>
                           <option>Maior Preço</option>
@@ -113,19 +245,19 @@ class paginaPesquisa extends React.Component {
                         <h5 className="mt-3">Quartos</h5>
                         <div className="grupo bg-light px-2">
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="quarto1" value={this.state.quarto1} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 1 quarto</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="quarto2" value={this.state.quarto2} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 2 quartos</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="quarto3" value={this.state.quarto3} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 3 quartos</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="quarto4" value={this.state.quarto4} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 4 quartos ou mais</label>
                           </div>
                         </div>
@@ -133,19 +265,19 @@ class paginaPesquisa extends React.Component {
                         <h5 className="mt-3">Banheiros</h5>
                         <div className="grupo bg-light px-2">
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="banheiro1" value={this.state.banheiro1} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 1 banheiro</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="banheiro2" value={this.state.banheiro2} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 2 banheiros</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="banheiro3" value={this.state.banheiro3} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 3 banheiros</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="banheiro4" value={this.state.banheiro4} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 4 banheiros ou mais</label>
                           </div>
                         </div>
@@ -153,19 +285,19 @@ class paginaPesquisa extends React.Component {
                         <h5 className="mt-3">Garagens</h5>
                         <div className="grupo bg-light px-2">
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="garagem0" value={this.state.garagem0} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> Sem garagem</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="garagem1" value={this.state.garagem1} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 1 garagem</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="garagem2" value={this.state.garagem2} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 2 garagens</label>
                           </div>
                           <div className="d-flex align-items-center"> 
-                            <input type="checkbox" name="" id=""/>
+                            <input type="checkbox" name="garagem3" value={this.state.garagem3} id="" onChange={this.handleChange} />
                             <label htmlFor="" className="m-0 ml-1"> 3 garagens ou mais</label>
                           </div>
                         </div>

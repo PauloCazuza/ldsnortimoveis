@@ -22,16 +22,18 @@ class Search extends React.Component {
 
   submitForm (e) {
     this.setState({redirecionar: true})
+    e.preventDefault()
+
   }
   
   render() {
     const {handleChange, filters} = this.props;
-    var string = filters.split(",");
+    var string = filters.split("&");
 
     return (
             <div className="s003">
-              { this.state.redirecionar ? <Redirect to={`/paginaPesquisa/${filters}`} /> : null}
             <legend>ENCONTRE SEU NOVO LAR AQUI!</legend>
+            {this.state.redirecionar ? <Redirect to={`/paginaPesquisa/${filters}`}/> : null}
             <form onSubmit={this.submitForm}>
               <div className="inner-form">
                 <div className="input-field first-wrap" style={{width: '160px'}}>
@@ -52,11 +54,20 @@ class Search extends React.Component {
                   </div>
                 </div>
                 <div className="input-field second-wrap">
-                  <input name="search" id="search" value={string[2]} type="text" placeholder="Busque um imóvel pela sua cidade" onChange={handleChange} />
+                  <input name="search" id="search" value={string[2]} type="text" 
+                  placeholder="Busque um imóvel pela sua cidade" onChange={handleChange} 
+                  
+                  />
                 </div>
                 <div className="input-field third-wrap" style={{height: '50px'}}>
-                    <button type="submit" className="btn-search">
-                      <img src={url} alt=""/>
+                    <button type="submit" className="btn-search" 
+                    onClick={() => {
+                      if (this.props.funcaoBD !== undefined)
+                        this.props.funcaoBD(filters)
+                    }}>
+                      <Link to={`/paginaPesquisa/${filters}`}>
+                        <img src={url} alt=""/>
+                      </Link>
                     </button>
                 </div>
               </div>

@@ -71,7 +71,10 @@ export default class Home extends Component {
 		return (
 			<>
 			<Navbar />
-      		<Search handleChange={this.handleChange} filters={`${this.state.filtro1},${this.state.filtro2},${this.state.search},`}/>	
+			  <Search handleChange={this.handleChange} 
+			  filters={`${this.state.filtro1}&${this.state.filtro2}&${this.state.search}&`}
+			  
+			/>	
 			
 			<div className="container">
 
