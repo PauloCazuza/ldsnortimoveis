@@ -29,7 +29,7 @@ export default class ImovelCard extends Component {
     }
  
     render() {
-        const {id, img, titulo, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros} = this.props;
+        const {id, img, titulo, preco, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros} = this.props;
       
         return(
             <div className={`${this.state.md} col-sm-12`}>
@@ -44,6 +44,7 @@ export default class ImovelCard extends Component {
     
                 <div className="card-body">
                     <h5>{titulo}</h5>
+                    <h4>{`R$ ${preco}`}</h4>
                     <p className="card-text">{detalhes}</p>
                     
                     <p className="small text-justify">{`${titulo} com ${areaUtil}m² de área construída, ${areaTotal}m²

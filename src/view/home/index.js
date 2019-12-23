@@ -97,6 +97,7 @@ export default class Home extends Component {
 							return(
 							<>
                 <ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} 
+                preco={item.preco}
                 detalhes={item.rua} areaUtil={item.areaUtil} 
                 areaTotal={item.areaTotal} quartos={item.quartos}
                 banheiros={item.banheiro} visualizacoes={'1'}/>
