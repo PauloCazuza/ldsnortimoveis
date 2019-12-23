@@ -7,6 +7,7 @@
 }
 .image-gallery-content.fullscreen .image-gallery-image {
   height: 100%;
+  max-height: 100vh;
 }
 .container-fluid {
   min-height: 300px;
