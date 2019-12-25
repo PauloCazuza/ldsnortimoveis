@@ -48,9 +48,10 @@ class NavBar extends React.Component {
 		db.where('email', '==', email).get().then(async resultado => {
 				// console.log(resultado.docs[0].data())
 				// await this.setState({usuario: resultado.docs[0].data()})
-				firebase.storage().ref(`imagensUsuarios/${resultado.docs[0].data().foto}`).getDownloadURL().then( url => {
-					this.props.SetFotoENome({email: email, foto: url, nome: resultado.docs[0].data().nome});
-				})	
+				if (resultado.docs[0] !== undefined)
+					firebase.storage().ref(`imagensUsuarios/${resultado.docs[0].data().foto}`).getDownloadURL().then( url => {
+						this.props.SetFotoENome({email: email, foto: url, nome: resultado.docs[0].data().nome});
+					})	
 		})	
 
 		return 'aaaaa'

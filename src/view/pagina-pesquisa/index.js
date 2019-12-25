@@ -20,6 +20,9 @@ class paginaPesquisa extends React.Component {
             filtro2: string[1],
             search: string[2],
             relevancia: '',
+            bairros: [],
+            bairro: '',
+            keys: [],
             quarto1: false,
             quarto2: false,
             quarto3: false,
@@ -50,9 +53,9 @@ class paginaPesquisa extends React.Component {
       var filtro1 = string[0];
       var filtro2 = string[1];
       var search = string[2];
-      var relevancia = string[3];
-      var cont = 0;
-      
+      var relevancia = this.state.relevancia;
+      var bairros = [];
+
       this.setState({listaImoveis: []})
 
       if (filtro1 === "Comprar")
@@ -88,16 +91,21 @@ class paginaPesquisa extends React.Component {
             return this.setState({carregando: false, mensagem: 'Sem resultados para a busca'});
 
         await resultado.docs.forEach(doc => {
-            cont++;
             listaImoveis.push({
               id: doc.id,
               ...doc.data()
             })
+            if (bairros[doc.data().bairro] === undefined) {
+              bairros[doc.data().bairro] = [];
+              bairros[doc.data().bairro].push(doc.data());  
+            } else {
+              bairros[doc.data().bairro].push(doc.data());
+            }
         })
         
         console.log("ok deu certo");
 
-        await this.setState({listaImoveis: listaImoveis, backup: listaImoveis, carregando: false, mensagem: `Total: ${cont}`});
+        await this.setState({listaImoveis: listaImoveis, backup: listaImoveis, carregando: false, mensagem: `Total: ${listaImoveis.length}`, bairros: bairros ,keys : Object.keys(bairros)});
         console.log(resultado.docs)
       }).catch(erro => {
         alert('Problema de Conexão');
@@ -107,22 +115,27 @@ class paginaPesquisa extends React.Component {
 	}
 
     async handleChange(event) {
-    const {name, value, type, checked} = event.target;
+      const {name, value, type, checked} = event.target;
 
-    console.log(event.target.value)
+      console.log(event.target)
 
-    await this.setState({
-      [name]: type === "checkbox" ? value == "false" ? true : false : value
-    })
-    if (type === "checkbox")
-      this.consultaOffline();
+      await this.setState({
+        [name]: type === "checkbox" ? value == "false" ? true : false : value
+      })
+      if (type === "checkbox" || name === "bairro")
+        this.consultaOffline();
+      
+      if (name === "relevancia") {
+        this.receberDoBD();
+      }
     }
     
     async consultaOffline() {
       const {quarto1, quarto2, quarto3, quarto4, banheiro1, banheiro2, banheiro3, banheiro4,
       garagem0, garagem1, garagem2, garagem3} = this.state;
       const imoveisFiltrados = [];
-      var i, cont = 0, quarto = false, banheiro: false, garagem: false;
+      var i, cont = 0, quarto = false, banheiro= false, garagem= false;
+      var listaDeImoveis = [];
       
       if (quarto1 === true || quarto2 === true || quarto3 === true || quarto4 === true)
         quarto = true;
@@ -131,71 +144,82 @@ class paginaPesquisa extends React.Component {
       if (garagem0 === true || garagem1 === true || garagem2 === true || garagem3 === true)
         garagem = true;
       
-      if (!quarto && !banheiro && !garagem)
-        return this.setState({listaImoveis: this.state.backup, carregando: false,  mensagem: "Total: " + this.state.backup.length});
-      
       await this.setState({carregando: true, listaImoveis: []})
 
-      for (i = 0; i < this.state.backup.length; i++) {
-          console.log(this.state.backup[i].quartos)
-          if (quarto1 && this.state.backup[i].quartos == 1) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+      if (this.state.bairro === "")
+        listaDeImoveis = this.state.backup;
+      else
+        listaDeImoveis = this.state.bairros[this.state.bairro];
+
+        console.log(this.state.bairro);
+        console.log(listaDeImoveis);
+      
+      if (!quarto && !banheiro && !garagem)
+        return setTimeout(() => {
+          this.setState({listaImoveis: listaDeImoveis, carregando: false,  mensagem: "Total: " + listaDeImoveis.length});
+        }, 1000); 
+      
+
+      for (i = 0; i < listaDeImoveis.length; i++) {
+          console.log(listaDeImoveis[i].quartos)
+          if (quarto1 && listaDeImoveis[i].quartos == 1) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
-            console.log(this.state.backup[i])
+            console.log(listaDeImoveis[i])
             continue;
           }
-          if ((quarto2) && this.state.backup[i].quartos == 2) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
-            cont++;
-            continue;
-          }
-          if (quarto3 && this.state.backup[i].quartos == 3) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
-            cont++;
-            continue;
-          }
-          if (quarto4 && this.state.backup[i].quartos >= 4) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
-            cont++;
-            continue;
-          }
-          if (banheiro1 && this.state.backup[i].banheiro == 1) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
-            cont++;
-            continue;
-          }
-          if (banheiro2 && this.state.backup[i].banheiro == 2) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+          if ((quarto2) && listaDeImoveis[i].quartos == 2) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
             continue;
           }
-          if (banheiro3 && this.state.backup[i].banheiro == 3) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+          if (quarto3 && listaDeImoveis[i].quartos == 3) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
             continue;
           }
-          if (banheiro4 && this.state.backup[i].banheiro >= 4) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+          if (quarto4 && listaDeImoveis[i].quartos >= 4) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
             continue;
           }
-          if (garagem0 && this.state.backup[i].garagem == 0) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+          if (banheiro1 && listaDeImoveis[i].banheiro == 1) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
             continue;
           }
-          if (garagem1 && this.state.backup[i].garagem == 1) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+          if (banheiro2 && listaDeImoveis[i].banheiro == 2) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
             continue;
           }
-          if (garagem2 && this.state.backup[i].garagem == 2) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+          if (banheiro3 && listaDeImoveis[i].banheiro == 3) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
             continue;
           }
-          if (garagem3 && this.state.backup[i].garagem >= 3) {
-            imoveisFiltrados[cont] = (this.state.backup[i]);
+          if (banheiro4 && listaDeImoveis[i].banheiro >= 4) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
+            cont++;
+            continue;
+          }
+          if (garagem0 && listaDeImoveis[i].garagem == 0) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
+            cont++;
+            continue;
+          }
+          if (garagem1 && listaDeImoveis[i].garagem == 1) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
+            cont++;
+            continue;
+          }
+          if (garagem2 && listaDeImoveis[i].garagem == 2) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
+            cont++;
+            continue;
+          }
+          if (garagem3 && listaDeImoveis[i].garagem >= 3) {
+            imoveisFiltrados[cont] = (listaDeImoveis[i]);
             cont++;
             continue;
           }
@@ -208,7 +232,6 @@ class paginaPesquisa extends React.Component {
 
     }
 
-
     render() {
 
         return (
@@ -216,7 +239,7 @@ class paginaPesquisa extends React.Component {
             <NavBar />
             <Search handleChange={this.handleChange} 
               filters=
-              {`${this.state.filtro1}&${this.state.filtro2}&${this.state.search}&${this.state.relevancia}`}
+              {`${this.state.filtro1}&${this.state.filtro2}&${this.state.search}`}
               funcaoBD={this.receberDoBD}
             />	
 			
@@ -229,17 +252,20 @@ class paginaPesquisa extends React.Component {
                         <h4 class="text-muted">Filtros selecionados</h4>
 
                         <h5 className="mt-3">Organizar</h5>
-                        <select class="form-control" id="exampleFormControlSelect1" name="relevancia" onChange={this.handleChange}>
+                        <select class="form-control" id="exampleFormControlSelect1" value={this.state.relevancia} name="relevancia" onChange={this.handleChange}>
                           <option>Relevância</option>
                           <option>Menor Preço</option>
                           <option>Maior Preço</option>
                         </select>
                         
                         <h5 className="mt-3">Bairros</h5>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option>Pedrinhas</option>
-                          <option>Alto do Cristo</option>
-                          <option>Coab II</option>
+                        <select class="form-control" id="exampleFormControlSelect1" value={this.state.bairro} name="bairro" onChange={this.handleChange}>
+                          <option value="">Todos</option>
+                          {this.state.carregando ? null : this.state.keys.map(item => {
+                            return (
+                              <option value={item}>{`${item} (${this.state.bairros[item].length})`}</option>
+                            );
+                          })}
                         </select>
 
                         <h5 className="mt-3">Quartos</h5>
