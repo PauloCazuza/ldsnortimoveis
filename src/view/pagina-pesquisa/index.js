@@ -55,6 +55,7 @@ class paginaPesquisa extends React.Component {
       var search = string[2];
       var relevancia = this.state.relevancia;
       var bairros = [];
+      var aux;
 
       this.setState({listaImoveis: []})
 
@@ -91,15 +92,16 @@ class paginaPesquisa extends React.Component {
             return this.setState({carregando: false, mensagem: 'Sem resultados para a busca'});
 
         await resultado.docs.forEach(doc => {
-            listaImoveis.push({
+            aux = {
               id: doc.id,
               ...doc.data()
-            })
+            }
+            listaImoveis.push(aux)
             if (bairros[doc.data().bairro] === undefined) {
               bairros[doc.data().bairro] = [];
-              bairros[doc.data().bairro].push(doc.data());  
+              bairros[doc.data().bairro].push(aux);  
             } else {
-              bairros[doc.data().bairro].push(doc.data());
+              bairros[doc.data().bairro].push(aux);
             }
         })
         
