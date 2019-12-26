@@ -18,7 +18,8 @@ class ImovelCard extends Component {
             url: "",
             md: this.props.md === undefined ? "col-md-3" : this.props.md,
             id: props.id,
-            favorito: null,
+            favorito: this.props.usuarioEmail === "" ? false : null,
+            idFavorito: null,
         }
         this.verSeEfavorito = this.verSeEfavorito.bind(this);
         this.receberUrl(this.props.img[0]);
@@ -52,7 +53,7 @@ class ImovelCard extends Component {
       .where('id', '==', this.props.id).get().then( (resultado) => {
         if (resultado.docs.length === 0)
           return this.setState({favorito: false});
-        return this.setState({favorito: true});
+        return this.setState({favorito: true, idFavorito: resultado.docs[0].id});
       });
     }
 
@@ -63,9 +64,15 @@ class ImovelCard extends Component {
             // console.log(url)
         });
     }
+
+    excluirFavorito() {
+      db.doc(this.state.idFavorito).delete();
+      this.setState({favorito: false})
+      alert('Favorito Removido com Sucesso!');     
+    }
  
     render() {
-        const {id, img, titulo, preco, favorito, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros} = this.props;
+        const {id, img, titulo, preco, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros} = this.props;
       
         return(
             <div className={`${this.state.md} col-sm-12`}>
@@ -74,7 +81,7 @@ class ImovelCard extends Component {
                   { this.state.favorito === null ? null :
                     <>
                       <i hidden={this.state.favorito} className="far fa-heart fa-2x heart" onClick={() => this.favoritarImovel()}/>
-                      <i hidden={!this.state.favorito} className="fas fa-heart fa-2x heart"></i>
+                      <i hidden={!this.state.favorito} className="fas fa-heart fa-2x heart" onClick={() => this.excluirFavorito()}/>
                     </>
                   }
                 </div>
