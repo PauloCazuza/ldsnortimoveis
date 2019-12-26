@@ -74,7 +74,7 @@ class NavBar extends React.Component {
 					<Link className="nav-link" to={logado === 0 ? "/login" : "/cadastrarimovel"}>Venda seu Imóvel</Link>
 				  </li>
 				  <li className="nav-item">
-					<Link className="nav-link" to={logado === 0 ? "/login" : "/cadastrarimovel"}> <i className="fas fa-heart" /> Seus Favoritos </Link>
+					<Link className="nav-link" to={logado === 0 ? "/login" : "/favoritos"}> <i className="fas fa-heart" /> Seus Favoritos </Link>
 				  </li>			  
 				  
 				  {
