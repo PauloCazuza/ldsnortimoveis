@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './navbar.css';
 
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import firebase from '../../config/firebase';
 
 import { connect } from 'react-redux';
-
-import { useSelector, useDispatch } from 'react-redux';
-
 
 const db = firebase.firestore().collection('usuarios');
 
@@ -24,7 +21,7 @@ class NavBar extends React.Component {
 			avatar: null,
 			usuario: null,
 			estadoAvatar: "",
-			urlLogo:"https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo-moderna.svg?alt=media&token=4e067975-927c-4824-9f76-62d12d9ed81b",
+			urlLogo: "https://firebasestorage.googleapis.com/v0/b/ldsnortimoveis.appspot.com/o/imagensSistema%2Flogo-moderna.svg?alt=media&token=4e067975-927c-4824-9f76-62d12d9ed81b",
 		}
 
 		this.receberUsario();
@@ -33,6 +30,7 @@ class NavBar extends React.Component {
 	async receberUsario() {
 		const email = this.props.usuarioEmail;
 		const foto = this.props.usuarioFoto;
+		const editado = this.props.editado;
 
 		if (email === "") {
 			console.log('okok entrou')
@@ -41,106 +39,112 @@ class NavBar extends React.Component {
 			console.log(this.state.avatar)
 			console.log("saiu")
 		}
-		
-		if (foto !== null)
+
+		if (foto !== null && editado === false) 
 			return console.log("Já tem Foto")
-		
+
+
 		db.where('email', '==', email).get().then(async resultado => {
-				// console.log(resultado.docs[0].data())
+			// console.log(resultado.docs[0].data())
+			if (resultado.docs[0] !== undefined)
 				// await this.setState({usuario: resultado.docs[0].data()})
-				if (resultado.docs[0] !== undefined)
-					firebase.storage().ref(`imagensUsuarios/${resultado.docs[0].data().foto}`).getDownloadURL().then( url => {
-						this.props.SetFotoENome({email: email, foto: url, nome: resultado.docs[0].data().nome});
-					})	
-		})	
+				firebase.storage().ref(`imagensUsuarios/${resultado.docs[0].data().foto}`).getDownloadURL().then(url => {
+					this.props.SetFotoENome({ email: email, foto: url, nome: resultado.docs[0].data().nome, usuario: {id: resultado.docs[0].id, foto: url, ...resultado.docs[0].data()} });
+				})
+		})
 
 		return 'aaaaa'
 	}
 
 	render() {
-		const {usuario, urlLogo, estadoAvatar, avatar} = this.state;
-		
+		const { usuario, urlLogo, estadoAvatar, avatar } = this.state;
+
 		const logado = this.props.usuarioLogado;
 
 		return (
 			<nav className="navbar navbar-expand-lg">
-			  <Link className="navbar-brand logo" to="/"> <img src={urlLogo}></img> </Link>
-				  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
+				<Link className="navbar-brand logo" to="/"> <img src={urlLogo}></img> </Link>
+				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
 					<i className="fas fa-bars"></i>
-				  </button>
-			  <div className="collapse navbar-collapse" id="navbarNav">
-				<ul className="navbar-nav">
-				  <li className="nav-item active">
-					<Link className="nav-link" to={logado === 0 ? "/login" : "/cadastrarimovel"}>Venda seu Imóvel</Link>
-				  </li>
-				  <li className="nav-item">
-					<Link className="nav-link" to={logado === 0 ? "/login" : "/favoritos"}> <i className="fas fa-heart" /> Seus Favoritos </Link>
-				  </li>			  
-				  
-				  {
-					  logado === 0 
-		
-						  ? 
-						  <>
-							  <li className="nav-item">
-								<Link className="nav-link" to="/login">Login</Link>
-							  </li>
-							  <li className="nav-item">
-								<Link className="nav-link" to="/novousuario">Cadastre-se</Link>
-							  </li>
-						  </>
-						  :
-							<>
-							  <li className="nav-item">
-								<Link className="nav-link" to="/login">Editar Perfil</Link>
-							  </li>
-							  <li className="nav-item">
-								<Link className="nav-link" to="/" onClick={() => this.props.Lougout()}>Sair</Link>
-							  </li>
-						  </>
-						  
-				  }
-				</ul>
-				{
-					logado === 0 ? null :
-						<ul className="navbar-nav ml-auto">
-							<li className="nav-item mx-2">
-								{(this.props.usuarioFoto === null) ? null : 
+				</button>
+				<div className="collapse navbar-collapse" id="navbarNav">
+					<ul className="navbar-nav">
+						<li className="nav-item active">
+							<Link className="nav-link" to={logado === 0 ? "/login" : "/cadastrarimovel"}>Venda seu Imóvel</Link>
+						</li>
+						<li className="nav-item">
+							<Link className="nav-link" to={logado === 0 ? "/login" : "/favoritos"}> <i className="fas fa-heart" /> Seus Favoritos </Link>
+						</li>
+
+						{
+							logado === 0
+
+								?
 								<>
-									<label className="mx-3">
-										{this.props.usuarioNome}
-									</label>
-									<img className="avatar" src={this.props.usuarioFoto} alt="Imagem de Perfil"/>
+									<li className="nav-item">
+										<Link className="nav-link" to="/login">Login</Link>
+									</li>
+									<li className="nav-item">
+										<Link className="nav-link" to="/novousuario">Cadastre-se</Link>
+									</li>
 								</>
-								}
-							</li>
-						</ul>
-				}
-			  </div>
+								:
+								<>
+									<li className="nav-item">
+										<Link className="nav-link" to={{
+											pathname: this.props.usuario === undefined ? "/" : "/novousuario",
+											// state: { usuario: this.props.usuario }
+										}}>Editar Perfil</Link>
+									</li>
+									<li className="nav-item">
+										<Link className="nav-link" to="/" onClick={() => this.props.Lougout()}>Sair</Link>
+									</li>
+								</>
+
+						}
+					</ul>
+					{
+						logado === 0 ? null :
+							<ul className="navbar-nav ml-auto">
+								<li className="nav-item mx-2">
+									{(this.props.usuarioFoto === null) ? null :
+										<>
+											<label className="mx-3">
+												{this.props.usuarioNome}
+											</label>
+											<img className="avatar" src={this.props.usuarioFoto} alt="Imagem de Perfil" />
+										</>
+									}
+								</li>
+							</ul>
+					}
+				</div>
 			</nav>
-		
+
 		);
 	}
 
 }
 
 const mapStateToProps = state => {
-    const {usuarioLogado, usuarioEmail, usuarioFoto, usuarioNome} = state;
+	const { usuarioLogado, usuarioEmail, usuarioFoto, usuarioNome, usuario, editado } = state;
 
-	return { usuarioLogado: usuarioLogado, usuarioEmail: usuarioEmail, 
-			 usuarioFoto: usuarioFoto, usuarioNome: usuarioNome }
+	return {
+		usuarioLogado: usuarioLogado, usuarioEmail: usuarioEmail,
+		usuarioFoto: usuarioFoto, usuarioNome: usuarioNome, usuario: usuario, editado: editado
+	}
 }
 
 const mapDispatchToEvents = (dispatch) => {
 	return {
-	  Lougout: () => {
-		dispatch({type: 'LOG_OUT'});
-	  },
-	  SetFotoENome: ({email, foto, nome}) => {
-		dispatch({type: 'SET_NOME', usuarioEmail: email, usuarioFoto: foto, usuarioNome: nome});
-	  },
-	  
-	};
-  };
+		Lougout: () => {
+			dispatch({ type: 'LOG_OUT' });
+		},
+		SetFotoENome: ({ email, foto, nome, usuario }) => {
+			dispatch({ type: 'SET_NOME', usuarioEmail: email, usuarioFoto: foto, usuarioNome: nome, usuario: usuario });
+		},
 
-export default connect( mapStateToProps,  mapDispatchToEvents)(NavBar);
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToEvents)(NavBar);
