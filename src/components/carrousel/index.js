@@ -43,6 +43,7 @@ class Carrousel extends React.Component {
     this.verSeEfavorito = this.verSeEfavorito.bind(this);
     this.favoritarImovel = this.favoritarImovel.bind(this);
     this.retornarGallery = this.retornarGallery.bind(this);
+    this.onSlideChanged = this.onSlideChanged.bind(this);
     this.receberUrl();
     this.verSeEfavorito();
 
@@ -145,6 +146,9 @@ class Carrousel extends React.Component {
   }
 
   retornarGallery() {
+    if (this.state.carregarFavoritos === null || this.state.url === null)
+      return [];
+    
     return this.state.url.map((url, index) => {
       let imovel = this.state.imovel[index];
 
@@ -189,8 +193,11 @@ class Carrousel extends React.Component {
     })
   }
 
+  onSlideChanged(e) {
+    this.setState({indice: e.item});
+  }
+
   render() {
-    const handleOnDragStart = (e) => e.preventDefault();
 
     if (this.state.url === null)
       return (
@@ -212,9 +219,8 @@ class Carrousel extends React.Component {
           startIndex={this.state.indice}
           autoPlayInterval={8000}
           duration={1500}
-          items={(this.state.carregarFavoritos === null || this.state.url === null) ?
-            []
-            : this.retornarGallery()}
+          items={this.retornarGallery()}
+          onSlideChanged={this.onSlideChanged}
         >
 
 
