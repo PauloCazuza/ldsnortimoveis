@@ -212,14 +212,8 @@ class Carrousel extends React.Component {
           startIndex={this.state.indice}
           autoPlayInterval={8000}
           duration={1500}
-          items={this.state.carregarFavoritos === null ?
-            <div className="row mx-auto">
-              <Spinner
-                sizeUnit={"px"}
-                size={15}
-                color={'#4d6d6d'}
-              />
-            </div>
+          items={(this.state.carregarFavoritos === null || this.state.url === null) ?
+            []
             : this.retornarGallery()}
         >
 
