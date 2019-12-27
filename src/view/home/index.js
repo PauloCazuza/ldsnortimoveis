@@ -91,7 +91,7 @@ export default class Home extends Component {
           <>
             <Carrousel imovel={this.state.listaImoveis.slice(0,5)} />
             <legend style={{ color: 'black', marginTop: '25px' }} >Imóveis em Destaque</legend>
-						{this.state.listaImoveis.slice(0,8).map( (item, index) => {
+						{this.state.listaImoveis.slice(5,13).map( (item, index) => {
 							return(
 							<>
 								<ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel} 
