@@ -53,7 +53,7 @@ function Login() {
 
 			{useSelector(state => state.usuarioLogado) > 0 ? <Redirect to="/" /> : null}
 
-			<div className="container mb-5">
+			<div className="container my-5 h-auto">
 				<div className="row">
 					<div className="login-content d-flex col-md h-auto">
 						<form className="form-signin mx-auto" style={{ width: '100%' }} onSubmit={submitForm}>

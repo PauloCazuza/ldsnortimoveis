@@ -22,3 +22,8 @@ input, select, .btn-login {
   border-radius: 0px !important;
   box-shadow: none !important;
 }
+div#root {
+  min-height: 100vh !important;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
