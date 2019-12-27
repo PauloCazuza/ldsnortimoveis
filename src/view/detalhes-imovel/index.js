@@ -8,13 +8,12 @@ import area from './images/full-screen.svg'
 import bathroom from './images/bathtub.svg'
 import car from './images/car.svg'
 import bed from './images/bed.svg'
-import like from './images/like.svg'
 
 import {Link} from 'react-router-dom';
 
 import { PulseLoader as Spinner } from 'react-spinners';
 
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import "react-image-gallery/styles/css/image-gallery.css";

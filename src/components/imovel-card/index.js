@@ -37,10 +37,10 @@ class ImovelCard extends Component {
           usuario: this.props.usuarioEmail,
         }).then(() => {
           this.setState({carregando: false})
-          alert("Favoritado")          
+          // alert("Favoritado")          
         }).catch(erro => {
           this.setState({carregando: false})
-          alert("Erro ao favoritar")          
+          // alert("Erro ao favoritar")          
         })
 
     }
@@ -60,15 +60,13 @@ class ImovelCard extends Component {
     receberUrl(img) {
         firebase.storage().ref(`imagensImoveis/${img}`).getDownloadURL().then(url => { 
             this.setState({url: url})
-            // console.log("----------------")
-            // console.log(url)
         });
     }
 
     excluirFavorito() {
       db.doc(this.state.idFavorito).delete();
       this.setState({favorito: false})
-      alert('Favorito Removido com Sucesso!');     
+      // alert('Favorito Removido com Sucesso!');     
     }
  
     render() {
@@ -77,11 +75,11 @@ class ImovelCard extends Component {
         return(
             <div className={`${this.state.md} col-sm-12`}>
               <div className="card">
-                <div className="d-flex justify-content-end b-teste">
+                <div className="d-flex justify-content-end div-heart">
                   { this.state.favorito === null ? null :
                     <>
                       <i hidden={this.state.favorito} className="far fa-heart fa-2x heart" onClick={() => this.favoritarImovel()}/>
-                      <i hidden={!this.state.favorito} className="fas fa-heart fa-2x heart" onClick={() => this.excluirFavorito()}/>
+                      <i hidden={!this.state.favorito} className="fas fa-heart fa-2x heart red" onClick={() => this.excluirFavorito()}/>
                     </>
                   }
                 </div>

@@ -13,3 +13,7 @@
   width: 35%;
   padding: 10px;
 }
+.div-fav-carrousel {
+  display: flex;
+  justify-content: space-between;
+}

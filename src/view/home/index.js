@@ -74,7 +74,7 @@ export default class Home extends Component {
 			  
 			/>	
 			
-			<div className="container">
+			<div className="container pb-5">
 
 				<div className="row p-2">
 					

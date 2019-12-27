@@ -75,8 +75,20 @@ export default class Carrousel extends React.Component {
             <div className="carrousel-container" key={index}>
               <img  style={{ backgroundImage: `url(${url})` }} />
               <div className="descricao">
-                <span>A partir de</span>
-                <h4 className="font-weight-light">{`R$ ${imovel.preco}`}</h4>
+                <div className="div-fav-carrousel">
+                  <div>
+                    <span>A partir de </span>
+                    <h4 className="font-weight-light">{`R$ ${imovel.preco}`}</h4>
+                  </div>
+
+                { this.state.favorito === null ? null :
+                  <>
+                    <i hidden={this.state.favorito} className="far fa-heart fa-2x heart" onClick={() => this.favoritarImovel()}/>
+                    <i hidden={!this.state.favorito} className="fas fa-heart fa-2x heart red" onClick={() => this.excluirFavorito()}/>
+                  </>
+                }
+                </div>
+
                 <h4>{imovel.imovel}</h4>
                 <h6>{`${imovel.cidade} - ${imovel.bairro}`}</h6><br/>
                 <p>{`${imovel.imovel} com ${imovel.areaUtil}m² de área construída, ${imovel.areaTotal}m²

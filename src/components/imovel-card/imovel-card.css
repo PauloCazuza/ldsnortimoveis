@@ -29,14 +29,38 @@
 .heart {
   width: 35px;
   margin: 5px;
-  color: white !important;
+  color: #ff9900 !important;
+  animation: ungrow .5s;
 }
 .heart:hover {
-  color: #ff9900 !important;
+  color: #f95c00 !important;
 }
-.b-teste {
+.div-heart {
   /* background: red; */
   height: 50px;
   position: absolute;
-  width: 95%;
+  width: 96%;
+}
+.heart.red {
+  color: #f95c00 !important;
+  animation: grow .5s;
+}
+@keyframes grow {
+	from {
+	  transform: scale(0);
+	}
+	to {
+	  transform: scale(1);
+	}
+}
+@keyframes ungrow {
+	0% {
+	  transform: scale(1);
+	}
+	50% {
+	  transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

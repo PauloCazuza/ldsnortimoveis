@@ -7,6 +7,8 @@ import Footer from '../../components/footer';
 
 import { connect } from 'react-redux';
 
+import star from './images/star.svg'
+
 class Favoritos extends React.Component {
 
     constructor(props) {
@@ -60,8 +62,11 @@ class Favoritos extends React.Component {
         return(
             <>
                 <NavBar />
-
                 <div className="container">
+                  <div className="d-flex align-items-end pl-2 pt-5"> <img src={star} style={{ width: "45px" }}/> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Meus Favoritos</h4> </div>
+                  <hr className="my"></hr>
+                </div>
+                <div className="container py-5">
 
 				<div className="row p-2">
 					
@@ -76,7 +81,8 @@ class Favoritos extends React.Component {
 					</div>
 					:  
           <>
-            <legend style={{ color: 'black', marginTop: '25px' }} >Seus Favoritos</legend>
+            {/* <legend style={{ color: 'black', marginTop: '25px' }} >Seus Favoritos</legend> */}
+
 						{this.state.listaImoveis.map( (item, index) => {
 							return(
 							<>
