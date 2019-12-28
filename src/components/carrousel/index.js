@@ -59,7 +59,7 @@ class Carrousel extends React.Component {
       await firebase.storage().ref(`imagensImoveis/${item.foto[0]}`).getDownloadURL().then(function (url) {
         foto[index] = url;
         i++;
-      }.bind(this));
+      })
 
       if (i === this.state.tam)
         this.setState({ url: foto });
@@ -146,9 +146,7 @@ class Carrousel extends React.Component {
   }
 
   retornarGallery() {
-    if (this.state.carregarFavoritos === null || this.state.url === null)
-      return [];
-    
+
     return this.state.url.map((url, index) => {
       let imovel = this.state.imovel[index];
 
@@ -219,7 +217,7 @@ class Carrousel extends React.Component {
           startIndex={this.state.indice}
           autoPlayInterval={8000}
           duration={1500}
-          items={this.retornarGallery()}
+          items={this.state.url === null ? [] : this.retornarGallery()}
           onSlideChanged={this.onSlideChanged}
         >
 
