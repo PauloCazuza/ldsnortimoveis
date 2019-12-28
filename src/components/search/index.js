@@ -87,7 +87,7 @@ class Search extends React.Component {
                   if (this.props.funcaoBD !== undefined)
                     this.props.funcaoBD(filters)
                 }}>
-                <Link to={`/paginaPesquisa/${this.props.funcaoBD !== undefined ? filters : this.state.filtro1+this.state.filtro2+this.state.search }`}>
+                <Link to={`/paginaPesquisa/${this.props.funcaoBD !== undefined ? filters : this.state.filtro1+'&'+this.state.filtro2+'&'+this.state.search+'&' }`}>
                   <img src={url} alt="" />
                 </Link>
               </button>
