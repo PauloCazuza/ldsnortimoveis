@@ -110,7 +110,7 @@ class NavBar extends React.Component {
 									{(this.props.usuarioFoto === null) ? null :
 										<>
 											<label className="mx-3">
-												{this.props.usuarioNome}
+												Olá, {this.props.usuarioNome.toUpperCase()}!
 											</label>
 											<img className="avatar" src={this.props.usuarioFoto} alt="Imagem de Perfil" />
 										</>

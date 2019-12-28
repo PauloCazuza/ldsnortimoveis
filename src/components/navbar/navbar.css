@@ -51,13 +51,13 @@
   border: 1px solid #6d6d6d !important;
   border-radius: 3px;
   font-size: 16px;
+  box-shadow: none;
 }
 .btn.btn-info.btn-nav:hover {
   background: #f95c00 !important;
   color: white;
   border-color: #f95c00 !important;
 }
-
 a.link-hover {
   padding-left: 0 !important;
   padding-right: 0 !important;
