@@ -62,18 +62,18 @@ class NavBar extends React.Component {
 		const logado = this.props.usuarioLogado;
 
 		return (
-			<nav className="navbar navbar-expand-lg">
+			<nav className="navbar navbar-expand-lg px-4">
 				<Link className="navbar-brand logo" to="/"> <img src={urlLogo}></img> </Link>
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
 					<i className="fas fa-bars"></i>
 				</button>
-				<div className="collapse navbar-collapse" id="navbarNav">
+				<div className="collapse navbar-collapse d-md-flex justify-content-end" id="navbarNav">
 					<ul className="navbar-nav">
 						<li className="nav-item active">
-							<Link className="nav-link" to={logado === 0 ? "/login" : "/cadastrarimovel"}>Venda seu Imóvel</Link>
+							<Link className="nav-link btn-nav link-hover" to={logado === 0 ? "/login" : "/cadastrarimovel"}>Anunciar imóveis</Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" to={logado === 0 ? "/login" : "/favoritos"}> <i className="fas fa-heart" /> Seus Favoritos </Link>
+							<Link className="nav-link btn-nav link-hover" to={logado === 0 ? "/login" : "/favoritos"}>Favoritos</Link>
 						</li>
 
 						{
@@ -82,22 +82,22 @@ class NavBar extends React.Component {
 								?
 								<>
 									<li className="nav-item">
-										<Link className="nav-link" to="/login">Login</Link>
+										<Link className="nav-link btn btn-nav link-hover" to="/login"><strong>Entrar</strong></Link>
 									</li>
 									<li className="nav-item">
-										<Link className="nav-link" to="/novousuario">Cadastre-se</Link>
+										<Link className="nav-link btn btn-info btn-nav" to="/novousuario"><strong>Cadastre-se</strong></Link>
 									</li>
 								</>
 								:
 								<>
 									<li className="nav-item">
-										<Link className="nav-link" to={{
+										<Link className="nav-link btn-nav link-hover" to={{
 											pathname: this.props.usuario === undefined ? "/" : "/novousuario",
 											// state: { usuario: this.props.usuario }
 										}}>Editar Perfil</Link>
 									</li>
 									<li className="nav-item">
-										<Link className="nav-link" to="/" onClick={() => this.props.Lougout()}>Sair</Link>
+										<Link className="nav-link btn-nav link-hover" to="/" onClick={() => this.props.Lougout()}>Sair</Link>
 									</li>
 								</>
 

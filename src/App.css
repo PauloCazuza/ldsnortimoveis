@@ -1,8 +1,6 @@
-html {
-  min-width: 100vh !important;
-}
 body {
   font-family: 'Roboto' !important;
+  min-height: 100vh;
 }
 .btn {
   background-color: transparent !important;
@@ -21,9 +19,4 @@ a.btn.btn-sm:hover i{
 input, select, .btn-login {
   border-radius: 0px !important;
   box-shadow: none !important;
-}
-div#root {
-  min-height: 100vh !important;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
 }
