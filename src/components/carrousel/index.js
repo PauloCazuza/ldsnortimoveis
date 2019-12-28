@@ -25,6 +25,7 @@ class Carrousel extends React.Component {
       carregarFavoritos: null,
       indice: 0,
       idFavoritos: [],
+      logado: true,
     }
 
     var favoritos = [], idFavoritos = [];
@@ -42,7 +43,7 @@ class Carrousel extends React.Component {
     this.receberUrl = this.receberUrl.bind(this);
     this.verSeEfavorito = this.verSeEfavorito.bind(this);
     this.favoritarImovel = this.favoritarImovel.bind(this);
-    this.retornarGallery = this.retornarGallery.bind(this);
+    // this.retornarGallery = this.retornarGallery.bind(this);
     this.onSlideChanged = this.onSlideChanged.bind(this);
     this.receberUrl();
     this.verSeEfavorito();
@@ -145,10 +146,23 @@ class Carrousel extends React.Component {
     // alert('Favorito Removido com Sucesso!');     
   }
 
+  desfavoritar(){
+    var favoritos = [];
+    
+    for (var i = 0; i < this.state.tam; i++)
+      favoritos.push(false);
+
+    this.setState({favoritos: favoritos, logado: false})
+
+  }
+
   retornarGallery() {
 
     return this.state.url.map((url, index) => {
       let imovel = this.state.imovel[index];
+
+      if (this.props.usuarioEmail === "" && this.state.logado === true) 
+        this.desfavoritar()
 
       return (
         <div className="carrousel-container" key={index}>

@@ -20,6 +20,7 @@ class ImovelCard extends Component {
       id: props.id,
       favorito: this.props.usuarioEmail === "" ? false : null,
       idFavorito: null,
+      logado: true,
     }
     this.verSeEfavorito = this.verSeEfavorito.bind(this);
     this.receberUrl(this.props.img[0]);
@@ -51,10 +52,10 @@ class ImovelCard extends Component {
     db.add({
       id: this.state.id,
       usuario: this.props.usuarioEmail,
-    }).then( ({id}) => {
+    }).then(({ id }) => {
       console.log(id)
       this.setState({ carregando: false, })
-      this.setState({ favorito: true, idFavorito: id})
+      this.setState({ favorito: true, idFavorito: id })
       // alert("Favoritado")          
     }).catch(erro => {
       this.setState({ carregando: false })
@@ -82,11 +83,17 @@ class ImovelCard extends Component {
     // alert('Favorito Removido com Sucesso!');     
   }
 
+  desfavoritar() {
+    this.setState({ favorito: false, logado: false });
+    return null;
+  }
+
   render() {
     const { id, img, titulo, preco, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros } = this.props;
 
     return (
       <div className={`${this.state.md} col-sm-12`}>
+        {(this.props.usuarioEmail === "" && this.state.logado === true) ? this.desfavoritar() : null}
         <div className="card">
           <div className="d-flex justify-content-end div-heart">
             {this.state.favorito === null ? null :
