@@ -10,6 +10,8 @@ import Tab from 'react-bootstrap/Tab';
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 
+import newUser from './images/new-user.svg'
+
 function UsuarioNovo(props) {
 
 	var usuario = useSelector(state => state.usuario)
@@ -203,101 +205,66 @@ function UsuarioNovo(props) {
 	return (
 		<div>
 			<Navbar />
+      <div className="container">
+        <div className="d-flex align-items-end pl-2 pt-5"> <img src={newUser} style={{ width: "45px" }}/> 
+        <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">{usuario ? 'Editar' : 'Novo' } Usuário</h4> </div>
+        <hr className="my"></hr>
+      </div>
 
-			<div className="container py-5">
+			<div className="container py-4">
 				<div className="container">
 					<Tabs defaultActiveKey={pessoa} id="tab-cad" onSelect={key => setPessoa(key)}>
 						{/* FORMULARIO DA PESSOA FISICA  */}
 						<Tab eventKey="fisica" title="Pessoa Física">
 
 							<form className="form-signin mx-auto" style={{ width: '100%' }}>
-								<div className="text-center mb-4">
-									<h1 className="h3 mb-3 font-weight-normal">Cadastro</h1>
+								<div>
 
-									<div className="row">
-										<div className="col">
-											<div className="input-group mb-3">
+									<div className="row mt-4">
 
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Nome</span>
-												</div>
+                    <div className="col">
+                        <label>Nome</label>
+                        <input onChange={(e) => setNome(e.target.value)} value={nome} type="text" id="inputNome" className="form-control" placeholder="Nome" />
+                    </div>
 
-												<input onChange={(e) => setNome(e.target.value)} value={nome} type="text" id="inputNome" className="form-control" placeholder="Nome" />
-											</div>
-										</div>
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Sobrenome</span>
-												</div>
-
+                    <div className="col">
+                        <label>Sobrenome</label>
 												<input onChange={(e) => setSobrenome(e.target.value)} value={sobrenome} type="text" id="inputSobrenome" className="form-control" placeholder="Sobrenome" required />
-											</div>
-										</div>
-										<div className="col">
-											<div className="input-group mb-3">
+                    </div>
 
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">CPF</span>
-												</div>
-
+                    <div className="col">
+                        <label>CPF</label>
 												<input onChange={(e) => setcpf(e.target.value)} type="text" id="inputCpf" value={cpf} className="form-control" placeholder="CPF" required />
-											</div>
-										</div>
-									</div>
-
-									<div className="row">
-
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Data de Nascimento</span>
-												</div>
-
-												<input onChange={(e) => { setDataDeNasc(e.target.value) }} type="date" value={dataDeNasc} className="form-control" />
-											</div>
-										</div>
-
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Telefone</span>
-												</div>
-
-												<input onChange={(e) => { setTelefone(e.target.value) }} type="text" value={telefone} className="form-control" placeholder="8888 - 8888" />
-											</div>
-										</div>
+                    </div>
 
 									</div>
 
 									<div className="row">
+                    <div className="col">
+                        <label>Data de nascimento</label>
+                        <input onChange={(e) => { setDataDeNasc(e.target.value) }} type="date" value={dataDeNasc} className="form-control" />
+                    </div>
+                    
+                    <div className="col">
+                        <label>Telefone</label>
+                        <input onChange={(e) => { setTelefone(e.target.value) }} type="text" value={telefone} className="form-control" placeholder="8888 - 8888" />
+                    </div>
+									</div>
 
-										<div className="col">
-											<div className="input-group mb-3">
+									<div className="row">
 
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Estado</span>
-												</div>
-
+                    <div className="col">
+                        <label>Estado</label>
 												<input onChange={(e) => { setEstado(e.target.value) }} value={estado} type="text" className="form-control" placeholder="Ceará" />
-											</div>
-										</div>
+                    </div>
 
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Cidade</span>
-												</div>
-
+                    <div className="col">
+                        <label>Cidade</label>
 												<input onChange={(e) => { setCidade(e.target.value) }} type="text" value={cidade} className="form-control" placeholder="Sobral" />
-											</div>
-										</div>
+                    </div>
 
 										<div className="col">
+                      <label>Adicionar uma foto</label>
 											<input onChange={e => { setFoto(e.target.files[0]) }} type="file" className="form-control" />
 										</div>
 									</div>
@@ -310,81 +277,52 @@ function UsuarioNovo(props) {
 						{/* FORMULARIO DA PESSOA JURIDICA  */}
 						<Tab eventKey="juridica" title="Pessoa Jurídica">
 							<form className="form-signin mx-auto" style={{ width: '100%' }}>
-								<div className="text-center mb-4">
-									<h1 className="h3 mb-3 font-weight-normal">Cadastro</h1>
-
-									<div className="row">
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Razão Social</span>
-												</div>
-
+								<div>
+                  
+									<div className="row mt-4">
+                    <div className="col">
+                        <label>Razão Social</label>
 												<input onChange={(e) => setRazaoSocial(e.target.value)} type="text" value={razaoSocial} className="form-control" placeholder="Nome" />
-											</div>
-										</div>
-										<div className="col">
-											<div className="input-group mb-3">
+                    </div>
 
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Nome Fantasia</span>
-												</div>
-
+                    <div className="col">
+                        <label>Nome Fantasia</label>
 												<input onChange={(e) => setNomeFantasia(e.target.value)} type="text" value={nomeFantasia} className="form-control" placeholder="Sobrenome" required />
-											</div>
-										</div>
-										<div className="col">
-											<div className="input-group mb-3">
+                    </div>
 
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">CNPJ</span>
-												</div>
-
+                    <div className="col">
+                        <label>CNPJ</label>
 												<input onChange={(e) => setCnpj(e.target.value)} type="text" value={cnpj} className="form-control" placeholder="CNPJ" required />
-											</div>
-										</div>
+                    </div>
 									</div>
 
 									<div className="row">
-
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Estado</span>
-												</div>
-
+                    <div className="col">
+                        <label>Estado</label>
 												<input onChange={(e) => { setEstado(e.target.value) }} value={estado} type="text" className="form-control" placeholder="Ceará" />
-											</div>
-										</div>
+                    </div>
 
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Cidade</span>
-												</div>
-
+                    <div className="col">
+                        <label>Cidade</label>
 												<input onChange={(e) => { setCidade(e.target.value) }} type="text" value={cidade} className="form-control" placeholder="Sobral" />
-											</div>
-										</div>
+                    </div>
 
-										<div className="col">
-											<div className="input-group mb-3">
-
-												<div className="input-group-prepend">
-													<span className="input-group-text" id="inputGroup-sizing-sm">Telefone</span>
-												</div>
-
-												<input onChange={(e) => { setTelefone(e.target.value) }} type="text" value={telefone} className="form-control" placeholder="8888 - 8888" />
-											</div>
-										</div>
-
-										<div className="col">
-											<input onChange={e => { setFoto(e.target.files[0]) }} type="file" className="form-control" />
-										</div>
+                    <div className="col">
+                        <label>Cidade</label>
+												<input onChange={(e) => { setCidade(e.target.value) }} type="text" value={cidade} className="form-control" placeholder="Sobral" />
+                    </div>
 									</div>
+                  <div className="row">
+                    <div className="col">
+                          <label>Telefone</label>
+                          <input onChange={(e) => { setTelefone(e.target.value) }} type="text" value={telefone} className="form-control" placeholder="8888 - 8888" />
+                      </div>
+
+                      <div className="col">
+                        <label>Adicionar uma foto</label>
+                        <input onChange={e => { setFoto(e.target.files[0]) }} type="file" className="form-control" />
+                      </div>
+                  </div>
 								</div>
 							</form>
 						</Tab>
@@ -394,46 +332,29 @@ function UsuarioNovo(props) {
 					{/* PARA AMBOS */}
 					{
 						usuario === undefined ?
-							<div className="row my-5">
-								<div className="col">
-									<div className="input-group mb-3">
+							<>
+                <div className="row">
 
-										<div className="input-group-prepend">
-											<span className="input-group-text" id="inputGroup-sizing-sm">Email</span>
-										</div>
+                  <div className="col">
+                      <label>Email</label>
+                      <input onChange={(e) => { setEmail(e.target.value) }} type="text" className="form-control" placeholder="example@mail.com" />
+                  </div>
 
-										<input onChange={(e) => { setEmail(e.target.value) }} type="text" className="form-control" placeholder="example@mail.com" />
-									</div>
-								</div>
+                  <div className="col">
+                      <label>Senha</label>
+                      <input onChange={(e) => { setSenha(e.target.value) }} type="password" className="form-control" placeholder="********" />
+                  </div>
 
-								<div className="col">
-									<div className="input-group mb-3">
+                  <div className="col">
+                      <label>Repita a senha</label>
+                      <input onChange={(e) => { setVerSenha(e.target.value) }} type="password" className="form-control" placeholder="********" />
+                  </div>
 
-										<div className="input-group-prepend">
-											<span className="input-group-text" id="inputGroup-sizing-sm">Senha</span>
-										</div>
-
-										<input onChange={(e) => { setSenha(e.target.value) }} type="password" className="form-control" placeholder="********" />
-									</div>
-								</div>
-
-								<div className="col">
-									<div className="input-group mb-3">
-
-										<div className="input-group-prepend">
-											<span className="input-group-text" id="inputGroup-sizing-sm">Repita a Senha</span>
-										</div>
-
-										<input onChange={(e) => { setVerSenha(e.target.value) }} type="password" className="form-control" placeholder="********" />
-									</div>
-								</div>
-
-								<button type="button" onClick={cadastrarPessoa} className="btn btn-lg btn-block btn-login my-3">Cadastrar</button>
-							</div>
+                </div>
+                <button type="button" onClick={cadastrarPessoa} className="btn btn-lg btn-login my-4">Cadastrar</button>
+              </>
 							:
-							<div>
-								<button type="button" onClick={editarPessoa} className="btn btn-lg btn-block btn-login my-3">Editar</button>
-							</div>
+                <button type="button" onClick={editarPessoa} className="btn btn-lg btn-login my-4">Editar</button>
 					}
 
 
