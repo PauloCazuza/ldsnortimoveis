@@ -103,7 +103,10 @@ class ImovelCard extends Component {
               </>
             }
           </div>
-          <Link to={"/detalhesimovel/" + id}>
+          <Link to={{
+                  pathname: "/detalhesimovel/" + id,
+                  state: { validar: validar }
+                }}>
             <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
           </Link>
 
