@@ -76,10 +76,7 @@ class Home extends Component {
 					<Navbar />
 
 					<div className="container pb-5">
-
 						<div className="row p-2">
-
-
 							<div className="mx-auto">
 								<Spinner
 									sizeUnit={"px"}

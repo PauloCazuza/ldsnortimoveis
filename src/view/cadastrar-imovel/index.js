@@ -110,6 +110,7 @@ function CadastrarImovel() {
                 preco: preco,
                 garagem: garagem,
                 criacao: new Date(),
+                validar: 'NaoValidado',
             }).then(() => {
                 setCarregando(false)
                 setMsg('sucesso')

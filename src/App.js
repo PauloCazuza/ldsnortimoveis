@@ -1,8 +1,8 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {store, persistor} from './store';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { store, persistor } from './store';
 import { Provider } from 'react-redux';
-import { PersistGate} from 'redux-persist/integration/react';
+import { PersistGate } from 'redux-persist/integration/react';
 import './App.css'
 
 /* PAGINAS */
@@ -16,25 +16,27 @@ import DetalhesImovel from './view/detalhes-imovel';
 import PaginaPesquisa from './view/pagina-pesquisa';
 import Favoritos from './view/favoritos';
 import Administrador from './view/administrador';
+import ValidarImovel from './view/validar-imovel';
 
 function App() {
-  return (
-    <Provider store={store}>
-		<PersistGate loading={null} persistor={persistor}>
-			<Router>
-				<Route exact path="/" component={Home} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/novousuario" component={NovoUsuario} />
-				<Route exact path="/recuperarsenha" component={RecuperarSenha} />
-				<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
-				<Route exact path="/favoritos" component={Favoritos} />
-				<Route exact path="/administrador" component={Administrador} />
-				<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
-				<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
-			</Router>
-		</PersistGate>
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
+				<Router>
+					<Route exact path="/" component={Home} />
+					<Route exact path="/login" component={Login} />
+					<Route exact path="/novousuario" component={NovoUsuario} />
+					<Route exact path="/recuperarsenha" component={RecuperarSenha} />
+					<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
+					<Route exact path="/favoritos" component={Favoritos} />
+					<Route exact path="/validarimovel" component={ValidarImovel} />
+					<Route exact path="/administrador" component={Administrador} />
+					<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
+					<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
+				</Router>
+			</PersistGate>
+		</Provider>
+	);
 }
 
 export default App;
