@@ -69,3 +69,20 @@
 		transform: scale(1);
 	}
 }
+.notificacao {
+  position: absolute;
+  margin: 0;
+  left: 85%;
+  top: 5%;
+  z-index: 3;
+  float: right;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  color: black;
+
+}

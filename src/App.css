@@ -20,7 +20,9 @@ input, select, .btn-login {
   border-radius: 0px !important;
   box-shadow: none !important;
 }
-
 .nav.nav-tabs .nav-item.nav-link {
   color: black !important;
+}
+.container-cinza {
+  background: whitesmoke;
 }

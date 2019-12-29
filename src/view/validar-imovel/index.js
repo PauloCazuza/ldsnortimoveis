@@ -21,7 +21,7 @@ class ValidarImovel extends React.Component {
         return (
             <>
                 <NavBar />
-                <div className="container pb-5">
+                <div className="container-fluid pb-5 container-cinza">
                     <div className="row p-2">
                         {this.state.imoveis.map((item, index) => {
                             return (
