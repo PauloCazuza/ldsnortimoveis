@@ -11,6 +11,7 @@ import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 
 import newUser from './images/new-user.svg'
+import editUser from './images/edit-user.svg'
 
 function UsuarioNovo(props) {
 
@@ -206,7 +207,7 @@ function UsuarioNovo(props) {
 		<div>
 			<Navbar />
 			<div className="container">
-				<div className="d-flex align-items-end pl-2 pt-5"> <img src={newUser} style={{ width: "45px" }} />
+				<div className="d-flex align-items-end pl-2 pt-5"> <img className={usuario ? 'mb-1' : ''} src={usuario ? editUser : newUser} style={{ width: usuario ? "35px" : "45px" }} />
 					<h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">{usuario ? 'Editar' : 'Novo'} Usuário</h4> </div>
 				<hr className="my"></hr>
 			</div>
