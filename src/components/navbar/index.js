@@ -109,7 +109,7 @@ class NavBar extends React.Component {
 					{
 						logado === 0 ? null :
 							<ul className="navbar-nav ml-auto">
-								<li className="nav-item mx-2">
+								<li className="nav-item">
 									{(this.props.usuarioFoto === null) ? null :
 										<>
 											<label className="mx-3">
