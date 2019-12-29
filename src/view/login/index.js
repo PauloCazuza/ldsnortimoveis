@@ -47,6 +47,10 @@ function Login() {
 		logar()
 	}
 
+	function submitForm2(e) {
+		e.preventDefault()
+	}
+
 	return (
 		<>
 			<Navbar />
@@ -91,13 +95,16 @@ function Login() {
 					<div className="col-md-1 div-hr d-none d-md-flex"> <hr /> </div>
 
 					<div className="login-content d-flex col-md h-auto mb-3">
-						<form className="form-signin mx-auto" style={{ width: '100%' }}>
+						<form className="form-signin mx-auto" style={{ width: '100%' }} onSubmit={submitForm2}>
 							<div className="text-center mb-4">
 								<h1 className="h3 mb-3 font-weight-normal">Crie sua Conta</h1>
 
-								<input type="email" id="inputCriarEmail" className="form-control my-2 input" placeholder="Seu email" />
+								<input onChange={(e) => setEmail(e.target.value)} type="email" id="inputCriarEmail" className="form-control my-2 input" placeholder="Seu email" />
 
-								<Link to="novousuario" mail={email} className="link"> <button type="button" className="btn btn-block btn-login">PROSSEGUIR</button> </Link>
+								<Link className="link" to={{
+									pathname: "/novousuario",
+									state: { email: email }
+								}}> <button type="submit" className="btn btn-block btn-login">PROSSEGUIR</button> </Link>
 							</div>
 
 						</form>

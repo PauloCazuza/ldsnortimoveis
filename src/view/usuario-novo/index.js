@@ -14,18 +14,18 @@ import newUser from './images/new-user.svg'
 import editUser from './images/edit-user.svg'
 
 function UsuarioNovo(props) {
+	// USUARIO PRÉ-DETERMINADO
+	var usuario = useSelector(state => state.usuario);
+	const mail = props.location.state === undefined ? '' : props.location.state.email;
 
-	var usuario = useSelector(state => state.usuario)
-
-	console.log(usuario);
-	//IDENTIFICAR A PESSOA
+	// IDENTIFICAR A PESSOA
 	const [pessoa, setPessoa] = useState(usuario === undefined ? 'fisica' : usuario.tipoDePessoa);
 	const [msg, setMsg] = useState();
 	const [carregando, setCarregando] = useState();
 	const dispatch = useDispatch();
 
-	//AMBOS USUARIOS
-	const [email, setEmail] = useState();
+	// AMBOS USUARIOS
+	const [email, setEmail] = useState(mail);
 	const [senha, setSenha] = useState();
 	const [verSenha, setVerSenha] = useState();
 	const [telefone, setTelefone] = useState(usuario === undefined ? '' : usuario.telefone);
@@ -38,15 +38,16 @@ function UsuarioNovo(props) {
 	const [nome, setNome] = useState(usuario === undefined ? '' : usuario.nome);
 	const [sobrenome, setSobrenome] = useState(usuario === undefined ? '' : usuario.sobrenome);
 	const [cpf, setcpf] = useState(usuario === undefined ? '' : usuario.cpf);
-	const [dataDeNasc, setDataDeNasc] = useState(usuario === undefined ? '' : usuario.dataDeNasc);
-
-	const storage = firebase.storage();
-	const db = firebase.firestore();
+	const [dataDeNasc, setDataDeNasc] = useState(usuario === undefined ? '' : usuario.dataDeNasc)
 
 	// PESSOA JURIDICA
 	const [razaoSocial, setRazaoSocial] = useState(usuario === undefined ? '' : usuario.razaoSocial);
 	const [nomeFantasia, setNomeFantasia] = useState(usuario === undefined ? '' : usuario.nome);
 	const [cnpj, setCnpj] = useState(usuario === undefined ? '' : usuario.cnpj);
+
+	// CONFIGURAÇÕES DO BD
+	const storage = firebase.storage();
+	const db = firebase.firestore();
 
 
 	async function enviarFoto(foto) {
@@ -346,7 +347,7 @@ function UsuarioNovo(props) {
 
 									<div className="col">
 										<label>Email</label>
-										<input onChange={(e) => { setEmail(e.target.value) }} type="text" className="form-control" placeholder="example@mail.com" />
+										<input onChange={(e) => { setEmail(e.target.value) }} value={email} type="text" className="form-control" placeholder="example@mail.com" />
 									</div>
 
 									<div className="col">

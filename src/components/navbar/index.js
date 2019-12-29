@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 const db = firebase.firestore().collection('usuarios');
 
 // import Search from '../search'
+const avatarDefault = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0XcdwpbHbau9Mqfcr9A1npUDVUQcxUXLc7srlXUkwKQeVZzRAag&s"
 
 class NavBar extends React.Component {
 
@@ -40,7 +41,7 @@ class NavBar extends React.Component {
 			console.log("saiu")
 		}
 
-		if (foto !== null && editado === false) 
+		if (foto !== null && editado === false)
 			return console.log("Já tem Foto")
 
 
@@ -49,7 +50,9 @@ class NavBar extends React.Component {
 			if (resultado.docs[0] !== undefined)
 				// await this.setState({usuario: resultado.docs[0].data()})
 				firebase.storage().ref(`imagensUsuarios/${resultado.docs[0].data().foto}`).getDownloadURL().then(url => {
-					this.props.SetFotoENome({ email: email, foto: url, nome: resultado.docs[0].data().nome, usuario: {id: resultado.docs[0].id, foto: url, ...resultado.docs[0].data()} });
+					this.props.SetFotoENome({ email: email, pessoa: resultado.docs[0].data().pessoa, foto: url, nome: resultado.docs[0].data().nome, usuario: { id: resultado.docs[0].id, foto: url, ...resultado.docs[0].data() } });
+				}).catch(erro => {
+					this.props.SetFotoENome({ email: email, pessoa: resultado.docs[0].data().pessoa, foto: avatarDefault, nome: resultado.docs[0].data().nome, usuario: { id: resultado.docs[0].id, foto: avatarDefault, ...resultado.docs[0].data() } });
 				})
 		})
 
@@ -92,7 +95,7 @@ class NavBar extends React.Component {
 								<>
 									<li className="nav-item">
 										<Link className="nav-link btn-nav link-hover" to={{
-											pathname: this.props.usuario === undefined ? "/" : "/novousuario",
+											pathname: "/novousuario",
 											// state: { usuario: this.props.usuario }
 										}}>Editar Perfil</Link>
 									</li>
@@ -140,8 +143,8 @@ const mapDispatchToEvents = (dispatch) => {
 		Lougout: () => {
 			dispatch({ type: 'LOG_OUT' });
 		},
-		SetFotoENome: ({ email, foto, nome, usuario }) => {
-			dispatch({ type: 'SET_NOME', usuarioEmail: email, usuarioFoto: foto, usuarioNome: nome, usuario: usuario });
+		SetFotoENome: ({ email, foto, nome, usuario, pessoa }) => {
+			dispatch({ type: 'SET_NOME', usuarioEmail: email, usuarioFoto: foto, usuarioNome: nome, usuario: usuario, pessoa: pessoa });
 		},
 
 	};

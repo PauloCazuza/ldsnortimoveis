@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './home.css';
 import { PulseLoader as Spinner } from 'react-spinners';
 
+import { Link, Redirect } from 'react-router-dom';
+
 import Navbar from '../../components/navbar';
 import Search from '../../components/search';
 import Footer from '../../components/footer';
@@ -13,11 +15,13 @@ import icone_hammer from './images/hammer.svg'
 
 import ImovelCard from '../../components/imovel-card';
 
+import { connect } from 'react-redux';
+
 import firebase from '../../config/firebase';
 
 const db = firebase.firestore().collection('imoveis');
 
-export default class Home extends Component {
+class Home extends Component {
 
 	constructor(props) {
 		super(props);
@@ -65,6 +69,39 @@ export default class Home extends Component {
 	}
 
 	render() {
+
+		if (this.props.pessoa === null)
+			return (
+				<>
+					<Navbar />
+
+					<div className="container pb-5">
+
+						<div className="row p-2">
+
+
+							<div className="mx-auto">
+								<Spinner
+									sizeUnit={"px"}
+									size={15}
+									color={'#4d6d6d'}
+								/>
+							</div>
+						</div>
+					</div>
+
+				</>
+			);
+
+		if (this.props.pessoa === "administrador")
+			return (
+				<Redirect to="/administrador" />
+			);
+
+		if (this.props.pessoa === "corretor")
+			return (
+				<Redirect to="/corretor" />
+			);
 
 		return (
 			<>
@@ -148,3 +185,15 @@ export default class Home extends Component {
 		);
 	}
 }
+
+
+const mapStateToProps = state => {
+	const { usuarioLogado, usuarioEmail, usuarioFoto, usuarioNome, usuario, editado, pessoa } = state;
+
+	return {
+		usuarioLogado: usuarioLogado, usuarioEmail: usuarioEmail, pessoa: pessoa,
+		usuarioFoto: usuarioFoto, usuarioNome: usuarioNome, usuario: usuario, editado: editado
+	}
+}
+
+export default connect(mapStateToProps, null)(Home);

@@ -15,6 +15,7 @@ import CadastrarImovel from './view/cadastrar-imovel';
 import DetalhesImovel from './view/detalhes-imovel';
 import PaginaPesquisa from './view/pagina-pesquisa';
 import Favoritos from './view/favoritos';
+import Administrador from './view/administrador';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 				<Route exact path="/recuperarsenha" component={RecuperarSenha} />
 				<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
 				<Route exact path="/favoritos" component={Favoritos} />
+				<Route exact path="/administrador" component={Administrador} />
 				<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
 				<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
 			</Router>
