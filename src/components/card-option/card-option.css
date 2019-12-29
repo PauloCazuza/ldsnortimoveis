@@ -1,12 +1,13 @@
 .card-option {
   height: 180px;
-  cursor: pointer;
   margin-bottom: 30px;
 }
 .card-option .content-logo img{
   animation: createBox .5s;
+  z-index: 2;
 }
 .card-option .content-logo {
+  position: relative;
   height: 100%;
   width: 80%;
   max-width: 270px;
@@ -16,12 +17,29 @@
   background: white;
   animation: fade .5s;
   overflow: hidden;
-  border-bottom: 4px solid #f95b00;
+  cursor: pointer;
+}
+.content-logo::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: calc(-100% + 4px);
+  width: 100%;
+  height: 100%;
+  background: #f95b00;
+  z-index: 1;
+  transition: .5s ease-in-out;
+}
+
+.content-logo:hover::before {
+  bottom: 0;
 }
 .content-logo:hover ~ .legenda {
   text-decoration: underline !important;
 }
-
+.card-option legend:hover {
+  text-decoration: underline;
+}
 .card-option legend {
   margin: 0;
   margin-top: 5px;
@@ -31,6 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 @keyframes createBox {
 	from {

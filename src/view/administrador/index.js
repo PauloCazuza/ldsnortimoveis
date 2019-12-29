@@ -11,7 +11,7 @@ import feedback from './images/check-list.svg'
 import corretor from './images/realtor.svg'
 
 export default class Administrador extends React.Component {
-
+    
     constructor(props) {
         super(props);
 
@@ -23,6 +23,7 @@ export default class Administrador extends React.Component {
     }
 
     render() {
+        
         return (
             <>
                 <Navbar />
