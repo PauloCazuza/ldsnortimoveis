@@ -18,7 +18,7 @@
   overflow: hidden;
   border-bottom: 4px solid #f95b00;
 }
-.card-option:hover .legenda {
+.content-logo:hover ~ .legenda {
   text-decoration: underline !important;
 }
 
