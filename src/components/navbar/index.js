@@ -70,7 +70,7 @@ class NavBar extends React.Component {
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
 					<i className="fas fa-bars"></i>
 				</button>
-				<div className="collapse navbar-collapse d-md-flex justify-content-end" id="navbarNav">
+				<div className="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarNav">
 					<ul className="navbar-nav">
 						<li className="nav-item active">
 							<Link className="nav-link btn-nav link-hover" to={logado === 0 ? "/login" : "/cadastrarimovel"}>Anunciar imóveis</Link>
