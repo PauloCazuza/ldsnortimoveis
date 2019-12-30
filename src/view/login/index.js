@@ -67,7 +67,7 @@ function Login() {
 								<input onChange={(e) => setEmail(e.target.value)} type="email" id="inputEmail" className="form-control my-2 input" placeholder="Seu email" />
 								<input onChange={(e) => setSenha(e.target.value)}
 									type={fechado ? 'text' : 'password'} id="inputSenha" className="form-control my-2 input content-olho pr-4" placeholder="Senha" required />
-                <span className="olho" className="span-olho" onClick={() => setFechado(!fechado)} >{fechado ? 'OCULTAR' : 'MOSTRAR'}</span>
+                <span className="span-olho" onClick={() => setFechado(!fechado)} >{fechado ? 'OCULTAR' : 'MOSTRAR'}</span>
 								<span className="link">
 									<Link className="mb-3 text-muted" to="recuperarsenha">Recuperar Senha</Link>
 								</span>

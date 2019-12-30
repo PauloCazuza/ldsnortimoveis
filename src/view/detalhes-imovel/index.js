@@ -142,50 +142,40 @@ class DetalhesImovel extends React.Component {
     return (
       <>
         <Navbar />
-        <Modal size="lg" show={this.state.modal} onHide={() => this.mostrarModal(false)} animation={false}>
+        <Modal size="lg" show={this.state.modal} onHide={() => this.mostrarModal(false)} animation={true}>
           <Modal.Header closeButton>
-            <Modal.Title>Antes de enviar seu interesse confirme seus dados.</Modal.Title>
+            <Modal.Title><i class="fas fa-exclamation-circle"></i> Antes de enviar seu interesse confirme seus dados.</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="row">
-              <div className="col">
-                Nome:
-              </div>
-              <div className="col">
-                Sobrenome:
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
+              <div className="col-sm d-flex flex-column d-flex flex-column">
+                <label>Nome</label>
                 <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} />
               </div>
-              <div className="col">
+
+              <div className="col-sm d-flex flex-column">
+                <label>Sobrenome</label>
                 <input type="text" name="sobrenome" value={this.state.sobrenome} onChange={this.handleChange} />
               </div>
             </div>
 
-            <div className="row">
-              <div className="col">
-                Telefone:
-              </div>
-              <div className="col">
-                Horário de Contato:
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
+            <div className="row mt-4">
+              <div className="col-sm d-flex flex-column d-flex flex-column">
+                <label>Telefone</label>
                 <input type="text" name="telefone" value={this.state.telefone} onChange={this.handleChange} />
               </div>
-              <div className="col">
+
+              <div className="col-sm d-flex flex-column">
+                <label>Horário de Contato</label>
                 <input type="time" name="horarioDeContato" onChange={this.handleChange} />
               </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <button className="btn btn-lg btn-login d-flex align-items-baseline" onClick={() => this.mostrarModal(false)}>
+            <button className="btn btn-login btn-cancel" onClick={() => this.mostrarModal(false)}>
               Fechar
           </button>
-            <button className="btn btn-lg btn-login d-flex align-items-baseline" onClick={() => this.enviarInteresse()}>
+            <button className="btn btn-login btn-confirme" onClick={() => this.enviarInteresse()}>
               Enviar Interesse
           </button>
           </Modal.Footer>

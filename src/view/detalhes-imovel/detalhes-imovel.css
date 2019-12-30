@@ -32,3 +32,21 @@
 .filtro {
   max-height: 745px;
 }
+.btn-cancel {
+  background: #ff9900 !important;
+  border: #ff9900;
+  border-radius: 5px !important;
+  color: white;
+}
+.btn-confirme {
+  background: #f95c00 !important;
+  border: #f95c00;
+  border-radius: 5px !important;
+  color: white;
+}
+.btn-confirme:hover {
+  background: #f76d1e !important;
+}
+.btn-cancel:hover {
+  background: #f7a01d !important;
+}
