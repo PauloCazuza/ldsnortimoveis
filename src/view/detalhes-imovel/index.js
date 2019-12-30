@@ -150,24 +150,24 @@ class DetalhesImovel extends React.Component {
             <div className="row">
               <div className="col-sm d-flex flex-column d-flex flex-column">
                 <label>Nome</label>
-                <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} />
+                <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} className="form-control" />
               </div>
 
               <div className="col-sm d-flex flex-column">
                 <label>Sobrenome</label>
-                <input type="text" name="sobrenome" value={this.state.sobrenome} onChange={this.handleChange} />
+                <input type="text" name="sobrenome" value={this.state.sobrenome} onChange={this.handleChange} className="form-control" />
               </div>
             </div>
 
             <div className="row mt-4">
               <div className="col-sm d-flex flex-column d-flex flex-column">
                 <label>Telefone</label>
-                <input type="text" name="telefone" value={this.state.telefone} onChange={this.handleChange} />
+                <input type="text" name="telefone" value={this.state.telefone} onChange={this.handleChange} className="form-control" />
               </div>
 
               <div className="col-sm d-flex flex-column">
                 <label>Horário de Contato</label>
-                <input type="time" name="horarioDeContato" onChange={this.handleChange} />
+                <input type="time" name="horarioDeContato" onChange={this.handleChange} className="form-control" />
               </div>
             </div>
           </Modal.Body>
