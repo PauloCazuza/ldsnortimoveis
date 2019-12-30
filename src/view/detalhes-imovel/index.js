@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './detalhes-imovel.css';
+import { Modal } from 'react-bootstrap';
 
 import firebase from '../../config/firebase';
 
@@ -12,16 +13,17 @@ import bed from './images/bed.svg'
 import { Link } from 'react-router-dom';
 
 import { PulseLoader as Spinner } from 'react-spinners';
-
-import { useSelector } from 'react-redux';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import "react-image-gallery/styles/css/image-gallery.css";
 
+import { connect } from 'react-redux';
 
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { height } from 'window-size';
+
+const interessesSolicitados = firebase.firestore().collection('interessesSolicitados');
 
 var images = [
   /*{
@@ -40,7 +42,7 @@ var images = [
 
 const db = firebase.firestore();
 
-export default class DetalhesImovel extends React.Component {
+class DetalhesImovel extends React.Component {
 
   constructor(props) {
     super(props);
@@ -50,9 +52,16 @@ export default class DetalhesImovel extends React.Component {
       urlImg: [],
       imagens: [],
       telaCheia: false,
+      modal: false, // false
+      nome: this.props.usuario !== undefined ? this.props.usuario.nome : '',
+      sobrenome: this.props.usuario !== undefined ? this.props.usuario.sobrenome : '',
+      telefone: this.props.usuario !== undefined ? this.props.usuario.telefone : '',
+      horarioDeContato: '',
     }
 
     console.log(this.props.match.params.id)
+    this.handleChange = this.handleChange.bind(this);
+    this.enviarInteresse = this.enviarInteresse.bind(this);
     this.receberDoBd();
   }
 
@@ -93,11 +102,94 @@ export default class DetalhesImovel extends React.Component {
     })
   }
 
+  mostrarModal(status) {
+    this.setState({ modal: status })
+  }
+
+  async handleChange(event) {
+    const { name, value } = event.target;
+
+    await this.setState({
+      [name]: value,
+    })
+
+  }
+
+  enviarInteresse() {
+    const { nome, sobrenome, telefone, horarioDeContato } = this.state;
+
+    if (nome === '' || sobrenome === '' || telefone === '' || horarioDeContato === '')
+      return alert('Preencha todos os campos solicitados');
+
+    this.mostrarModal(false);
+
+    interessesSolicitados.add({
+      id: this.props.match.params.id,
+      nome: nome,
+      sobrenome: sobrenome,
+      telefone: telefone,
+      horarioDeContato: horarioDeContato,
+    }).then(() => {
+      alert('Interesse Enviado');
+    }).catch(erro => {
+      alert('Erro ao enviar o Interesse');
+    })
+
+  }
+
   render(props) {
     let imovel = this.state.imovel;
     return (
       <>
         <Navbar />
+        <Modal size="lg" show={this.state.modal} onHide={() => this.mostrarModal(false)} animation={false}>
+          <Modal.Header closeButton>
+            <Modal.Title>Antes de enviar seu interesse confirme seus dados.</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row">
+              <div className="col">
+                Nome:
+              </div>
+              <div className="col">
+                Sobrenome:
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} />
+              </div>
+              <div className="col">
+                <input type="text" name="sobrenome" value={this.state.sobrenome} onChange={this.handleChange} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                Telefone:
+              </div>
+              <div className="col">
+                Horário de Contato:
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <input type="text" name="telefone" value={this.state.telefone} onChange={this.handleChange} />
+              </div>
+              <div className="col">
+                <input type="time" name="horarioDeContato" onChange={this.handleChange} />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-lg btn-login d-flex align-items-baseline" onClick={() => this.mostrarModal(false)}>
+              Fechar
+          </button>
+            <button className="btn btn-lg btn-login d-flex align-items-baseline" onClick={() => this.enviarInteresse()}>
+              Enviar Interesse
+          </button>
+          </Modal.Footer>
+        </Modal>
         {this.state.imovel === null ?
           <center>
             <Spinner
@@ -145,7 +237,7 @@ export default class DetalhesImovel extends React.Component {
                 </div>
               </div>
               <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
-                <button type="button" className="btn btn-lg btn-login d-flex align-items-baseline">
+                <button type="button" onClick={() => this.mostrarModal(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
                   TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
                 </button>
                 <img src={`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.href}&size=150x150&format=svg`} alt="QRCode" />
@@ -154,13 +246,13 @@ export default class DetalhesImovel extends React.Component {
 
             {this.props.location.state !== undefined && this.props.location.state.validar === true ?
               <>
-              <div className="container">
-                <div className="row">
-                  <div className="col">
-                    <button type="button" onClick={ () => this.validarImovel("Validar")} className="btn btn-lg btn-login d-flex align-items-baseline">Validar Imovel</button>
-                    <button type="button" onClick={ () => this.validarImovel("Excluido")} className="btn btn-lg btn-login d-flex align-items-baseline">Recusar Imovel</button>
+                <div className="container">
+                  <div className="row">
+                    <div className="col">
+                      <button type="button" onClick={() => this.validarImovel("Validar")} className="btn btn-lg btn-login d-flex align-items-baseline">Validar Imovel</button>
+                      <button type="button" onClick={() => this.validarImovel("Excluido")} className="btn btn-lg btn-login d-flex align-items-baseline">Recusar Imovel</button>
+                    </div>
                   </div>
-                </div>
                 </div>
               </>
               : null}
@@ -172,3 +264,15 @@ export default class DetalhesImovel extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = state => {
+  const { usuarioLogado, usuarioEmail, usuarioFoto, usuarioNome, usuario, editado, pessoa } = state;
+
+  return {
+    usuarioLogado: usuarioLogado, usuarioEmail: usuarioEmail, pessoa: pessoa,
+    usuarioFoto: usuarioFoto, usuarioNome: usuarioNome, usuario: usuario, editado: editado
+  }
+}
+
+export default connect(mapStateToProps, null)(DetalhesImovel);
