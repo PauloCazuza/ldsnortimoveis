@@ -14,10 +14,10 @@ import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 
 function Login() {
-
 	const [email, setEmail] = useState("");
 	const [senha, setSenha] = useState("");
 	const [carregando, setCarregando] = useState(false);
+	const [fechado, setFechado] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -66,8 +66,8 @@ function Login() {
 
 								<input onChange={(e) => setEmail(e.target.value)} type="email" id="inputEmail" className="form-control my-2 input" placeholder="Seu email" />
 								<input onChange={(e) => setSenha(e.target.value)}
-									//onKeyPress={ e => e.key === 'Enter' ? logar() : null} 
-									type="password" id="inputPassword" className="form-control my-2 input" placeholder="Senha" required />
+									type={fechado ? 'text' : 'password'} id="inputSenha" className="form-control my-2 input content-olho pr-4" placeholder="Senha" required />
+                <span className="olho" className="span-olho" onClick={() => setFechado(!fechado)} >{fechado ? 'OCULTAR' : 'MOSTRAR'}</span>
 								<span className="link">
 									<Link className="mb-3 text-muted" to="recuperarsenha">Recuperar Senha</Link>
 								</span>

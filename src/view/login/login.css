@@ -41,3 +41,17 @@ a.link {
   width: 1px;
   height: 264px;
 }
+.content-olho {
+  position: relative;
+}
+.span-olho {
+  text-align: right;
+  font-size: 14px;
+  cursor: pointer;
+  width: 70px;
+  position: absolute;
+  float: right;
+  top: 135px;
+  right: 30px;
+  background-color: white;
+}
