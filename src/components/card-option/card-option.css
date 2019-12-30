@@ -1,6 +1,8 @@
 .card-option {
   height: 180px;
   margin-bottom: 30px;
+  text-decoration: none !important;
+  cursor: default;
 }
 .card-option .content-logo img{
   animation: createBox .5s;
@@ -50,6 +52,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-family: 'open-sans-bold';
+  text-transform: uppercase;
 }
 @keyframes createBox {
 	from {

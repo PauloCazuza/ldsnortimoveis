@@ -1,3 +1,7 @@
+@font-face {
+  font-family: open-sans-bold;
+  src: url('./fonts/OpenSans-Bold.ttf');
+}
 body {
   font-family: 'Roboto' !important;
   min-height: 100vh;
