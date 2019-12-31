@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 export default class CardOption extends React.Component {
 
   render() {
-    const { legenda, funcaoDoCard, img, link, quant, imoveis } = this.props;
+    const { legenda, funcaoDoCard, img, link, quant, imoveis, interessesSolicitados, interessesSolicitadosPorId } = this.props;
     return (
       <>
         <Link to={{
           pathname: link,
-          state: {imoveis: imoveis},
+          state: {imoveis: imoveis, cont: quant, interessesSolicitados: interessesSolicitados, interessesSolicitadosPorId: interessesSolicitadosPorId},
         }} className="card-option d-flex flex-column align-items-center justify-content-center" >
           <div className="content-logo">
           {quant !== undefined && quant > 0 ?

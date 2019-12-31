@@ -17,6 +17,8 @@ import PaginaPesquisa from './view/pagina-pesquisa';
 import Favoritos from './view/favoritos';
 import Administrador from './view/administrador';
 import ValidarImovel from './view/validar-imovel';
+import InteressesSolicitados from './view/interesses-solicitados';
+import SolicitacoesDoImovel from './view/solicitacoes-do-Imovel';
 
 function App() {
 	return (
@@ -30,9 +32,11 @@ function App() {
 					<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
 					<Route exact path="/favoritos" component={Favoritos} />
 					<Route exact path="/validarimovel" component={ValidarImovel} />
-					<Route exact path="/administrador" component={Administrador} />
+					<Route exact path="/administrador" component={Administrador} /> 
+					<Route exact path="/interessessolicitados" component={InteressesSolicitados} />
 					<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
 					<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
+					<Route path="/solicitacoesdoimovel/:id" component={SolicitacoesDoImovel} />
 				</Router>
 			</PersistGate>
 		</Provider>

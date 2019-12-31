@@ -53,9 +53,12 @@ class DetalhesImovel extends React.Component {
       imagens: [],
       telaCheia: false,
       modal: false, // false
+      tipoDePessoa: this.props.usuario !== undefined ? this.props.usuario.tipoDePessoa : 'fisica',
       nome: this.props.usuario !== undefined ? this.props.usuario.nome : '',
       sobrenome: this.props.usuario !== undefined ? this.props.usuario.sobrenome : '',
+      razaoSocial: this.props.usuario !== undefined ? this.props.usuario.razaoSocial : '',
       telefone: this.props.usuario !== undefined ? this.props.usuario.telefone : '',
+      editavel: this.props.usuario !== undefined ? true : false,
       horarioDeContato: '',
     }
 
@@ -116,24 +119,38 @@ class DetalhesImovel extends React.Component {
   }
 
   enviarInteresse() {
-    const { nome, sobrenome, telefone, horarioDeContato } = this.state;
+    const { nome, sobrenome, telefone, horarioDeContato, razaoSocial, tipoDePessoa } = this.state;
 
-    if (nome === '' || sobrenome === '' || telefone === '' || horarioDeContato === '')
+    if (tipoDePessoa === 'fisica' && (nome === '' || telefone === '' || sobrenome === '' || horarioDeContato === ''))
       return alert('Preencha todos os campos solicitados');
 
     this.mostrarModal(false);
 
-    interessesSolicitados.add({
-      id: this.props.match.params.id,
-      nome: nome,
-      sobrenome: sobrenome,
-      telefone: telefone,
-      horarioDeContato: horarioDeContato,
-    }).then(() => {
-      alert('Interesse Enviado');
-    }).catch(erro => {
-      alert('Erro ao enviar o Interesse');
-    })
+    if (tipoDePessoa === 'fisica') {
+      interessesSolicitados.add({
+        idMovel: this.props.match.params.id,
+        nome: nome,
+        sobrenome: sobrenome,
+        telefone: telefone,
+        horarioDeContato: horarioDeContato,
+      }).then(() => {
+        alert('Interesse Enviado');
+      }).catch(erro => {
+        alert('Erro ao enviar o Interesse');
+      })
+    } else {
+      interessesSolicitados.add({
+        idMovel: this.props.match.params.id,
+        nome: nome,
+        razaoSocial: razaoSocial,
+        telefone: telefone,
+        horarioDeContato: horarioDeContato,
+      }).then(() => {
+        alert('Interesse Enviado');
+      }).catch(erro => {
+        alert('Erro ao enviar o Interesse');
+      })
+    }
 
   }
 
@@ -150,19 +167,26 @@ class DetalhesImovel extends React.Component {
             <div className="row">
               <div className="col-sm d-flex flex-column d-flex flex-column">
                 <label>Nome</label>
-                <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} className="form-control" />
+                <input type="text" name="nome" value={this.state.nome} disabled={this.state.editavel} onChange={this.handleChange} className="form-control" />
               </div>
 
-              <div className="col-sm d-flex flex-column">
-                <label>Sobrenome</label>
-                <input type="text" name="sobrenome" value={this.state.sobrenome} onChange={this.handleChange} className="form-control" />
-              </div>
+              {this.state.tipoDePessoa === 'fisica'
+                ?
+                <div className="col-sm d-flex flex-column">
+                  <label>Sobrenome</label>
+                  <input type="text" name="sobrenome" value={this.state.sobrenome} disabled={this.state.editavel} onChange={this.handleChange} className="form-control" />
+                </div>
+                :
+                <div className="col-sm d-flex flex-column">
+                  <label>Razao Social</label>
+                  <input type="text" name="sobrenome" value={this.state.razaoSocial} disabled={this.state.editavel} onChange={this.handleChange} className="form-control" />
+                </div>
+              }
             </div>
-
             <div className="row mt-4">
               <div className="col-sm d-flex flex-column d-flex flex-column">
                 <label>Telefone</label>
-                <input type="text" name="telefone" value={this.state.telefone} onChange={this.handleChange} className="form-control" />
+                <input type="text" name="telefone" value={this.state.telefone} disabled={this.state.editavel} onChange={this.handleChange} className="form-control" />
               </div>
 
               <div className="col-sm d-flex flex-column">
@@ -180,74 +204,75 @@ class DetalhesImovel extends React.Component {
           </button>
           </Modal.Footer>
         </Modal>
-        {this.state.imovel === null ?
-          <center>
-            <Spinner
-              sizeUnit={"px"}
-              // height={4}
-              // width={100}
-              size={15}
-              margin={70}
-              color={'#4d6d6d'}
-            />
-          </center>
-          :
-          <>
-            <div className="container-fluid p-2 my-4 tam-fixo" style={{ width: '70%' }}>
-              <ImageGallery items={this.state.imagens} showBullets autoPlay
-                thumbnailPosition={"left"} showPlayButton={false}
+        {
+          this.state.imovel === null ?
+            <center>
+              <Spinner
+                sizeUnit={"px"}
+                // height={4}
+                // width={100}
+                size={15}
+                margin={70}
+                color={'#4d6d6d'}
               />
-            </div>
-            <div className="container-fluid banner-desc-imovel d-flex">
-
-              <div className="desc">
-                <p>{`${imovel.imovel} para comprar em`} </p>
-                <div className="d-flex">
-                  <p className="text-primary">{`${imovel.rua} - ${imovel.cidade}, ${imovel.estado} `}</p>
-                  <img src={location} style={{ width: "20px", margin: "5px" }} /></div>
-                <p className="mt-3">A PARTIR DE</p>
-                <h1>{`R$ ${imovel.preco}`}</h1>
-                <div className="d-flex justify-content-between">
-                  <div className="d-flex flex-column align-items-center">
-                    <img src={area} style={{ width: "25px", margin: "5px" }} />
-                    <p>{`${imovel.areaUtil} - ${imovel.areaTotal} m²`}</p>
-                  </div>
-                  <div className="d-flex flex-column align-items-center">
-                    <img src={bathroom} style={{ width: "25px", margin: "5px" }} />
-                    <p>{`${imovel.banheiro} Suíte${imovel.banheiro > 1 ? 's' : ''}`}</p>
-                  </div>
-                  <div className="d-flex flex-column align-items-center">
-                    <img src={bed} style={{ width: "25px", margin: "5px" }} />
-                    <p>{`${imovel.quartos} Quarto${imovel.quartos > 1 ? 's' : ''}`}</p>
-                  </div>
-                  <div className="d-flex flex-column align-items-center">
-                    <img src={car} style={{ width: "25px", margin: "5px" }} />
-                    <p>{`${imovel.garagem} Vaga${imovel.garagem > 1 ? 's' : ''}`}</p>
-                  </div>
-                </div>
+            </center>
+            :
+            <>
+              <div className="container-fluid p-2 my-4 tam-fixo" style={{ width: '70%' }}>
+                <ImageGallery items={this.state.imagens} showBullets autoPlay
+                  thumbnailPosition={"left"} showPlayButton={false}
+                />
               </div>
-              <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
-                <button type="button" onClick={() => this.mostrarModal(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
-                  TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
-                </button>
-                <img src={`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.href}&size=150x150&format=svg`} alt="QRCode" />
-              </div>
-            </div>
+              <div className="container-fluid banner-desc-imovel d-flex">
 
-            {this.props.location.state !== undefined && this.props.location.state.validar === true ?
-              <>
-                <div className="container">
-                  <div className="row">
-                    <div className="col">
-                      <button type="button" onClick={() => this.validarImovel("Validar")} className="btn btn-lg btn-login d-flex align-items-baseline">Validar Imovel</button>
-                      <button type="button" onClick={() => this.validarImovel("Excluido")} className="btn btn-lg btn-login d-flex align-items-baseline">Recusar Imovel</button>
+                <div className="desc">
+                  <p>{`${imovel.imovel} para comprar em`} </p>
+                  <div className="d-flex">
+                    <p className="text-primary">{`${imovel.rua} - ${imovel.cidade}, ${imovel.estado} `}</p>
+                    <img src={location} style={{ width: "20px", margin: "5px" }} /></div>
+                  <p className="mt-3">A PARTIR DE</p>
+                  <h1>{`R$ ${imovel.preco}`}</h1>
+                  <div className="d-flex justify-content-between">
+                    <div className="d-flex flex-column align-items-center">
+                      <img src={area} style={{ width: "25px", margin: "5px" }} />
+                      <p>{`${imovel.areaUtil} - ${imovel.areaTotal} m²`}</p>
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                      <img src={bathroom} style={{ width: "25px", margin: "5px" }} />
+                      <p>{`${imovel.banheiro} Suíte${imovel.banheiro > 1 ? 's' : ''}`}</p>
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                      <img src={bed} style={{ width: "25px", margin: "5px" }} />
+                      <p>{`${imovel.quartos} Quarto${imovel.quartos > 1 ? 's' : ''}`}</p>
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                      <img src={car} style={{ width: "25px", margin: "5px" }} />
+                      <p>{`${imovel.garagem} Vaga${imovel.garagem > 1 ? 's' : ''}`}</p>
                     </div>
                   </div>
                 </div>
-              </>
-              : null}
+                <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
+                  <button type="button" onClick={() => this.mostrarModal(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
+                    TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
+                  </button>
+                  <img src={`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.href}&size=150x150&format=svg`} alt="QRCode" />
+                </div>
+              </div>
 
-          </>
+              {this.props.location.state !== undefined && this.props.location.state.validar === true ?
+                <>
+                  <div className="container">
+                    <div className="row">
+                      <div className="col">
+                        <button type="button" onClick={() => this.validarImovel("Validar")} className="btn btn-lg btn-login d-flex align-items-baseline">Validar Imovel</button>
+                        <button type="button" onClick={() => this.validarImovel("Excluido")} className="btn btn-lg btn-login d-flex align-items-baseline">Recusar Imovel</button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+                : null}
+
+            </>
         }
         <Footer />
       </>
