@@ -38,6 +38,13 @@ class SolicitacoesDoImovel extends React.Component {
                                             Telefone: {item.telefone}
                                         </label>
                                     </div>
+
+                                    <div className="col">
+                                        <label>
+                                            Horario para Contato: {item.horarioDeContato}
+                                        </label>
+                                    </div>
+
                                 </div>
                                 <hr />
                             </div>
