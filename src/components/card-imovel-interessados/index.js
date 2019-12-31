@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from 'react';
 import './card-imovel-interessados.css';
 
 import { Link } from 'react-router-dom';
+import { PulseLoader as Spinner } from 'react-spinners';
 
 import firebase from '../../config/firebase';
 import { connect } from 'react-redux';
@@ -40,7 +41,17 @@ class CardImovelInteressados extends Component {
         const { id, img, titulo, detalhes, solicitacoes, interessados, } = this.props;
 
         if (this.state.url === "")
-            return null;
+            return (
+                <div className={`col-md-3 col-sm-12`}>
+                    <div className="mx-auto">
+                        <Spinner
+                            sizeUnit={"px"}
+                            size={15}
+                            color={'#4d6d6d'}
+                        />
+                    </div>
+                </div>
+            );
 
         return (
             <div className={`col-md-3 col-sm-12`}>
@@ -55,7 +66,7 @@ class CardImovelInteressados extends Component {
                     <div className="card-body">
                         <h5>{this.state.imovel.imovel}</h5>
                         <p className="card-text">{this.state.imovel.preco}</p>
-                        
+
 
                         <p className="small text-justify">{`${solicitacoes} solicitações a este imóvel. `}</p>
 
