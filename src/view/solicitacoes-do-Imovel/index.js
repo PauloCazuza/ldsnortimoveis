@@ -19,55 +19,82 @@ class SolicitacoesDoImovel extends React.Component {
 
         this.state = {
             interessados: this.props.location.state.interessados,
+            imagens: [],
+            urlImg: [],
         }
+
+        console.log(this.props.match)
+        this.receberDoBd = this.receberDoBd.bind(this);
+        this.receberDoBd(this.props.location.state.imagens);
     }
+
+    async receberDoBd(imagens) {
+
+
+        var fotos = [];
+        var images = [];
+        await imagens.map(item => {
+            firebase.storage().ref(`imagensImoveis/${item}`).getDownloadURL().then(url => {
+                console.log(url);
+                fotos.push(url);
+                images.push({
+                    original: url,
+                    thumbnail: url,
+                })
+                if (fotos.length === this.props.location.state.imagens.length) {
+                    this.setState({ urlImg: fotos, imagens: images });
+                }
+            });
+        })
+    }
+
     render() {
         return (
             <>
                 <Navbar />
                 <div className="container">
-                
-                <div className="container-fluid p-2 my-4 tam-fixo" style={{ width: '70%' }}>
-                  <ImageGallery items={this.state.imagens} showBullets autoPlay
-                    thumbnailPosition={"left"} showPlayButton={false}
-                  />
-                </div>
-                
-                  <div className="container">
-                    <div className="d-flex align-items-end pl-2 pt-5"> <img src={solicitacoesImovel} style={{ width: "45px" }}/> 
-                    <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Dados de contato</h4> </div>
-                    <hr className="my"></hr>
 
-                    {this.state.interessados.map((item, index) => {
-                        return (
-                            <div className="container mt-5" key={index}>
+                    <div className="container-fluid p-2 my-4 tam-fixo" style={{ width: '70%' }}>
+                        <ImageGallery items={this.state.imagens} showBullets autoPlay
+                            thumbnailPosition={"left"} showPlayButton={false}
+                        />
+                    </div>
 
-                                <div className="row pl-5">
-                                    <div className="col-1">
-                                      <img src={person} style={{ width: "35px" }}/> 
-                                    </div>
-                                    <div className="col-5">
-                                        <label>
-                                            {item.nome} {item.sobrenome ? item.sobrenome : item.razaoSocial}
-                                        </label><br/>
-                                        <label>
-                                            Telefone: {item.telefone}
-                                        </label>
-                                    </div>
+                    <div className="container">
+                        <div className="d-flex align-items-end pl-2 pt-5"> <img src={solicitacoesImovel} style={{ width: "45px" }} />
+                            <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Dados de contato</h4> </div>
+                        <hr className="my"></hr>
 
-                                    <div className="col">
-                                        <label>
-                                            Horario para Contato: {item.horarioDeContato}
-                                        </label>
+                        {this.state.interessados.map((item, index) => {
+                            return (
+                                <div className="container mt-5" key={index}>
+
+                                    <div className="row pl-5">
+                                        <div className="col-1">
+                                            <img src={person} style={{ width: "35px" }} />
+                                        </div>
+                                        <div className="col-5">
+                                            <label>
+                                                {item.nome} {item.sobrenome ? item.sobrenome : item.razaoSocial}
+                                            </label><br />
+                                            <label>
+                                                Telefone: {item.telefone}
+                                            </label>
+                                        </div>
+
+                                        <div className="col">
+                                            <label>
+                                                Horario para Contato: {item.horarioDeContato}
+                                            </label>
+                                        </div>
+
                                     </div>
+                                    <hr />
 
                                 </div>
-                                <hr />
-
-                            </div>
-                        );
-                    })}
-                  </div>
+                            );
+                        })}
+                    </div>
                 </div>
                 <Footer />
             </>

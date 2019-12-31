@@ -89,8 +89,6 @@ class DetalhesImovel extends React.Component {
           }
         });
       })
-
-
     })
   }
 
