@@ -209,8 +209,6 @@ class DetalhesImovel extends React.Component {
             <center>
               <Spinner
                 sizeUnit={"px"}
-                // height={4}
-                // width={100}
                 size={15}
                 margin={70}
                 color={'#4d6d6d'}

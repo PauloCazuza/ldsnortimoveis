@@ -5,6 +5,9 @@ import { PulseLoader as Spinner } from 'react-spinners';
 import Footer from '../../components/footer';
 import { connect } from 'react-redux';
 import CardImovelInteressados from '../../components/card-imovel-interessados';
+import './interesses-solicitados.css'
+
+import solicitacoesImovel from '../administrador/images/deal.svg'
 
 class InteressesSolicitados extends React.Component {
 
@@ -26,8 +29,13 @@ class InteressesSolicitados extends React.Component {
         return (
             <>
                 <NavBar />
-                <div className="container-fluid pb-5 container-cinza">
-                    <div className="row p-2">
+                <div className="container pb-5">
+                  <div className="container">
+                    <div className="d-flex align-items-end pl-2 pt-5"> <img src={solicitacoesImovel} style={{ width: "55px" }}/> 
+                    <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Solicitações de Imóveis</h4> </div>
+                    <hr className="my"></hr>
+                    
+                    <div className="row p-2 content-card-solicitacao">
                         {this.state.interessesSolicitados.map((item, index) => {
                             return (
                                 <>
@@ -39,6 +47,7 @@ class InteressesSolicitados extends React.Component {
                             )
                         })}
                     </div>
+                  </div>
                 </div>
                 <Footer />
             </>

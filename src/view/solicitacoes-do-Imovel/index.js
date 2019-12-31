@@ -7,6 +7,10 @@ import { connect } from 'react-redux';
 
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
+import ImageGallery from 'react-image-gallery';
+
+import solicitacoesImovel from './images/telephone.svg'
+import person from './images/user.svg'
 
 class SolicitacoesDoImovel extends React.Component {
 
@@ -21,19 +25,31 @@ class SolicitacoesDoImovel extends React.Component {
         return (
             <>
                 <Navbar />
-                <div className="container my-2">
+                <div className="container">
+                
+                <div className="container-fluid p-2 my-4 tam-fixo" style={{ width: '70%' }}>
+                  <ImageGallery items={this.state.imagens} showBullets autoPlay
+                    thumbnailPosition={"left"} showPlayButton={false}
+                  />
+                </div>
+                
+                  <div className="container">
+                    <div className="d-flex align-items-end pl-2 pt-5"> <img src={solicitacoesImovel} style={{ width: "45px" }}/> 
+                    <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Dados de contato</h4> </div>
+                    <hr className="my"></hr>
+
                     {this.state.interessados.map((item, index) => {
                         return (
-                            <div key={index}>
-                                <div className="row">
-                                    <div className="col">
-                                        <label>
-                                            {item.nome} {item.sobrenome !== undefined ? item.sobrenome : item.razaoSocial}
-                                        </label>
+                            <div className="container mt-5" key={index}>
+
+                                <div className="row pl-5">
+                                    <div className="col-1">
+                                      <img src={person} style={{ width: "35px" }}/> 
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col">
+                                    <div className="col-5">
+                                        <label>
+                                            {item.nome} {item.sobrenome ? item.sobrenome : item.razaoSocial}
+                                        </label><br/>
                                         <label>
                                             Telefone: {item.telefone}
                                         </label>
@@ -47,9 +63,11 @@ class SolicitacoesDoImovel extends React.Component {
 
                                 </div>
                                 <hr />
+
                             </div>
                         );
                     })}
+                  </div>
                 </div>
                 <Footer />
             </>
