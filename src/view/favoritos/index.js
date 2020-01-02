@@ -67,7 +67,7 @@ class Favoritos extends React.Component {
                   <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Meus Favoritos</h4> </div>
                   <hr className="my"></hr>
                 </div>
-                <div className="container py-5">
+                <div className="container p-2">
 
 				          <div className="row p-2">
                     {this.state.carregando 

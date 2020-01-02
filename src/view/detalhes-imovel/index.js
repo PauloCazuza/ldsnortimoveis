@@ -181,8 +181,8 @@ class DetalhesImovel extends React.Component {
                 </div>
               }
             </div>
-            <div className="row mt-4">
-              <div className="col-sm d-flex flex-column d-flex flex-column">
+            <div className="row">
+              <div className="col-sm d-flex flex-column">
                 <label>Telefone</label>
                 <input type="text" name="telefone" value={this.state.telefone} disabled={this.state.editavel} onChange={this.handleChange} className="form-control" />
               </div>
@@ -257,13 +257,9 @@ class DetalhesImovel extends React.Component {
 
               {this.props.location.state !== undefined && this.props.location.state.validar === true ?
                 <>
-                  <div className="container">
-                    <div className="row">
-                      <div className="col">
-                        <button type="button" onClick={() => this.validarImovel("Validar")} className="btn btn-lg btn-login d-flex align-items-baseline">Validar Imovel</button>
-                        <button type="button" onClick={() => this.validarImovel("Excluido")} className="btn btn-lg btn-login d-flex align-items-baseline">Recusar Imovel</button>
-                      </div>
-                    </div>
+                  <div className="col d-flex justify-content-around mb-5">
+                    <button type="button" onClick={() => this.validarImovel("Validar")} className="btn-lg d-flex align-items-baseline btn-success">Validar Imóvel <i class="ml-2 fas fa-check"></i></button>
+                    <button type="button" onClick={() => this.validarImovel("Excluido")} className="btn-lg d-flex align-items-baseline btn-danger">Recusar Imóvel <i class="ml-2 fas fa-times"></i></button>
                   </div>
                 </>
                 : null}

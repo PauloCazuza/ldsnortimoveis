@@ -29,8 +29,6 @@ class SolicitacoesDoImovel extends React.Component {
     }
 
     async receberDoBd(imagens) {
-
-
         var fotos = [];
         var images = [];
         await imagens.map(item => {
@@ -52,13 +50,10 @@ class SolicitacoesDoImovel extends React.Component {
         return (
             <>
                 <Navbar />
-                <div className="container">
-
-                    <div className="container-fluid p-2 my-4 tam-fixo" style={{ width: '70%' }}>
-                        <ImageGallery items={this.state.imagens} showBullets autoPlay
-                            thumbnailPosition={"left"} showPlayButton={false}
-                        />
-                    </div>
+                <div className="container p-5">
+                    <ImageGallery items={this.state.imagens} showBullets autoPlay
+                        thumbnailPosition={"left"} showPlayButton={false}
+                    />
 
                     <div className="container">
                         <div className="d-flex align-items-end pl-2 pt-5"> <img src={solicitacoesImovel} style={{ width: "45px" }} />
@@ -68,7 +63,6 @@ class SolicitacoesDoImovel extends React.Component {
                         {this.state.interessados.map((item, index) => {
                             return (
                                 <div className="container mt-5" key={index}>
-
                                     <div className="row pl-5">
                                         <div className="col-1">
                                             <img src={person} style={{ width: "35px" }} />
@@ -87,10 +81,8 @@ class SolicitacoesDoImovel extends React.Component {
                                                 Horario para Contato: {item.horarioDeContato}
                                             </label>
                                         </div>
-
                                     </div>
                                     <hr />
-
                                 </div>
                             );
                         })}
