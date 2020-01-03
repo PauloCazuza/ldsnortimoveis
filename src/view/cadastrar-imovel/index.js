@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import './cadastrar-imovel.css';
 import {Link, Redirect} from 'react-router-dom';
 import { BounceLoader as Spinner } from 'react-spinners';
+import InputMask from 'react-input-mask';
+import CurrencyInput from 'react-currency-input';
 
 import firebase from '../../config/firebase';
 import 'firebase/auth';
@@ -120,8 +122,6 @@ function CadastrarImovel() {
             })
     }    
 
-    //{	useSelector(state => state.usuarioLogado) === 0 ? <Redirect to="/login" /> : null
-    //}
     return(
         <>
             <NavBar />
@@ -168,7 +168,9 @@ function CadastrarImovel() {
                     <div className="row">
                         <div className="col-4">
                             <label>CEP</label>
-                            <input type="text" onChange={ e => setCep(e.target.value)} value={cep} className="form-control" placeholder="00000 - 000"/>
+                            {/* <input type="text" onChange={ e => setCep(e.target.value)} value={cep} className="form-control" placeholder="00000 - 000"/> */}
+                            <InputMask mask="99.999-999" maskChar=" " placeholder="00.000-000" 
+                            className="form-control" onChange={ e => setCep(e.target.value)} value={cep}/>
                         </div>
 
                         <div className="col-4">
@@ -207,7 +209,9 @@ function CadastrarImovel() {
 
                         <div className="col-4">
                             <label>Telefone</label>
-                            <input type="text" onChange={ e => setTelefone(e.target.value)} className="form-control"/>
+                            {/* <input type="text" onChange={ e => setTelefone(e.target.value)} className="form-control"/> */}
+
+                            <InputMask mask="(99) 9 9999-9999" maskChar=" " placeholder="" className="form-control" onChange={ e => setTelefone(e.target.value)} value={telefone}/>
                         </div>
 
                         <div className="col-4">
@@ -230,20 +234,20 @@ function CadastrarImovel() {
                         </div>
 
                         <div className="col-4">
-                                <label>Area Útil </label>
-                                <input type="number" onChange={ e => setAreaUtil(e.target.value)} className="form-control" />                                
+                            <label>Area Útil </label>
+                            <input type="number" onChange={ e => setAreaUtil(e.target.value)} className="form-control" />                                
                         </div>
 
                         <div className="col-4">
-                                <label>Quartos</label>
-                                <input type="text" onChange={ e => setQuartos(e.target.value)} className="form-control"/>
+                            <label>Quartos</label>
+                            <input type="text" onChange={ e => setQuartos(e.target.value)} className="form-control"/>
                         </div>
                     </div>
 
                     <div className="row">
                         <div className="col-4">
-                                <label>Banheiros </label>
-                                <input type="number" onChange={ e => setBanheiro(e.target.value)} className="form-control"/>
+                            <label>Banheiros </label>
+                            <input type="number" onChange={ e => setBanheiro(e.target.value)} className="form-control"/>
                         </div>
 
                         <div className="col-4">
@@ -253,7 +257,7 @@ function CadastrarImovel() {
                         
                         <div className="col-4">
                             <label>Valor do Imóvel</label>
-                            <input type="number" onChange={ e => setPreco(e.target.value)} className="form-control"/>
+                            <CurrencyInput value={preco} onChangeEvent={ e => setPreco(e.target.value)} className="form-control" decimalSeparator="," thousandSeparator="." />
                         </div>
                     </div>
 
