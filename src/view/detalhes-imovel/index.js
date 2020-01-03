@@ -247,12 +247,18 @@ class DetalhesImovel extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
-                  <button type="button" onClick={() => this.mostrarModal(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
-                    TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
-                  </button>
-                  <img src={`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.href}&size=150x150&format=svg`} alt="QRCode" />
-                </div>
+                {
+                  this.props.location.state === undefined || this.props.location.state.validar === false
+                    ?
+                    <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
+                      <button type="button" onClick={() => this.mostrarModal(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
+                        TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
+                      </button>
+                      <img src={`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.href}&size=150x150&format=svg`} alt="QRCode" />
+                    </div>
+                    :
+                    null
+                }
               </div>
 
               {this.props.location.state !== undefined && this.props.location.state.validar === true ?

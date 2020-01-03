@@ -111,7 +111,7 @@ export default class Administrador extends React.Component {
                 <CardOption link="/interessessolicitados" quant={this.state.contInteressados} interessesSolicitados={this.state.listaInteressesSolicitados} interessesSolicitadosPorId={this.state.listaInteressesSolicitadosPorImovel} legenda="Interesses Solicitados" funcaoDoCard={this.funcaoTeste} img={interesse} />
               </div>
               <div class="col-sm">
-                <CardOption link="" legenda="Gerenciar Corretores" funcaoDoCard={this.funcaoTeste} img={corretor} />
+                <CardOption link="/gerenciarcorretor" legenda="Gerenciar Corretores" funcaoDoCard={this.funcaoTeste} img={corretor} />
               </div>
             </div>
             <div class="row">

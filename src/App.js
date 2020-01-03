@@ -19,6 +19,7 @@ import Administrador from './view/administrador';
 import ValidarImovel from './view/validar-imovel';
 import InteressesSolicitados from './view/interesses-solicitados';
 import SolicitacoesDoImovel from './view/solicitacoes-do-Imovel';
+import GerenciarCorretor from './view/gerenciar-corretor';
 
 function App() {
 	return (
@@ -34,6 +35,7 @@ function App() {
 					<Route exact path="/validarimovel" component={ValidarImovel} />
 					<Route exact path="/administrador" component={Administrador} /> 
 					<Route exact path="/interessessolicitados" component={InteressesSolicitados} />
+					<Route exact path="/gerenciarcorretor" component={GerenciarCorretor} />
 					<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
 					<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
 					<Route path="/solicitacoesdoimovel/:id" component={SolicitacoesDoImovel} />

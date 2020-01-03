@@ -50,9 +50,9 @@ class NavBar extends React.Component {
 			if (resultado.docs[0] !== undefined)
 				// await this.setState({usuario: resultado.docs[0].data()})
 				firebase.storage().ref(`imagensUsuarios/${resultado.docs[0].data().foto}`).getDownloadURL().then(url => {
-					this.props.SetFotoENome({ email: email, pessoa: resultado.docs[0].data().pessoa, foto: url, nome: resultado.docs[0].data().nome, usuario: { id: resultado.docs[0].id, foto: url, ...resultado.docs[0].data() } });
+					this.props.SetFotoENome({ email: email, pessoa: resultado.docs[0].data().tipoDePessoa, foto: url, nome: resultado.docs[0].data().nome, usuario: { id: resultado.docs[0].id, foto: url, ...resultado.docs[0].data() } });
 				}).catch(erro => {
-					this.props.SetFotoENome({ email: email, pessoa: resultado.docs[0].data().pessoa, foto: avatarDefault, nome: resultado.docs[0].data().nome, usuario: { id: resultado.docs[0].id, foto: avatarDefault, ...resultado.docs[0].data() } });
+					this.props.SetFotoENome({ email: email, pessoa: resultado.docs[0].data().tipoDePessoa, foto: avatarDefault, nome: resultado.docs[0].data().nome, usuario: { id: resultado.docs[0].id, foto: avatarDefault, ...resultado.docs[0].data() } });
 				})
 		})
 

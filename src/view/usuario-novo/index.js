@@ -215,10 +215,10 @@ function UsuarioNovo(props) {
 
 			<div className="container py-4">
 				<div className="container">
-					<Tabs defaultActiveKey={pessoa} id="tab-cad" onSelect={key => setPessoa(key)}>
+					<Tabs id="tab-cad" onSelect={key => setPessoa(key)}>
 						{/* FORMULARIO DA PESSOA FISICA  */}
 						{
-							usuario === undefined || usuario.tipoDePessoa === "fisica" ?
+							usuario === undefined || usuario.tipoDePessoa === "fisica" || usuario.tipoDePessoa === "administrador" || usuario.tipoDePessoa === "corretor"  ?
 
 								<Tab eventKey="fisica" title="Pessoa Física">
 
