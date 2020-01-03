@@ -248,7 +248,7 @@ class DetalhesImovel extends React.Component {
                   </div>
                 </div>
                 {
-                  this.props.location.state === undefined || this.props.location.state.validar === false
+                  this.props.location.state === undefined || this.props.location.state.validar === undefined
                     ?
                     <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
                       <button type="button" onClick={() => this.mostrarModal(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
