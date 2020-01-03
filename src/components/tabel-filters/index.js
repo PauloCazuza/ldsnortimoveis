@@ -4,14 +4,36 @@ import Footer from '../../components/footer';
 import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
-import DataTable from 'react-data-table-component';
+import DataTable, { createTheme } from 'react-data-table-component';
+
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Switch from '@material-ui/core/Switch';
 
+createTheme('solariszed', {
+  text: {
+    primary: '#268bd2',
+    secondary: '#2aa198',
+  },
+  background: {
+    default: '#002b36',
+  },
+  context: {
+    background: '#cb4b16',
+    text: '#FFFFFF',
+  },
+  divider: {
+    default: '#073642',
+  },
+  action: {
+    button: 'rgba(0,0,0,.54)',
+    hover: 'rgba(0,0,0,.08)',
+    disabled: 'rgba(0,0,0,.12)',
+  },
+});
 
 const TextField = styled.input`
-  height: 32px;
-  width: 200px;
+  height: 40px;
+  width: 300px;
   border-radius: 3px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -19,30 +41,33 @@ const TextField = styled.input`
   border-bottom-right-radius: 0;
   border: 1px solid #e5e5e5;
   padding: 0 32px 0 16px;
-
+  margin-bottom: 50px;
   &:hover {
     cursor: pointer;
   }
 `;
 
 const ClearButton = styled(Button)`
+  color: white;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  height: 34px;
-  width: 32px;
+  border: none !important;
+  height: 40px;
+  width: 50px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
+  background: #f95c00 !important;
 `;
-
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
     <>
         <TextField id="search" type="text" placeholder="Filtrar Por Nome" value={filterText} onChange={onFilter} />
-        <ClearButton onClick={onClear}>X</ClearButton>
+        <ClearButton onClick={onClear}> <i class="fas fa-backspace"></i> </ClearButton>
     </>
 );
 
@@ -63,6 +88,33 @@ const columns = [
         sortable: true,
     },
 ];
+
+const customStyles = {
+  rows: {
+    style: {
+      minHeight: '72px', // override the row height
+      background: 'white',
+      color: 'black',
+      fontSize: '16px'
+    }
+  },
+  headCells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for head cells
+      paddingRight: '8px',
+      background: '#ff9900cc',
+      color: 'white',
+      fontSize: '18px',
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: '8px', // override the cell padding for data cells
+      paddingRight: '8px',
+      justifyText: 'center'
+    },
+  },
+};
 
 const DefinirPadrao = { rowsPerPageText: 'Linhas por página:', rangeSeparatorText: 'de', noRowsPerPage: false }
 
@@ -114,6 +166,7 @@ const BasicTable = ({ columns, dados, titulo, naoEncontrado }) => {
                 subHeaderComponent={subHeaderComponentMemo}
                 persistTableHead
                 noDataComponent={naoEncontrado}
+                customStyles={customStyles}
             />
         </>
     );

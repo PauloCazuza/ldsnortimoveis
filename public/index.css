@@ -4,14 +4,14 @@ html {
 body {
   font-family: 'Roboto' !important;
 }
-.btn {
+.btnA {
   background-color: transparent !important;
   border: 1px solid #ff9900 !important;
   color: #ff9900;
   border-radius: 0;   /*#ff9900 #f95c00*/
   box-sizing: border-box !important;
 }
-.btn:hover{
+.btnA:hover{
   background-color: #f95c00 !important;
   color: white;
 }

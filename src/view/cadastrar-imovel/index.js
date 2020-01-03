@@ -175,7 +175,7 @@ function CadastrarImovel() {
 
                         <div className="col-4">
                                 <label>UF </label>
-                                <input type="text" onChange={ e => setEstado(e.target.value)} value={estado} className="form-control"/>                                
+                                <input type="text" onChange={ e => setEstado(e.target.value)} value={estado} className="form-control"/>
                         </div>
 
                         <div className="col-4">
