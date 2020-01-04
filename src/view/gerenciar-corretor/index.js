@@ -1,10 +1,13 @@
 import React from 'react';
 import corretor from '../administrador/images/realtor.svg'
+
+import InputMask from 'react-input-mask';
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
-import firebase from '../../config/firebase';
 import BasicTable from '../../components/tabel-filters';
 import { PulseLoader as Spinner } from 'react-spinners';
+
+import firebase from '../../config/firebase';
 import './gerenciar-corretor.css'
 
 const corretoresBd = firebase.firestore().collection('usuarios');
@@ -54,7 +57,7 @@ class GerenciarCorretor extends React.Component {
         const { name, value } = event.target;
 
         this.setState({
-            [name]: value
+            [name]: value.toUpperCase()
         })
     }
 
@@ -67,9 +70,7 @@ class GerenciarCorretor extends React.Component {
             })
           })
     
-          // console.log("ok deu certo");
           this.setState({ corretoresCadastrados: corretoresCadastrados});
-          // console.log(resultado.docs)
         }).catch(erro => {
           alert('Problema de Conexão');
           console.log(erro)
@@ -101,11 +102,9 @@ class GerenciarCorretor extends React.Component {
                 })
                 this.setState({ nome: '', email: '', cpf: '', telefone: '', corretoresCadastrados: corretoresCadastrados })
                 alert('Corretor Cadastrado com Sucesso');
-                // alert("Favoritado")          
             }).catch(erro => {
                 var errorMessage = erro.message;
                 alert(errorMessage)
-                // alert("Erro ao favoritar")          
             })
         }.bind(this))
 
@@ -124,28 +123,43 @@ class GerenciarCorretor extends React.Component {
                 <form onSubmit={this.enviarCorretor}>
                     <div className="container">
                         <div className="row">
-                            <div className="col">
+                            <div className="col-sm-12 col-md-6">
                                 <label>Nome </label>
                                 <input type="text" name="nome" className="form-control" onChange={this.handleChange} value={this.state.nome} />
                             </div>
 
-                            <div className="col">
+                            <div className="col-sm-12 col-md-6">
                                 <label>Email </label>
                                 <input type="email" name="email" className="form-control" onChange={this.handleChange} value={this.state.email} />
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col">
+                            <div className="col-sm-12 col-md-6">
                                 <label>Telefone </label>
-                                <input type="number" name="telefone" className="form-control" onChange={this.handleChange} value={this.state.telefone} />
+                                <InputMask 
+                                    mask="(99) 9 9999-9999" 
+                                    maskChar=" " 
+                                    placeholder="" 
+                                    className="form-control" 
+                                    name="telefone" 
+                                    onChange={this.handleChange} value={this.state.telefone}
+                                />
                             </div>
 
-                            <div className="col">
+                            <div className="col-sm-12 col-md-6">
                                 <label>CPF </label>
-                                <input type="text" name="cpf" className="form-control" onChange={this.handleChange} value={this.state.cpf} />
+                                <InputMask 
+                                    mask="999.999.999-99" 
+                                    name="cpf" 
+                                    maskChar=" " 
+                                    placeholder="" 
+                                    className="form-control" 
+                                    onChange={this.handleChange} 
+                                    value={this.state.cpf} 
+                                />
                             </div>
                         </div>
-                        <div className="row mb-5 float-right">
+                        <div className="row float-right pb-4">
                             <div className="col-2">
                                 <button className="btn btn-cheio">Adicionar Corretor <i class="fas fa-plus-circle"></i></button>
                             </div>
@@ -156,7 +170,12 @@ class GerenciarCorretor extends React.Component {
                     this.state.corretoresCadastrados.length !== 0
                         ?
                         <div className="container pb-5">
-                            <BasicTable columns={columns} dados={this.state.corretoresCadastrados} titulo="Lista de Corretores" naoEncontrado={'Não foi possível encontrar nenhum corretor com essa busca!'} />
+                            <BasicTable 
+                                columns={columns} 
+                                dados={this.state.corretoresCadastrados} 
+                                titulo="Lista de Corretores" 
+                                naoEncontrado={'Não foi possível encontrar nenhum corretor com essa busca!'} 
+                            />
                         </div>
                         :
                         <div className="container pb-5">

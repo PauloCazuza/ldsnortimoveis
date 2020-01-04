@@ -93,7 +93,7 @@ const customStyles = {
   rows: {
     style: {
       minHeight: '72px', // override the row height
-      background: 'white',
+      background: 'wheat',
       color: 'black',
       fontSize: '16px'
     }
@@ -158,8 +158,10 @@ const BasicTable = ({ columns, dados, titulo, naoEncontrado }) => {
                 title={titulo}
                 columns={columns}
                 data={filteredItems}
-                // theme={theme}
+                striped
+                highlightOnHover
                 pagination
+                pointerOnHover
                 paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
                 subHeader
                 paginationComponentOptions={DefinirPadrao}
