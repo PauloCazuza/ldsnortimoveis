@@ -314,11 +314,6 @@ function UsuarioNovo(props) {
 													<label>Cidade</label>
 													<input onChange={(e) => { setCidade(e.target.value) }} type="text" value={cidade} className="form-control" placeholder="Sobral" />
 												</div>
-
-												<div className="col">
-													<label>Cidade</label>
-													<input onChange={(e) => { setCidade(e.target.value) }} type="text" value={cidade} className="form-control" placeholder="Sobral" />
-												</div>
 											</div>
 											<div className="row">
 												<div className="col">

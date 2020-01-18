@@ -42,7 +42,7 @@ class Home extends Component {
 
 	receberDoBD() {
 
-		db.get().then(async (resultado) => {
+		db.where('validar', '==', 'Validar').get().then(async (resultado) => {
 			let listaImoveis = [];
 			await resultado.docs.forEach(doc => {
 				listaImoveis.push({
