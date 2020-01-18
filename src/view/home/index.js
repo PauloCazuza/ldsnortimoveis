@@ -8,6 +8,7 @@ import Navbar from '../../components/navbar';
 import Search from '../../components/search';
 import Footer from '../../components/footer';
 import Carrousel from '../../components/carrousel';
+import LoginModal from '../../components/login-modal';
 
 import icone_search from './images/search.svg'
 import icone_home from './images/home.svg'
@@ -32,15 +33,18 @@ class Home extends Component {
 			pesquisa: '',
 			search: '',
 			filtro1: 'Comprar',
-			filtro2: 'Casa',
+      filtro2: 'Casa',
+      show: true,
 		}
 
-		this.receberDoBD();
-		this.handleChange = this.handleChange.bind(this);
+    this.receberDoBD = this.receberDoBD.bind(this);
+    this.receberDoBD();
+    this.handleChange = this.handleChange.bind(this);
 		// console.log(props.match.params);
-	}
+  }
 
 	receberDoBD() {
+    this.setState({ show: true })
 
 		db.where('validar', '==', 'Validar').get().then(async (resultado) => {
 			let listaImoveis = [];
@@ -177,6 +181,7 @@ class Home extends Component {
 						</div>
 					</div>
 				}
+
 				<Footer />
 			</>
 		);

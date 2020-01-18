@@ -6,6 +6,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import './carrousel.css';
 
 import { PulseLoader as Spinner } from 'react-spinners';
+import LoginModal from '../login-modal';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ class Carrousel extends React.Component {
       indice: 0,
       idFavoritos: [],
       logado: true,
+      show: false,
     }
 
     var favoritos = [], idFavoritos = [];
@@ -45,6 +47,7 @@ class Carrousel extends React.Component {
     this.favoritarImovel = this.favoritarImovel.bind(this);
     // this.retornarGallery = this.retornarGallery.bind(this);
     this.onSlideChanged = this.onSlideChanged.bind(this);
+    this.mostrarModal = this.mostrarModal.bind(this);
     this.receberUrl();
     this.verSeEfavorito();
 
@@ -66,6 +69,10 @@ class Carrousel extends React.Component {
         this.setState({ url: foto });
 
     })
+  }
+
+  mostrarModal(status) {
+    this.setState({ show: status })
   }
 
   verSeEfavorito() {
@@ -100,8 +107,11 @@ class Carrousel extends React.Component {
   }
 
   async favoritarImovel(id, index) {
-    if (this.props.usuarioEmail === "")
-      return alert("Faça Login para poder favoritar");
+    if (this.props.usuarioEmail === "") {
+      this.setState({ show: true })
+      return
+    }
+      // return alert("Faça Login para poder favoritar");
 
     if (this.state.favoritos[index] === true)
       return;
@@ -223,7 +233,7 @@ class Carrousel extends React.Component {
       );
 
     return (
-
+      <>
       <div className="container courrosel">
         <AliceCarousel mouseTrackingEnabled
           buttonsDisabled={true}
@@ -238,6 +248,12 @@ class Carrousel extends React.Component {
 
         </AliceCarousel>
       </div>
+      {
+        this.state.show ?
+          <LoginModal show={true} funcShow={this.mostrarModal} />
+          : null
+      }
+      </>
     );
   }
 }

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import firebase from '../../config/firebase';
 import { connect } from 'react-redux';
+import LoginModal from '../login-modal';
 
 
 const db = firebase.firestore().collection('favoritos');
@@ -21,8 +22,10 @@ class ImovelCard extends Component {
       favorito: this.props.usuarioEmail === "" ? false : null,
       idFavorito: null,
       logado: true,
+      show: false,
     }
     this.verSeEfavorito = this.verSeEfavorito.bind(this);
+    this.mostrarModal = this.mostrarModal.bind(this);
     this.receberUrl(this.props.img[0]);
     this.verSeEfavorito();
   }
@@ -41,8 +44,11 @@ class ImovelCard extends Component {
       });
   }
   async favoritarImovel() {
-    if (this.props.usuarioEmail === "")
-      return alert("Faça Login para poder favoritar");
+    if (this.props.usuarioEmail === "") {
+      this.setState({ show: true })
+      return
+    }
+    // return alert("Faça Login para poder favoritar");
 
     if (this.state.favorito === true)
       return;
@@ -62,6 +68,10 @@ class ImovelCard extends Component {
       // alert("Erro ao favoritar")          
     })
 
+  }
+
+  mostrarModal(status) {
+    this.setState({ show: status })
   }
 
   receberUrl(img) {
@@ -92,47 +102,55 @@ class ImovelCard extends Component {
     const { id, img, titulo, preco, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros, validar } = this.props;
 
     return (
-      <div className={`${this.state.md} col-sm-12`}>
-        {(this.props.usuarioEmail === "" && this.state.logado === true) ? this.desfavoritar() : null}
-        <div className="card">
-          <div className="d-flex justify-content-end div-heart">
-            {this.state.favorito === null ? null :
-              <>
-                <i hidden={this.state.favorito} className="far fa-heart fa-2x heart" onClick={() => this.favoritarImovel()} />
-                <i hidden={!this.state.favorito} className="fas fa-heart fa-2x heart red" onClick={() => this.excluirFavorito()} />
-              </>
-            }
-          </div>
-          <Link to={{
-                  pathname: "/detalhesimovel/" + id,
-                  state: { validar: validar }
-                }}>
-            <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
-          </Link>
+      <>
+        <div className={`${this.state.md} col-sm-12`}>
+          {(this.props.usuarioEmail === "" && this.state.logado === true) ? this.desfavoritar() : null}
+          <div className="card">
+            <div className="d-flex justify-content-end div-heart">
+              {this.state.favorito === null ? null :
+                <>
+                  <i hidden={this.state.favorito} className="far fa-heart fa-2x heart" onClick={() => this.favoritarImovel()} />
+                  <i hidden={!this.state.favorito} className="fas fa-heart fa-2x heart red" onClick={() => this.excluirFavorito()} />
+                </>
+              }
+            </div>
+            <Link to={{
+              pathname: "/detalhesimovel/" + id,
+              state: { validar: validar }
+            }}>
+              <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
+            </Link>
 
-          <div className="card-body">
-            <h5>{titulo}</h5>
-            <h4>{`R$ ${preco}`}</h4>
-            <p className="card-text">{detalhes}</p>
+            <div className="card-body">
+              <h5>{titulo}</h5>
+              <h4>{`R$ ${preco}`}</h4>
+              <p className="card-text">{detalhes}</p>
 
-            <p className="small text-justify">{`${titulo} com ${areaUtil}m² de área construída, ${areaTotal}m²
+              <p className="small text-justify">{`${titulo} com ${areaUtil}m² de área construída, ${areaTotal}m²
                     de terreno, com ${quartos} quartos, possui ${banheiros} banheiro(s).`}</p>
 
-            <div className="row rodape-card d-flex align-items-center">
-              <div className="col-6">
-                <Link to={{
-                  pathname: "/detalhesimovel/" + id,
-                  state: { validar: validar }
-                }} className="btn btn-sm">Detalhes <i className="fas fa-angle-right"></i></Link>
+              <div className="row rodape-card d-flex align-items-center">
+                <div className="col-6">
+                  <Link to={{
+                    pathname: "/detalhesimovel/" + id,
+                    state: { validar: validar }
+                  }} className="btn btn-sm">Detalhes <i className="fas fa-angle-right"></i></Link>
+                </div>
+                <div className="col-6 text-right">
+                  <i className="fas fa-eye"> </i> <span>{visualizacoes}</span>
+                </div>
               </div>
-              <div className="col-6 text-right">
-                <i className="fas fa-eye"> </i> <span>{visualizacoes}</span>
-              </div>
-            </div>
 
+            </div>
           </div>
         </div>
-      </div>
+        {
+          this.state.show ?
+            <LoginModal show={true} funcShow={this.mostrarModal} />
+            : null
+        }
+
+      </>
     );
   }
 }
