@@ -21,6 +21,7 @@ import InteressesSolicitados from './view/interesses-solicitados';
 import SolicitacoesDoImovel from './view/solicitacoes-do-Imovel';
 import GerenciarCorretor from './view/gerenciar-corretor';
 import Corretor from './view/corretor';
+import FeedbackCorretor from './view/feedback-corretor';
 
 function App() {
 	return (
@@ -41,6 +42,7 @@ function App() {
 					<Route exact path="/paginaPesquisa/:filters" component={PaginaPesquisa} />
 					<Route path="/detalhesimovel/:id" component={DetalhesImovel} />
 					<Route path="/solicitacoesdoimovel/:id" component={SolicitacoesDoImovel} />
+					<Route path="/corretor/darfeedback/" component={FeedbackCorretor} />
 				</Router>
 			</PersistGate>
 		</Provider>

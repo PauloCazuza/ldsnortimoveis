@@ -144,14 +144,21 @@ class ImovelCard extends Component {
                   <div className="col-6">
                     <Link to={{
                       pathname: "/corretor/darfeedback/",
-                      state: { validar: validar, corretores: this.props.corretores }
+                      state: { validar: validar, corretores: this.props.corretores, id: id }
                     }} className="btn btn-sm">Dar Feedback<i className="fas fa-angle-right"></i></Link>
                   </div>
                 </div>
               }
-              <div className="col-6 text-right">
-                <i className="fas fa-eye"> </i> <span>{visualizacoes}</span>
-              </div>
+
+              {
+                this.props.pessoa === "administrador"
+                  ?
+                  <div className="col-6 text-right">
+                    <i className="fas fa-eye"> </i> <span>{visualizacoes}</span>
+                  </div>
+                  : null
+              }
+
 
 
             </div>
@@ -170,9 +177,9 @@ class ImovelCard extends Component {
 
 
 const mapStateToProps = state => {
-  const { usuarioEmail } = state;
+  const { usuarioEmail, pessoa } = state;
 
-  return { usuarioEmail: usuarioEmail }
+  return { usuarioEmail: usuarioEmail, pessoa: pessoa }
 }
 
 export default connect(mapStateToProps, null)(ImovelCard);

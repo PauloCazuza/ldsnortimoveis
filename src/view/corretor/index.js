@@ -24,7 +24,7 @@ class Corretor extends React.Component {
 
     receberDoBD() {
         var listaImoveis = [];
-        db.get().then(async (resultado) => {
+        db.where('validar', '==', 'Validar').where('corretor', '==', this.props.usuarioEmail).get().then(async (resultado) => {
             await resultado.docs.forEach(doc => {
                 listaImoveis.push({
                     id: doc.id,
