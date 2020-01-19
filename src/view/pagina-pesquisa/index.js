@@ -64,6 +64,8 @@ class paginaPesquisa extends React.Component {
 
       var consulta = firebase.firestore().collection('imoveis');
 
+      consulta = consulta.where('validar', '==', 'Validar');
+
       if (search !== "") {
           search = search[0].toUpperCase() + search.substring(1,search.length).toLowerCase()
           consulta = consulta.where('cidade', '==', search);

@@ -42,6 +42,12 @@ function CadastrarImovel() {
     const [usuario, setUsuario] = useState(useSelector(state => state.usuarioEmail));
     const [preco, setPreco] = useState('Preço do Imovel');
 
+    // DESABILITAR INPUTS
+    const [disUF, setDisUF] = useState(false);
+    const [disCidade, setDisCidade] = useState(false);
+    const [disBairro, setDisBairro] = useState(false);
+    const [disRua, setDisRua] = useState(false);
+
     // MENSAGEM PARA O USUARIO
     const [msg, setMsg] = useState();
 
@@ -60,20 +66,71 @@ function CadastrarImovel() {
 
                 if (data.cep !== "")
                     setCep(data.cep);
-                if (data.uf !== "")
+                if (data.uf !== "") {
                     setEstado(data.uf);
-                if (data.localidade !== "")
+                    setDisUF(true);
+                } else {
+                    setEstado("");
+                    setDisUF(false);
+                }
+                if (data.localidade !== "") {
                     setCidade(data.localidade);
-                if (data.bairro !== "")
+                    setDisCidade(true);
+                } else {
+                    setCidade("");
+                    setDisCidade(false);
+                }
+                if (data.bairro !== "") {
                     setBairro(data.bairro);
-                if (data.logradouro !== "")
+                    setDisBairro(true);
+                } else {
+                    setBairro("");
+                    setDisBairro(false);
+                }
+                if (data.logradouro !== "") {
                     setRua(data.logradouro);
-
+                    setDisRua(true);
+                } else {
+                    setRua("");
+                    setDisRua(false);
+                }
             }).catch(erro => {
-                console.log('erro')
+                if (disBairro) {
+                    setBairro("");
+                    setDisBairro(false);
+                }
+                if (disCidade) {
+                    setCidade("");
+                    setDisCidade(false);
+                }
+                if (disUF) {
+                    setEstado("");
+                    setDisUF(false);
+                }
+                if (disRua) {
+                    setRua("");
+                    setDisRua(false);
+                }
             })
+        } else {
+            if (disBairro) {
+                setBairro("");
+                setDisBairro(false);
+            }
+            if (disCidade) {
+                setCidade("");
+                setDisCidade(false);
+            }
+            if (disUF) {
+                setEstado("");
+                setDisUF(false);
+            }
+            if (disRua) {
+                setRua("");
+                setDisRua(false);
+            }
         }
-        
+
     }
 
     const storage = firebase.storage();
@@ -179,29 +236,29 @@ function CadastrarImovel() {
                             <label>CEP</label>
                             {/* <input type="text" onChange={ e => setCep(e.target.value)} value={cep} className="form-control" placeholder="00000 - 000"/> */}
                             <InputMask mask="99.999-999" maskChar=" " placeholder="00.000-000"
-                                className="form-control" onChange={e => setCep(e.target.value)} value={cep} />
+                                className="form-control" onChange={e => { setCep(e.target.value); receberPorCep(e.target.value) }} value={cep} />
                         </div>
 
                         <div className="col-4">
                             <label>UF </label>
-                            <input type="text" onChange={e => setEstado(e.target.value)} value={estado} className="form-control" />
+                            <input type="text" disabled={disUF} onChange={e => setEstado(e.target.value)} value={estado} className="form-control" />
                         </div>
 
                         <div className="col-4">
                             <label>Cidade</label>
-                            <input type="text" onChange={e => setCidade(e.target.value)} value={cidade} className="form-control" />
+                            <input type="text" disabled={disCidade} onChange={e => setCidade(e.target.value)} value={cidade} className="form-control" />
                         </div>
                     </div>
 
                     <div className="row">
                         <div className="col-4">
                             <label>Bairro </label>
-                            <input type="text" onChange={e => setBairro(e.target.value)} value={bairro} className="form-control" />
+                            <input type="text" disabled={disBairro} onChange={e => setBairro(e.target.value)} value={bairro} className="form-control" />
                         </div>
 
                         <div className="col-4">
                             <label>Rua</label>
-                            <input type="text" onChange={e => setRua(e.target.value)} value={rua} className="form-control" />
+                            <input type="text" disabled={disRua} onChange={e => setRua(e.target.value)} value={rua} className="form-control" />
                         </div>
 
                         <div className="col-4">
@@ -231,7 +288,7 @@ function CadastrarImovel() {
                 </form>
 
                 <div className="row">
-                    <div className="d-flex align-items-end pl-2"> <img src={description} style={{ width: "45px" }} /> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Descriçaõ do Imóvel</h4> </div>
+                    <div className="d-flex align-items-end pl-2"> <img src={description} style={{ width: "45px" }} /> <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Descrição do Imóvel</h4> </div>
                 </div>
                 <hr className="my"></hr>
 

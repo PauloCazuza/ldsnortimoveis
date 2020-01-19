@@ -23,6 +23,8 @@ import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { height } from 'window-size';
 
+import CurrencyInput from 'react-currency-input';
+
 const interessesSolicitados = firebase.firestore().collection('interessesSolicitados');
 
 var images = [
@@ -47,12 +49,15 @@ class DetalhesImovel extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log(this.props.location.state.corretores)
+
     this.state = {
       imovel: null,
       urlImg: [],
       imagens: [],
       telaCheia: false,
       modal: false, // false
+      modalValidar: false, //false
       tipoDePessoa: this.props.usuario !== undefined ? this.props.usuario.tipoDePessoa : 'fisica',
       nome: this.props.usuario !== undefined ? this.props.usuario.nome : '',
       sobrenome: this.props.usuario !== undefined ? this.props.usuario.sobrenome : '',
@@ -60,6 +65,9 @@ class DetalhesImovel extends React.Component {
       telefone: this.props.usuario !== undefined ? this.props.usuario.telefone : '',
       editavel: this.props.usuario !== undefined ? true : false,
       horarioDeContato: '',
+      preco: '',
+      corretores: this.props.location.state.corretores === undefined ? [] : this.props.location.state.corretores,
+      corretor: '',
     }
 
     console.log(this.props.match.params.id)
@@ -71,7 +79,7 @@ class DetalhesImovel extends React.Component {
   async receberDoBd() {
 
     await firebase.firestore().collection('imoveis').doc(this.props.match.params.id).get().then(async resultado => {
-      this.setState({ imovel: resultado.data() })
+      this.setState({ imovel: resultado.data(), preco: resultado.data().preco })
       console.log(this.state.imovel);
 
       var fotos = [];
@@ -93,18 +101,28 @@ class DetalhesImovel extends React.Component {
   }
 
   validarImovel(validar) {
+    if (this.state.corretor === "")
+      return alert('Selecione um corretor');
+
     db.collection('imoveis').doc(this.props.match.params.id).set({
       ...this.state.imovel,
+      preco: this.state.preco,
       validar: validar,
+      corretor: this.state.corretor,
     }).then(() => {
       alert("Foi Validado");
+      this.mostrarModalValidar(false);
     }).catch(erro => {
       alert("Deu erro na validação");
     })
   }
 
-  mostrarModal(status) {
+  mostrarModalInteresse(status) {
     this.setState({ modal: status })
+  }
+
+  mostrarModalValidar(status) {
+    this.setState({ modalValidar: status })
   }
 
   async handleChange(event) {
@@ -122,9 +140,9 @@ class DetalhesImovel extends React.Component {
     if (tipoDePessoa === 'fisica' && (nome === '' || telefone === '' || sobrenome === '' || horarioDeContato === ''))
       return alert('Preencha todos os campos solicitados');
 
-    this.mostrarModal(false);
+    this.mostrarModalInteresse(false);
 
-    if (tipoDePessoa === 'fisica') {
+    if (tipoDePessoa === 'fisica' || tipoDePessoa === 'corretor' || tipoDePessoa === 'administrador') {
       interessesSolicitados.add({
         idMovel: this.props.match.params.id,
         nome: nome,
@@ -157,7 +175,7 @@ class DetalhesImovel extends React.Component {
     return (
       <>
         <Navbar />
-        <Modal size="lg" show={this.state.modal} onHide={() => this.mostrarModal(false)} animation={true}>
+        <Modal size="lg" show={this.state.modal} onHide={() => this.mostrarModalInteresse(false)} animation={true}>
           <Modal.Header closeButton>
             <Modal.Title><i class="fas fa-exclamation-circle"></i> Antes de enviar seu interesse confirme seus dados.</Modal.Title>
           </Modal.Header>
@@ -194,7 +212,7 @@ class DetalhesImovel extends React.Component {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <button className="btn btn-login btn-cancel" onClick={() => this.mostrarModal(false)}>
+            <button className="btn btn-login btn-cancel" onClick={() => this.mostrarModalInteresse(false)}>
               Fechar
           </button>
             <button className="btn btn-login btn-confirme" onClick={() => this.enviarInteresse()}>
@@ -202,6 +220,46 @@ class DetalhesImovel extends React.Component {
           </button>
           </Modal.Footer>
         </Modal>
+        <Modal size="lg" show={this.state.modalValidar} onHide={() => this.mostrarModalValidar(false)} animation={true}>
+          <Modal.Header closeButton>
+            <Modal.Title><i class="fas fa-exclamation-circle"></i> Confirme os dados antes de validar</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row">
+              <div className="col-sm d-flex flex-column d-flex flex-column">
+                <label>Preço</label>
+                <CurrencyInput value={this.state.preco} onChangeEvent={this.handleChange} name="preco" className="form-control" decimalSeparator="," thousandSeparator="." />
+              </div>
+            </div>
+            {
+              this.props.location.state !== undefined && this.state.corretores !== []
+                ?
+                <div className="row">
+                  <div className="col-sm d-flex flex-column d-flex flex-column">
+                    <label>Vincular Corretor ao Imóvel</label>
+                    <select class="form-control" id="exampleFormControlSelect1" value={this.state.corretor} name="corretor" onChange={this.handleChange} >
+                      <option></option>
+                      {this.state.corretores.map(item => {
+                        return (
+                          <option value={item.email}> {item.nome} </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+                : null
+            }
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-login btn-cancel" onClick={() => this.mostrarModalValidar(false)}>
+              Fechar
+          </button>
+            <button className="btn btn-login btn-confirme" onClick={() => this.validarImovel("Validar")}>
+              Validar Imóvel
+          </button>
+          </Modal.Footer>
+        </Modal>
+
         {
           this.state.imovel === null ?
             <center>
@@ -251,7 +309,7 @@ class DetalhesImovel extends React.Component {
                   this.props.location.state === undefined || this.props.location.state.validar === undefined
                     ?
                     <div className="w-100 d-flex flex-columln align-items-center justify-content-around">
-                      <button type="button" onClick={() => this.mostrarModal(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
+                      <button type="button" onClick={() => this.mostrarModalInteresse(true)} className="btn btn-lg btn-login d-flex align-items-baseline">
                         TENHO INTERESSE <i class="far fa-thumbs-up ml-1"></i>
                       </button>
                       <img src={`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.href}&size=150x150&format=svg`} alt="QRCode" />
@@ -264,7 +322,7 @@ class DetalhesImovel extends React.Component {
               {this.props.location.state !== undefined && this.props.location.state.validar === true ?
                 <>
                   <div className="col d-flex justify-content-around mb-5">
-                    <button type="button" onClick={() => this.validarImovel("Validar")} className="btn-lg d-flex align-items-baseline btn-success">Validar Imóvel <i class="ml-2 fas fa-check"></i></button>
+                    <button type="button" onClick={() => this.mostrarModalValidar(true)} className="btn-lg d-flex align-items-baseline btn-success">Validar Imóvel <i class="ml-2 fas fa-check"></i></button>
                     <button type="button" onClick={() => this.validarImovel("Excluido")} className="btn-lg d-flex align-items-baseline btn-danger">Recusar Imóvel <i class="ml-2 fas fa-times"></i></button>
                   </div>
                 </>

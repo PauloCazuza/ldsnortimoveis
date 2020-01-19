@@ -44,13 +44,11 @@ class GerenciarCorretor extends React.Component {
             email: '',
             cpf: '',
             telefone: '',
-            corretoresCadastrados: [],
+            corretoresCadastrados: this.props.location.state.corretores,
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.enviarCorretor = this.enviarCorretor.bind(this);
-        this.receberCorretores = this.receberCorretores.bind(this);
-        this.receberCorretores();
     }
 
     handleChange(event) {
@@ -60,22 +58,6 @@ class GerenciarCorretor extends React.Component {
             [name]: value.toUpperCase()
         })
     }
-
-    receberCorretores() {
-        corretoresBd.where('tipoDePessoa', '==', 'corretor').get().then(async (resultado) => {
-          let corretoresCadastrados = [];
-          await resultado.docs.forEach(doc => {
-            corretoresCadastrados.push({
-              ...doc.data()
-            })
-          })
-    
-          this.setState({ corretoresCadastrados: corretoresCadastrados});
-        }).catch(erro => {
-          alert('Problema de Conexão');
-          console.log(erro)
-        })
-      }
 
     enviarCorretor(e) {
         e.preventDefault();

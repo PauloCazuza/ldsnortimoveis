@@ -20,6 +20,7 @@ import ValidarImovel from './view/validar-imovel';
 import InteressesSolicitados from './view/interesses-solicitados';
 import SolicitacoesDoImovel from './view/solicitacoes-do-Imovel';
 import GerenciarCorretor from './view/gerenciar-corretor';
+import Corretor from './view/corretor';
 
 function App() {
 	return (
@@ -29,6 +30,7 @@ function App() {
 					<Route exact path="/" component={Home} />
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/novousuario" component={NovoUsuario} />
+					<Route exact path="/corretor" component={Corretor} />
 					<Route exact path="/recuperarsenha" component={RecuperarSenha} />
 					<Route exact path="/cadastrarimovel" component={CadastrarImovel} />
 					<Route exact path="/favoritos" component={Favoritos} />

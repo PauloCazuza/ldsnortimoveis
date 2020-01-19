@@ -29,16 +29,16 @@ function UsuarioNovo(props) {
 	const [senha, setSenha] = useState();
 	const [verSenha, setVerSenha] = useState();
 	const [telefone, setTelefone] = useState(usuario === undefined ? '' : usuario.telefone);
-	const [estado, setEstado] = useState(usuario === undefined ? '' : usuario.estado);
-	const [cidade, setCidade] = useState(usuario === undefined ? '' : usuario.cidade);
+	const [estado, setEstado] = useState(usuario === undefined ? '' : (usuario.estado === undefined ? '' : usuario.estado));
+	const [cidade, setCidade] = useState(usuario === undefined ? '' : (usuario.cidade === undefined ? '' : usuario.cidade));
 	const [foto, setFoto] = useState(usuario === undefined ? { name: "" } : { name: usuario.foto });
 
 
 	// PESSOA FÍSICA
 	const [nome, setNome] = useState(usuario === undefined ? '' : usuario.nome);
-	const [sobrenome, setSobrenome] = useState(usuario === undefined ? '' : usuario.sobrenome);
+	const [sobrenome, setSobrenome] = useState(usuario === undefined ? '' : (usuario.sobrenome === undefined ? '' : usuario.sobrenome));
 	const [cpf, setcpf] = useState(usuario === undefined ? '' : usuario.cpf);
-	const [dataDeNasc, setDataDeNasc] = useState(usuario === undefined ? '' : usuario.dataDeNasc)
+	const [dataDeNasc, setDataDeNasc] = useState(usuario === undefined ? '' : (usuario.dataDeNasc === undefined ? '' : usuario.dataDeNasc))
 
 	// PESSOA JURIDICA
 	const [razaoSocial, setRazaoSocial] = useState(usuario === undefined ? '' : usuario.razaoSocial);
@@ -67,7 +67,7 @@ function UsuarioNovo(props) {
 		}
 
 		firebase.auth().createUserWithEmailAndPassword(email, senha).then(function () {
-			if (pessoa === "fisica") {
+			if (pessoa === 'fisica') {
 				db.collection('usuarios').add({
 					nome: nome,
 					sobrenome: sobrenome,
@@ -126,7 +126,7 @@ function UsuarioNovo(props) {
 			enviarFoto(foto)
 		}
 
-		if (pessoa === "fisica") {
+		if (pessoa === 'fisica' || pessoa === 'corretor' || pessoa === 'administrador') {
 			db.collection('usuarios').doc(usuario.id).set({
 				nome: nome,
 				sobrenome: sobrenome,

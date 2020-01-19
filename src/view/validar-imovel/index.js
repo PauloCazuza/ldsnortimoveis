@@ -13,6 +13,7 @@ class ValidarImovel extends React.Component {
 
         this.state = {
             imoveis: this.props.location.state.imoveis,
+            corretores: this.props.location !== undefined ? this.props.location.state.corretores : null
         }
     }
 
@@ -31,7 +32,7 @@ class ValidarImovel extends React.Component {
                     return (
                         <>
                           <ImovelCard id={item.id} key={index} img={item.foto} titulo={item.imovel}
-                              preco={item.preco}
+                              preco={item.preco} corretores={this.state.corretores}
                               detalhes={item.rua} areaUtil={item.areaUtil}
                               areaTotal={item.areaTotal} quartos={item.quartos}
                               banheiros={item.banheiro} validar={true} visualizacoes={'1'} />

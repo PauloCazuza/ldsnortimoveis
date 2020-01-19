@@ -116,7 +116,7 @@ class ImovelCard extends Component {
             </div>
             <Link to={{
               pathname: "/detalhesimovel/" + id,
-              state: { validar: validar }
+              state: { validar: validar, corretores: this.props.corretores}
             }}>
               <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
             </Link>
@@ -133,7 +133,7 @@ class ImovelCard extends Component {
                 <div className="col-6">
                   <Link to={{
                     pathname: "/detalhesimovel/" + id,
-                    state: { validar: validar }
+                    state: { validar: validar, corretores: this.props.corretores}
                   }} className="btn btn-sm">Detalhes <i className="fas fa-angle-right"></i></Link>
                 </div>
                 <div className="col-6 text-right">

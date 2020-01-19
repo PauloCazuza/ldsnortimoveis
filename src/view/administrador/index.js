@@ -13,6 +13,7 @@ import corretor from './images/realtor.svg'
 
 const db = firebase.firestore().collection('imoveis');
 const interessesSolicitados = firebase.firestore().collection('interessesSolicitados');
+const corretoresBd = firebase.firestore().collection('usuarios');
 
 export default class Administrador extends React.Component {
 
@@ -23,6 +24,7 @@ export default class Administrador extends React.Component {
       listaImoveis: [],
       listaInteressesSolicitados: [],
       listaInteressesSolicitadosPorImovel: [],
+      corretoresCadastrados: [],
       carregando: false,
       contInteressados: 0,
     }
@@ -30,8 +32,26 @@ export default class Administrador extends React.Component {
     this.funcaoTeste = this.funcaoTeste.bind(this);
     this.receberDoBdImoveis = this.receberDoBdImoveis.bind(this);
     this.receberDoBdInteressesSolicitados = this.receberDoBdInteressesSolicitados.bind(this);
+    this.receberCorretores = this.receberCorretores.bind(this);
+    this.receberCorretores();
     this.receberDoBdImoveis();
     this.receberDoBdInteressesSolicitados();
+  }
+
+  receberCorretores() {
+    corretoresBd.where('tipoDePessoa', '==', 'corretor').get().then(async (resultado) => {
+      let corretoresCadastrados = [];
+      await resultado.docs.forEach(doc => {
+        corretoresCadastrados.push({
+          ...doc.data()
+        })
+      })
+
+      this.setState({ corretoresCadastrados: corretoresCadastrados});
+    }).catch(erro => {
+      alert('Problema de Conexão');
+      console.log(erro)
+    })
   }
 
   receberDoBdImoveis() {
@@ -105,13 +125,13 @@ export default class Administrador extends React.Component {
           <div class="container p-3">
             <div class="row">
               <div class="col-sm">
-                <CardOption link="/validarimovel" quant={this.state.listaImoveis.length} imoveis={this.state.listaImoveis} legenda="Validar Imóveis" funcaoDoCard={this.funcaoTeste} img={validarImovel} />
+                <CardOption link="/validarimovel" quant={this.state.listaImoveis.length} corretores={this.state.corretoresCadastrados} imoveis={this.state.listaImoveis} legenda="Validar Imóveis" funcaoDoCard={this.funcaoTeste} img={validarImovel} />
               </div>
               <div class="col-sm">
                 <CardOption link="/interessessolicitados" quant={this.state.contInteressados} interessesSolicitados={this.state.listaInteressesSolicitados} interessesSolicitadosPorId={this.state.listaInteressesSolicitadosPorImovel} legenda="Interesses Solicitados" funcaoDoCard={this.funcaoTeste} img={interesse} />
               </div>
               <div class="col-sm">
-                <CardOption link="/gerenciarcorretor" legenda="Gerenciar Corretores" funcaoDoCard={this.funcaoTeste} img={corretor} />
+                <CardOption link="/gerenciarcorretor" legenda="Gerenciar Corretores" corretores={this.state.corretoresCadastrados} funcaoDoCard={this.funcaoTeste} img={corretor} />
               </div>
             </div>
             <div class="row">
