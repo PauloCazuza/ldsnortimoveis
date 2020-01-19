@@ -8,7 +8,6 @@ import Navbar from '../../components/navbar';
 import Search from '../../components/search';
 import Footer from '../../components/footer';
 import Carrousel from '../../components/carrousel';
-import LoginModal from '../../components/login-modal';
 
 import icone_search from './images/search.svg'
 import icone_home from './images/home.svg'
@@ -38,9 +37,14 @@ class Home extends Component {
 		}
 
     this.receberDoBD = this.receberDoBD.bind(this);
+    this.mostrarModal = this.mostrarModal.bind(this);
     this.receberDoBD();
     this.handleChange = this.handleChange.bind(this);
 		// console.log(props.match.params);
+  }
+
+  mostrarModal(status) {
+    this.setState({ show: status })
   }
 
 	receberDoBD() {
@@ -181,7 +185,6 @@ class Home extends Component {
 						</div>
 					</div>
 				}
-
 				<Footer />
 			</>
 		);

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import AlertModal from '../alert-modal'
 
 import firebase from '../../config/firebase';
 
@@ -18,10 +19,13 @@ class LoginModal extends Component {
       email: "",
       senha: "",
       carregando: false,
+      showAlert: false,
     }
+
     this.handleChange = this.handleChange.bind(this)
     this.logar = this.logar.bind(this)
     this.submitForm = this.submitForm.bind(this)
+    this.mostrarModalAlert = this.mostrarModalAlert.bind(this);
   }
 
   handleChange(e) {
@@ -33,11 +37,15 @@ class LoginModal extends Component {
   logar() {
     const { email, senha } = this.state;
 
-    if (email === "")
-      return alert('Preencha o email');
+    if (email === "") {
+      this.setState({ showAlert: true, titulo: "Sem e-mail" })
+      return
+    }
 
-    if (senha === "")
-      return alert('Preencha a senha');
+    if (senha === "") {
+      this.setState({ showAlert: true, titulo: "Sem senha" })
+      return
+    }
 
     this.setState({ carregando: false })
     firebase.auth().signInWithEmailAndPassword(email, senha).then(resultado => {
@@ -57,9 +65,13 @@ class LoginModal extends Component {
       this.props.funcShow(false);
       this.setState({ carregando: false })
     }).catch(erro => {
-      alert('DEU ERRO' + erro.message);
-      this.setState({ carregando: false })
+      // alert('DEU ERRO' + erro.message);
+      this.setState({ carregando: false, showAlert: true, titulo: `${erro}` })
     })
+  }
+
+  mostrarModalAlert(status) {
+    this.setState({ showAlert: status })
   }
 
   mostrarModal(status) {
@@ -75,6 +87,13 @@ class LoginModal extends Component {
   render() {
 
     return (
+      <>
+      {
+        this.state.showAlert ?
+          <AlertModal title={ this.state.titulo } message show={ this.state.showAlert } funcShow={this.mostrarModalAlert} />
+          :
+          null
+      }
       <Modal size="lg" show={this.state.show} onHide={() => this.mostrarModal(false)} animation={true}>
         <Modal.Header closeButton>
           <Modal.Title><i class="fas fa-key"></i> Faça login para continuar </Modal.Title>
@@ -105,6 +124,7 @@ class LoginModal extends Component {
             </button>
         </Modal.Footer>
       </Modal>
+      </>
     )
   }
 }

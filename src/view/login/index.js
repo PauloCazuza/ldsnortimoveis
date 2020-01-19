@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './login.css';
 
+import AlertModal from '../../components/alert-modal'
 import { Link, Redirect } from 'react-router-dom';
 
 import { ClipLoader as Spinner } from 'react-spinners';
@@ -18,16 +19,24 @@ function Login() {
 	const [senha, setSenha] = useState("");
 	const [carregando, setCarregando] = useState(false);
 	const [fechado, setFechado] = useState(false);
+	const [showAlert, setShowAlert] = useState(false);
+	const [title, setTitle] = useState("Titulo kkkkk");
 
 	const dispatch = useDispatch();
 
 	function logar() {
 
-		if (email === "")
-			return alert('Preencha o email');
+		if (email === "") {
+      setTitle("Preencha seu email")
+      setShowAlert(true)
+			return
+    }
 
-		if (senha === "")
-			return alert('Preencha a senha');
+		if (senha === "") {
+      setTitle("Preencha sua senha")
+      setShowAlert(true)
+			return 
+    }
 
 		setCarregando(true);
 		firebase.auth().signInWithEmailAndPassword(email, senha).then(resultado => {
@@ -37,7 +46,8 @@ function Login() {
 			setCarregando(false);
 
 		}).catch(erro => {
-			alert('DEU ERRO')
+      setTitle(`${erro}`)
+      setShowAlert(true)
 			setCarregando(false)
 		})
 	}
@@ -50,6 +60,10 @@ function Login() {
 	function submitForm2(e) {
 		e.preventDefault()
 	}
+
+  function mostrarModalAlert(status) {
+    setShowAlert(status)
+  }
 
 	return (
 		<>
@@ -111,6 +125,12 @@ function Login() {
 					</div>
 				</div>
 			</div>
+      {
+        showAlert ?
+          <AlertModal title={ title } message show={ showAlert } funcShow={mostrarModalAlert} />
+          :
+          null
+      }
 			<Footer />
 		</>
 	)
