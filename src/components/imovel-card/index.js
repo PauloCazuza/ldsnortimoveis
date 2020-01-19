@@ -99,7 +99,7 @@ class ImovelCard extends Component {
   }
 
   render() {
-    const { id, img, titulo, preco, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros, validar } = this.props;
+    const { id, img, titulo, preco, detalhes, visualizacoes, areaUtil, areaTotal, quartos, banheiros, corretor, validar } = this.props;
 
     return (
       <>
@@ -116,7 +116,7 @@ class ImovelCard extends Component {
             </div>
             <Link to={{
               pathname: "/detalhesimovel/" + id,
-              state: { validar: validar, corretores: this.props.corretores}
+              state: { validar: validar, corretores: this.props.corretores }
             }}>
               <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
             </Link>
@@ -129,17 +129,30 @@ class ImovelCard extends Component {
               <p className="small text-justify">{`${titulo} com ${areaUtil}m² de área construída, ${areaTotal}m²
                     de terreno, com ${quartos} quartos, possui ${banheiros} banheiro(s).`}</p>
 
-              <div className="row rodape-card d-flex align-items-center">
-                <div className="col-6">
-                  <Link to={{
-                    pathname: "/detalhesimovel/" + id,
-                    state: { validar: validar, corretores: this.props.corretores}
-                  }} className="btn btn-sm">Detalhes <i className="fas fa-angle-right"></i></Link>
+              {corretor === undefined
+                ?
+                <div className="row rodape-card d-flex align-items-center">
+                  <div className="col-6">
+                    <Link to={{
+                      pathname: "/detalhesimovel/" + id,
+                      state: { validar: validar, corretores: this.props.corretores }
+                    }} className="btn btn-sm">Detalhes <i className="fas fa-angle-right"></i></Link>
+                  </div>
                 </div>
-                <div className="col-6 text-right">
-                  <i className="fas fa-eye"> </i> <span>{visualizacoes}</span>
+                :
+                <div className="row rodape-card d-flex align-items-center">
+                  <div className="col-6">
+                    <Link to={{
+                      pathname: "/corretor/darfeedback/",
+                      state: { validar: validar, corretores: this.props.corretores }
+                    }} className="btn btn-sm">Dar Feedback<i className="fas fa-angle-right"></i></Link>
+                  </div>
                 </div>
+              }
+              <div className="col-6 text-right">
+                <i className="fas fa-eye"> </i> <span>{visualizacoes}</span>
               </div>
+
 
             </div>
           </div>

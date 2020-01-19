@@ -100,7 +100,7 @@ class NavBar extends React.Component {
 										}}>Editar Perfil</Link>
 									</li>
 									<li className="nav-item">
-										<Link className="nav-link btn-nav link-hover" onClick={() => this.props.Lougout()}>Sair</Link>
+										<Link className="nav-link btn-nav link-hover" to="/" onClick={() => this.props.Lougout()}>Sair</Link>
 									</li>
 								</>
 
