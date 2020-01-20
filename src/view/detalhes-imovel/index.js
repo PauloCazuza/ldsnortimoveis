@@ -49,8 +49,6 @@ class DetalhesImovel extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.location.state.corretores)
-
     this.state = {
       imovel: null,
       urlImg: [],
@@ -66,7 +64,7 @@ class DetalhesImovel extends React.Component {
       editavel: this.props.usuario !== undefined ? true : false,
       horarioDeContato: '',
       preco: '',
-      corretores: this.props.location.state.corretores === undefined ? [] : this.props.location.state.corretores,
+      corretores: this.props.location.state === undefined ? [] : this.props.location.state.corretores,
       corretor: '',
     }
 

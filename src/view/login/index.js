@@ -20,7 +20,7 @@ function Login() {
 	const [carregando, setCarregando] = useState(false);
 	const [fechado, setFechado] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
-	const [title, setTitle] = useState("Titulo kkkkk");
+	const [title, setTitle] = useState("");
 
 	const dispatch = useDispatch();
 

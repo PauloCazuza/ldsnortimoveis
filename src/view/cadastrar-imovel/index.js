@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { BounceLoader as Spinner } from 'react-spinners';
 import InputMask from 'react-input-mask';
 import CurrencyInput from 'react-currency-input';
+import AlertModal from '../../components/alert-modal'
 
 import firebase from '../../config/firebase';
 import 'firebase/auth';
@@ -31,16 +32,18 @@ function CadastrarImovel() {
     const [telefone, setTelefone] = useState("");
     const [complemento, setComplemento] = useState("");
     const [horarioDeContato, setHorarioDeContato] = useState("");
-    const [imovel, setImovel] = useState();
-    const [transacao, setTransacao] = useState();
+    const [imovel, setImovel] = useState("");
+    const [transacao, setTransacao] = useState("");
     const [foto, setFoto] = useState([]);
-    const [areaTotal, setAreaTotal] = useState();
-    const [areaUtil, setAreaUtil] = useState();
-    const [quartos, setQuartos] = useState();
-    const [banheiro, setBanheiro] = useState();
-    const [garagem, setGaragem] = useState();
+    const [areaTotal, setAreaTotal] = useState("");
+    const [areaUtil, setAreaUtil] = useState("");
+    const [quartos, setQuartos] = useState("");
+    const [banheiro, setBanheiro] = useState("");
+    const [garagem, setGaragem] = useState("");
     const [usuario, setUsuario] = useState(useSelector(state => state.usuarioEmail));
     const [preco, setPreco] = useState('Preço do Imovel');
+    const [title, setTitle] = useState("");
+    const [showAlert, setShowAlert] = useState(false);
 
     // DESABILITAR INPUTS
     const [disUF, setDisUF] = useState(false);
@@ -140,13 +143,21 @@ function CadastrarImovel() {
         await storage.ref(`imagensImoveis/${nomeDaFoto}/`).put(foto).then(
 
         ).catch(erro => {
-            console.log('Erro ao enviar a foto ', foto.name);
+            setTitle("Erro ao enviar a foto")
+            setShowAlert(true)
         });
     }
 
+    function mostrarModalAlert(status) {
+      setShowAlert(status)
+    }
+    
     function enviarImovel() {
-        if (foto.length === 0)
-            return alert("Não Há Imagem");
+        if (foto.length === 0) {
+          setTitle("Não há imagem selecionada")
+          setShowAlert(true)
+          return
+        }
 
         setMsg(null);
         setCarregando(true);
@@ -181,10 +192,14 @@ function CadastrarImovel() {
             validar: 'NaoValidado',
         }).then(() => {
             setCarregando(false)
-            setMsg('sucesso')
+            setMsg('Imóvel cadastrado com sucesso, aguarde validação do imóvel')
+            setTitle("Sucesso")
+            setShowAlert(true)
         }).catch(erro => {
             setCarregando(false)
             setMsg('erro')
+            setTitle("Não há imagem selecionada")
+            setShowAlert("Erro")
         })
     }
 
@@ -343,11 +358,16 @@ function CadastrarImovel() {
                         :
                         <button type="button" onClick={enviarImovel} className="btn btn-lg btn-login my-4">Enviar</button>
                 }
-
-
-                {msg === 'sucesso' ? <span>Imovel enviado para a equipe Nortimoveis avaliar, aguarde o contato</span> : null}
-                {msg === 'erro' ? <span>Ocorreu um erro ao enviar seu Imóvel</span> : null}
+                
             </div>
+            
+            {
+              showAlert ?
+              <AlertModal title={ title } message show={ showAlert } funcShow={mostrarModalAlert} />
+              :
+              null
+            }
+
             <Footer />
         </>
     );
