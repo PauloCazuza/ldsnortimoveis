@@ -64,7 +64,7 @@ class DetalhesImovel extends React.Component {
       editavel: this.props.usuario !== undefined ? true : false,
       horarioDeContato: '',
       preco: '',
-      corretores: this.props.location.state.corretores === undefined ? [] : this.props.location.state.corretores,
+      corretores: this.props.state !== undefined ?(this.props.location.state.corretores === undefined ? [] : this.props.location.state.corretores) : [],
       corretor: '',
     }
 
