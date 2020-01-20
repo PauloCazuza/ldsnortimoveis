@@ -5,6 +5,8 @@ import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import firebase from '../../config/firebase';
 
+import feedback from '../administrador/images/check-list.svg'
+
 const db = firebase.firestore();
 
 class FeedbackCorretor extends React.Component {
@@ -53,8 +55,13 @@ class FeedbackCorretor extends React.Component {
         return (
             <>
                 <Navbar />
-                <div className="container">
-                    <div className="row">
+                <div className="container pb-5">
+                  <div className="container">
+                    <div className="d-flex align-items-end pl-2 pt-5"> <img src={feedback} style={{ width: "55px" }}/> 
+                    <h4 className="mt-4 ml-3 mb-0 display-3 title align-text-bottom">Dar Feedback</h4> </div>
+                    <hr className="my mb-4"></hr>
+
+                    <div className="row mb-4">
                         <div className="col-2">
                             <label>Nome do Cliente:</label>
                         </div>
@@ -82,14 +89,15 @@ class FeedbackCorretor extends React.Component {
                             ?
                             <div className="row rodape-card d-flex align-items-center">
                                 <div className="col-6">
-                                    <button className="btn btn-sm" onClick={e => this.cadastrarFeedback()}>Enviar <i className="fas fa-angle-right"></i></button>
+                                    <button className="btn btn-lg" onClick={e => this.cadastrarFeedback()}>Enviar <i className="fas fa-angle-right"></i></button>
                                 </div>
                             </div>
                             :
                             <label> Aguarde ... </label>
                     }
-                </div>
 
+                  </div>
+                </div>
 
                 <Footer />
             </>
