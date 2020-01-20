@@ -14,6 +14,7 @@ import corretor from './images/realtor.svg'
 const db = firebase.firestore().collection('imoveis');
 const interessesSolicitados = firebase.firestore().collection('interessesSolicitados');
 const corretoresBd = firebase.firestore().collection('usuarios');
+const feedbackImoveis = firebase.firestore().collection('feedbackImoveis');
 
 export default class Administrador extends React.Component {
 
@@ -24,15 +25,20 @@ export default class Administrador extends React.Component {
       listaImoveis: [],
       listaInteressesSolicitados: [],
       listaInteressesSolicitadosPorImovel: [],
+      listaFeedbackDosCorretoresPorImovel: [],
+      feedbackDosCorretores: [],
       corretoresCadastrados: [],
       carregando: false,
       contInteressados: 0,
+      contFeedback: 0,
     }
 
     this.funcaoTeste = this.funcaoTeste.bind(this);
     this.receberDoBdImoveis = this.receberDoBdImoveis.bind(this);
     this.receberDoBdInteressesSolicitados = this.receberDoBdInteressesSolicitados.bind(this);
     this.receberCorretores = this.receberCorretores.bind(this);
+    this.receberDoBdFeedbackImoveis = this.receberDoBdFeedbackImoveis.bind(this);
+    this.receberDoBdFeedbackImoveis();
     this.receberCorretores();
     this.receberDoBdImoveis();
     this.receberDoBdInteressesSolicitados();
@@ -110,6 +116,43 @@ export default class Administrador extends React.Component {
     })
   }
 
+  receberDoBdFeedbackImoveis() {
+    var cont = 0;
+    feedbackImoveis.get().then(async (resultado) => {
+      let listaFeedbackDosCorretoresPorImovel = [];
+      let feedbackDosCorretores = [];
+
+      await resultado.docs.forEach(doc => {
+        
+        if (listaFeedbackDosCorretoresPorImovel[doc.data().idImovel] === undefined) {
+          feedbackDosCorretores.push({
+            id: doc.id,
+            ...doc.data()
+          })
+          listaFeedbackDosCorretoresPorImovel[doc.data().idImovel] = [];
+          cont++;
+          listaFeedbackDosCorretoresPorImovel[doc.data().idImovel].push({
+            id: doc.id,
+            ...doc.data()
+          })
+        } else {
+          cont++;
+          listaFeedbackDosCorretoresPorImovel[doc.data().idImovel].push({
+            id: doc.id,
+            ...doc.data()
+          })
+        }
+
+      })
+      //console.log(feedbackDosCorretores);
+      this.setState({ listaFeedbackDosCorretoresPorImovel: listaFeedbackDosCorretoresPorImovel, feedbackDosCorretores: feedbackDosCorretores, contFeedback: cont, carregando: false });
+      // console.log(resultado.docs)
+    }).catch(erro => {
+      alert('Problema de Conexão');
+      console.log(erro)
+    })
+  }
+
   funcaoTeste() {
     console.log("Teste")
   }
@@ -136,7 +179,7 @@ export default class Administrador extends React.Component {
             </div>
             <div class="row">
               <div class="col-sm pl-5">
-                <CardOption link="" legenda="Feedback de Corretores" funcaoDoCard={this.funcaoTeste} img={feedback} />
+                <CardOption link="/feedbackdecorretores" quant={this.state.contFeedback} interessesSolicitados={this.state.feedbackDosCorretores} interessesSolicitadosPorId={this.state.listaFeedbackDosCorretoresPorImovel} legenda="Feedback de Corretores" funcaoDoCard={this.funcaoTeste} img={feedback} />
               </div>
               <div class="col-sm pr-5">
                 <CardOption link="" legenda="Relatórios" funcaoDoCard={this.funcaoTeste} img={relatorio} />
