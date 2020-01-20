@@ -4,6 +4,7 @@ import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css';
 
 import './carrousel.css';
+//SUBINDO CARROUSEL
 
 import { PulseLoader as Spinner } from 'react-spinners';
 import LoginModal from '../login-modal';
