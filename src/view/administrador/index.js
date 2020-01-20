@@ -52,7 +52,7 @@ export default class Administrador extends React.Component {
           ...doc.data()
         })
       })
-
+      console.log(corretoresCadastrados);
       this.setState({ corretoresCadastrados: corretoresCadastrados});
     }).catch(erro => {
       alert('Problema de Conexão');

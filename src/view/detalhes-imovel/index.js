@@ -46,6 +46,7 @@ const db = firebase.firestore();
 
 class DetalhesImovel extends React.Component {
 
+
   constructor(props) {
     super(props);
 
@@ -64,11 +65,11 @@ class DetalhesImovel extends React.Component {
       editavel: this.props.usuario !== undefined ? true : false,
       horarioDeContato: '',
       preco: '',
-      corretores: this.props.state !== undefined ?(this.props.location.state.corretores === undefined ? [] : this.props.location.state.corretores) : [],
+      corretores: this.props.state !== undefined ?(this.props.location.state.corretores === undefined ? [] : this.props.location.state.corretores) : [  ],
       corretor: '',
     }
 
-    console.log(this.props.match.params.id)
+    console.log(this.props.state)
     this.handleChange = this.handleChange.bind(this);
     this.enviarInteresse = this.enviarInteresse.bind(this);
     this.receberDoBd();
@@ -99,7 +100,7 @@ class DetalhesImovel extends React.Component {
   }
 
   validarImovel(validar) {
-    if (this.state.corretor === "")
+    if (this.state.corretor === "" && validar !== 'Excluido')
       return alert('Selecione um corretor');
 
     db.collection('imoveis').doc(this.props.match.params.id).set({
@@ -108,7 +109,7 @@ class DetalhesImovel extends React.Component {
       validar: validar,
       corretor: this.state.corretor,
     }).then(() => {
-      alert("Foi Validado");
+      alert("Foi " + validar);
       this.mostrarModalValidar(false);
     }).catch(erro => {
       alert("Deu erro na validação");
@@ -237,7 +238,7 @@ class DetalhesImovel extends React.Component {
                     <label>Vincular Corretor ao Imóvel</label>
                     <select class="form-control" id="exampleFormControlSelect1" value={this.state.corretor} name="corretor" onChange={this.handleChange} >
                       <option></option>
-                      {this.state.corretores.map(item => {
+                      {this.props.location.state.corretores.map(item => {
                         return (
                           <option value={item.email}> {item.nome} </option>
                         );
