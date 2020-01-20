@@ -25,7 +25,7 @@ class CardImovelInteressados extends Component {
     async receberDoBd(id) {
 
         await firebase.firestore().collection('imoveis').doc(id).get().then(async resultado => {
-            await this.setState({ imovel: resultado.data() })
+            await this.setState({ imovel: {...resultado.data(), id: resultado.id}})
             console.log(this.state.imovel);
             console.log(this.state.imovel.foto);
             firebase.storage().ref(`imagensImoveis/${this.state.imovel.foto[0]}`).getDownloadURL().then(url => {
@@ -58,7 +58,7 @@ class CardImovelInteressados extends Component {
                 <div className="card">
                     <Link to={{
                         pathname: "/solicitacoesdoimovel/" + id,
-                        state: { interessados: interessados, imagens: this.state.imovel.foto },
+                        state: { interessados: interessados, imagens: this.state.imovel.foto, imovel: this.state.imovel },
                     }}>
                         <img src={this.state.url} className="card-img-top img-cartao" alt="imagem do imovel" />
                     </Link>
@@ -74,7 +74,7 @@ class CardImovelInteressados extends Component {
                             <div className="col-6">
                                 <Link to={{
                                     pathname: "/solicitacoesdoimovel/" + id,
-                                    state: { interessados: interessados, imagens: this.state.imovel.foto },
+                                    state: { interessados: interessados, imagens: this.state.imovel.foto, imovel: this.state.imovel },
                                 }} className="btn btn-sm">Detalhes <i className="fas fa-angle-right"></i></Link>
                             </div>
                         </div>
