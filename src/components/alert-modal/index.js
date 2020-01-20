@@ -31,6 +31,8 @@ class AlertModal extends Component {
 
   render() {
 
+    const {funcSim, cliente} = this.props;
+
     return (
       <Modal size="md" show={this.state.show} onHide={() => this.mostrarModal(false)} animation={true}>
         <Modal.Header closeButton>
@@ -44,7 +46,7 @@ class AlertModal extends Component {
           </button>
           {
             this.state.message ?
-            <button className="btn btn-login btn-confirme" onClick={() => this.logar()}>
+            <button className="btn btn-login btn-confirme" onClick={() => this.funcSim(cliente)}>
               Sim
             </button>
             :
